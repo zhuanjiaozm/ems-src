@@ -1,0 +1,109 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b>
+                <a>首页</a>
+                <a>内容管理</a>
+                <a class="last-e">公告列表</a>
+                <div class="operate">
+                    <button ui-sref="main.addNotice">新建公告</button>
+                </div>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">公告标题:</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin" ng-model="params.title"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">创建时间:</div>
+                        <div class="sch-input">
+                            <input type="text" ng-laydate class="sort_input_skin laydate-icon"  ng-model="params.beginTime" istime='false' max-date='{{params.endTime}}' format="YYYY-MM-DD">
+                            至
+                            <input type="text" ng-laydate class="sort_input_skin laydate-icon" ng-model="params.endTime" istime="false" min-date="{{params.beginTime}}" format="YYYY-MM-DD">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">创建人:</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin" ng-model="params.creator"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">状态:</div>
+                        <div class="sch-input">
+                            <select class="sort_input_skin" ng-model="params.finalStatus">
+                                <option value="">全部</option>
+                                <option value="1">待提交</option>
+                                <option value="2">待审核</option>
+                                <option value="3">审核不通过</option>
+                                <option value="4">生效</option>
+                                <option value="5">失效</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-btn">
+                            <input type="button" class="sort_btn" value="搜索" ng-click="searchNotice(params)">
+                            <ber-resert reset-obj="params"></ber-reset>
+                        </div>
+                    </div>
+                    <div class="params">
+
+                    </div>
+                </div>
+                <table class="list_table">
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th class="left">公告标题</th>
+                            <th class="left">公告摘要</th>
+                            <th>创建时间</th>
+                            <th>创建人</th>
+                            <th>状态</th>
+                            <th width="15%">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="n in noticesList" ng-if="noticesList.length>0">
+                            <td ng-bind="$index+1"></td>
+                            <td class="left" ng-bind="n.title"></td>
+                            <td class="left" ng-bind="n.summary"></td>
+                            <td ng-bind="n.createTime | date:'yyyy-MM-dd HH:mm:ss'"></td>
+                            <td ng-bind="n. creator"></td>
+                            <!-- <td>
+                                <span ng-if="n.auditStatus=='3'" ng-bind="{'1':'生效','2':'失效'}[n.announcementStatus]"></span>
+                                <span ng-if="n.auditStatus!=3" ng-bind="{'1':'未提交','2':'待审核','4':'审核失败'}[n.auditStatus]"></span>
+                            </td> -->
+                            <td ng-bind="{'1':'待提交','2':'待审核','3':'审核不通过','4':'生效','5':'失效'}[n.finalStatus]"></td>
+                            <td class="option">
+                                <a ui-sref="main.addNotice({flag:1,id:n.id})">详情</a>
+                                <a ui-sref="main.addNotice({flag:2,id:n.id})" ng-if="n.finalStatus!=2">编辑</a>
+                                <a ng-if="n.finalStatus==5" ng-click="toggle(2,n.id)">生效</a>
+                                <a ng-if="n.finalStatus==4"  ng-click="toggle(1,n.id)">失效</a>
+                                <a ng-click="delete(n.id)"  ng-if="n.finalStatus!=2">删除</a>
+                                <a ng-click="startWorkFlow(n.id)" ng-if="n.finalStatus==1||n.finalStatus==3">提交审核</a>
+                            </td>
+                        </tr>
+                        <tr ng-if="noticesList.length<1">
+                            <td colspan="7">无相关数据</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pages">
+                    <div ui-pagination conf="conf"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="delete-notice">
+    <h1>删除确认</h1>
+    <div class="ngdialog-content">
+        确定要删除本公告吗？
+    </div>
+    <div class="ngdialog-footer">
+        <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+        <button class="btn-enter" ng-click="enter()">确认</button>
+    </div>
+</script>

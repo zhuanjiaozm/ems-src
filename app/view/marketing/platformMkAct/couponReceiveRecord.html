@@ -1,0 +1,121 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>营销中心</a><a>领取记录</a>
+            </div>
+            <div class="tab_box">
+                <ul class="tab-title">
+                    <li ng-class="{'active':showMain=='base'}" ng-click="showMain='base'"><a>基本信息</a></li>
+                    <li ng-class="{'active':showMain=='chart'}" ng-click="showMain='chart'"><a>图表概况</a></li>
+                    <li ng-class="{'active':showMain=='detail'}" ng-click="showMain='detail'"><a>优惠券明细</a></li>
+                    <li><input type="button" class="back_btn" ui-sref="main.couponDiscount" value="返回"></li>
+                </ul>
+                <div class="tab_content" ng-if="showMain=='base'">
+                    <div>
+                        <table class="form_table">
+                            <tr>
+                                <th colspan="3">优惠券名称：xxxxx优惠券</th>
+                            </tr>
+                            <tr>
+                                <td>名称</td>
+                                <td>数量</td>
+                                <td>占比</td>
+                            </tr>
+                            <tr>
+                                <td>发行量</td>
+                                <td>1000</td>
+                                <td>100%</td>
+                            </tr>
+                            <tr>
+                                <td>已领取</td>
+                                <td>900</td>
+                                <td>90%</td>
+                            </tr>
+                            <tr>
+                                <td>已使用</td>
+                                <td>800</td>
+                                <td>80%</td>
+                            </tr>
+                            <tr>
+                                <td>未使用</td>
+                                <td>100</td>
+                                <td>10%</td>
+                            </tr>
+                            <tr>
+                                <td>已过期</td>
+                                <td>0</td>
+                                <td>0%</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="show-form" ng-if="showMain=='chart'">
+                    <div>
+
+                    </div>
+                </div>
+                <div class="tab_content" ng-if="showMain=='detail'">
+                    <div>
+                        <table class="form_table">
+                            <tr>
+                                <th>序号</th>
+                                <th>优惠券编码</th>
+                                <th>面额（元）</th>
+                                <th>领取用户</th>
+                                <th>领取时间</th>
+                                <th>使用时间</th>
+                                <th>状态</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>124037926</td>
+                                <td>50</td>
+                                <td>jdjljk</td>
+                                <td>2016-11-25 16:27:40</td>
+                                <td>-</td>
+                                <td>未使用</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>124037926</td>
+                                <td>50</td>
+                                <td>jdjljk</td>
+                                <td>2016-11-25 16:27:40</td>
+                                <td>-</td>
+                                <td>未使用</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>124037926</td>
+                                <td>50</td>
+                                <td>jdjljk</td>
+                                <td>2016-11-25 16:27:40</td>
+                                <td>-</td>
+                                <td>未使用</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>124037926</td>
+                                <td>50</td>
+                                <td>jdjljk</td>
+                                <td>2016-11-25 16:27:40</td>
+                                <td>-</td>
+                                <td>未使用</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>124037926</td>
+                                <td>50</td>
+                                <td>jdjljk</td>
+                                <td>2016-11-25 16:27:40</td>
+                                <td>-</td>
+                                <td>未使用</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

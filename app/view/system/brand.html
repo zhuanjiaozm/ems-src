@@ -1,0 +1,111 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>系统管理</a><a class="last-e">品牌管理</a>
+                <div class="operate">
+                    <button ng-click="operateBrand()">添加品牌</button>
+                </div>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">品牌名称:</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin" ng-model="brandParams.name">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">状态:</div>
+                        <div class="sch-input">
+                            <select class="sort_input_skin" ng-model="brandParams.status">
+                                <option value="1">可用</option>
+                                <option value="2">不可用</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <input type="button" class="sort_btn" ng-click="getSearch()" value="搜索">
+                        <!--<div select-shop sparams="sparams" select="radio"></div>-->
+                    </div>
+                </div>
+                <table class="list_table">
+                    <thead>
+                    <tr>
+                        <th width="35">序号</th>
+                        <th>品牌编号</th>
+                        <th>品牌名称</th>
+                        <th>品牌描述</th>
+                        <th>状态</th>
+                        <th width="150">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody ng-if="brandsList.length>0">
+                        <tr ng-repeat="item in brandsList">
+                            <td>{{$index+1}}</td>
+                            <td>{{ item.brandId }}</td>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.brandDesc}}</td>
+                            <td ng-bind="statusName(item.status)"></td>
+                            <td class="option">
+                                <a ng-click="deleteBrand(item.brandId)">删除</a>
+                                <a ng-click="operateBrand(item)">编辑</a>
+                                <a>详情</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-if="!brandsList || brandsList.length<1">
+                        <tr>
+                            <td colspan="6">暂无数据！</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pages">
+                    <!--<div class="batch-operate">
+                        <label><input type="checkbox">全选</label>
+                        <button class="bo-red">批量删除</button>
+                    </div>-->
+                    <div ui-pagination conf="conf"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="addBrand">
+    <h1 ng-bind="ngDialogTitle"></h1>
+    <div class="ngdialog-content">
+        <form name="userForm">
+            <dl>
+                <dt><span class="red">*</span>品牌名称：</dt>
+                <dd><input type="text" class="w-medium" required ng-model="brandInfo.name" maxlength="32"></dd>
+            </dl>
+            <dl>
+                <dt><span class="red">*</span>品牌Logo：</dt>
+                <dd>
+                    <span upload-pic-box conf="{picName:'logoUrl',canDelete:true}" pic-model="brandInfo.logoUrl"></span>
+                </dd>
+            </dl>
+            <dl>
+                <dt><span class="red">*</span>品牌编码：</dt>
+                <dd><input type="text" class="w-medium" maxlength="32" ng-model="brandInfo.code"></dd>
+            </dl>
+            <dl>
+                <dt><span class="red">*</span>品牌状态：</dt>
+                <dd>
+                    <label><input type="radio" ng-model="brandInfo.status" ng-value="'1'">可用</label>
+                    <label><input type="radio" ng-model="brandInfo.status" ng-value="'2'">不可用</label>
+                </dd>
+            </dl>
+            <dl>
+                <dt>描述：</dt>
+                <dd>
+                    <textarea class="w-large" rows="5" ng-model="brandInfo.brandDesc" maxlength="100"></textarea>
+                </dd>
+            </dl>
+        </form>
+    </div>
+    <div class="ngdialog-footer">
+        <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+        <button class="btn-enter" ng-click="enter()">确认</button>
+    </div>
+</script>

@@ -1,0 +1,511 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b>
+                <a>首页</a>
+                <a>内容管理</a>
+                <span>新增广告</span>
+                <div class="operate">
+                    <button ng-click="goBack()">返回</button>
+                </div>
+            </div>
+            <div class="ad_wrap">
+                <div class="ad_show_l">
+                    <h2>【<span ng-bind="{'1':'手机端','2':'电脑端'}[params.displayChannel]"></span>】【<span ng-bind="{'10':'首页','11':'乐购买','20':'分行馆','21':'享生活','22':'分行馆','13':'流量广告'}[params.displayPage]"></span>】页面位置示意图</h2>
+                    <div class="ad_phone_show" ng-if="params.displayChannel==='1'&&params.displayPage==='10'">
+                        <div class="phone_header">
+                            <a><i class="iconfont icon-saoyisao" ></i></a>
+                            <input type="text">
+                            <a><i class="icon font icon-duihuakuangneirong2xian" ></i></a>
+                        </div>
+                        <div class="ad_phone_body">
+                            <a class="slide_ad hover_add" ng-class="{'current_selected':flag==1||params.columnCode==='mhpAdvertArray'}" ng-click="flag=1;showAdvert('mhpAdvertArray')" ng-init="flag=0">
+                                <span>轮播广告</span>
+                                <i class="iconfont icon-add"></i>
+                                <span class="add_active_bg">
+                                    编辑中
+                                </span>
+                            </a>
+                            <a class="enter_ad hover_add" ng-class="{'current_selected':flag==2||params.columnCode==='mhpQuickEntryArray'}" ng-click="flag=2;showAdvert('mhpQuickEntryArray')">
+                                <i class="iconfont icon-add"></i>
+                                <span class="slide_icon">
+                                    <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <p class="slide_nav"><span></span><span></span><span></span></p>
+                                </span>
+                                <span class="add_active_bg">
+                                    编辑中
+                                </span>
+                            </a>
+                            <div class="disable_enter">频道入口</div>
+                            <div class="disable_enter">热点资讯</div>
+                            <div class="disable_enter">秒杀商品</div>
+                            <div class="base_ad">
+                                <div class="base_ad_tit">
+                                    <p>乐购买</p>
+                                </div>
+                                <div class="lg_ad">
+                                    <a class="w_50 hover_add" ng-class="{'current_selected':flag==3||params.columnCode=='mhpHappyBuyIndex0'}" ng-click="flag=3;showAdvert('mhpHappyBuyIndex0')">
+                                        <i class="iconfont"></i>
+                                        <span class="add_active_bg">
+                                            编辑中
+                                        </span>
+                                    </a>
+                                    <a class="w_50 hover_add br_none" ng-class="{'current_selected':flag==4||params.columnCode==='mhpHappyBuyIndex1'}" ng-click="flag=4;showAdvert('mhpHappyBuyIndex1')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                    <a class="w_50 hover_add" ng-class="{'current_selected':flag==5||params.columnCode==='mhpHappyBuyIndex2'}" ng-click="flag=5;showAdvert('mhpHappyBuyIndex2')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                    <a class="w_50 hover_add br_none" ng-class="{'current_selected':flag==6||params.columnCode==='mhpHappyBuyIndex3'}" ng-click="flag=6;showAdvert('mhpHappyBuyIndex3')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                    <a class="w_25 hover_add" ng-class="{'current_selected':flag==7||params.columnCode==='mhpHappyBuyIndex4'}" ng-click="flag=7;showAdvert('mhpHappyBuyIndex4')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                    <a class="w_25 hover_add" ng-class="{'current_selected':flag==8||params.columnCode==='mhpHappyBuyIndex5'}" ng-click="flag=8;showAdvert('mhpHappyBuyIndex5')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                    <a class="w_25 hover_add" ng-class="{'current_selected':flag==9||params.columnCode==='mhpHappyBuyIndex6'}" ng-click="flag=9;showAdvert('mhpHappyBuyIndex6')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                    <a class="w_25 hover_add br_none" ng-class="{'current_selected':flag==10||params.columnCode==='mhpHappyBuyIndex7'}" ng-click="flag=10;showAdvert('mhpHappyBuyIndex7')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <a class="full_ad hover_add" ng-class="{'current_selected':flag==11||params.columnCode==='mhpHappyBuyAdvertArray'}" ng-click="flag=11;showAdvert('mhpHappyBuyAdvertArray')">
+                                <span>横幅广告</span>
+                                <i class="iconfont icon-add"></i>
+                                <span class="add_active_bg">编辑中</span>
+                            </a>
+                            <div class="base_ad">
+                                <div class="base_ad_tit">
+                                    <p>逛商场</p>
+                                </div>
+                                <div class="lg_ad">
+                                    <a class="w_50 hover_add" ng-class="{'current_selected':flag==12||params.columnCode==='mhpMarketIndex0'}" ng-click="flag=12;showAdvert('mhpMarketIndex0')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                    <a class="w_50 hover_add br_none" ng-class="{'current_selected':flag==13||params.columnCode==='mhpMarketIndex1'}" ng-click="flag=13;showAdvert('mhpMarketIndex1')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                    <a class="w_25 hover_add" ng-class="{'current_selected':flag==14||params.columnCode==='mhpMarketIndex2'}" ng-click="flag=14;showAdvert('mhpMarketIndex2')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                    <a class="w_25 hover_add" ng-class="{'current_selected':flag==15||params.columnCode==='mhpMarketIndex3'}" ng-click="flag=15;showAdvert('mhpMarketIndex3')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                    <a class="w_25 hover_add" ng-class="{'current_selected':flag==16||params.columnCode==='mhpMarketIndex4'}" ng-click="flag=16;showAdvert('mhpMarketIndex4')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                    <a class="w_25 hover_add br_none" ng-class="{'current_selected':flag==17||params.columnCode==='mhpMarketIndex5'}" ng-click="flag=17;showAdvert('mhpMarketIndex5')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                    <a class="w_25 hover_add" ng-class="{'current_selected':flag==18||params.columnCode==='mhpMarketIndex6'}" ng-click="flag=18;showAdvert('mhpMarketIndex6')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                    <a class="w_25 hover_add" ng-class="{'current_selected':flag==19||params.columnCode==='mhpMarketIndex7'}" ng-click="flag=19;showAdvert('mhpMarketIndex7')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                    <a class="w_25 hover_add" ng-class="{'current_selected':flag==20||params.columnCode==='mhpMarketIndex8'}" ng-click="flag=20;showAdvert('mhpMarketIndex8')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                    <a class="w_25 hover_add br_none" ng-class="{'current_selected':flag==21||params.columnCode==='mhpMarketIndex9'}" ng-click="flag=21;showAdvert('mhpMarketIndex9')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <a class="full_ad hover_add" ng-class="{'current_selected':flag==22||params.columnCode==='mhpMarketAdvertArray'}" ng-click="flag=22;showAdvert('mhpMarketAdvertArray')">
+                                <span>横幅广告</span><i class="iconfont icon-add"></i><span class="add_active_bg">编辑中</span>
+                            </a>
+                            <div class="disable_enter">店铺推荐</div>
+                            <div class="disable_enter">推荐优品</div>
+                        </div>
+                    </div>
+                    <!--乐购买stars-->
+                    <div class="ad_phone_show" ng-if="params.displayChannel==='1'&&params.displayPage==='11'">
+                        <div class="phone_header">
+                            <a><i class="iconfont icon-saoyisao" ></i></a>
+                            <input type="text">
+                            <a><i class="icon font icon-duihuakuangneirong2xian" ></i></a>
+                        </div>
+                        <div class="ad_phone_body">
+                            <a class="slide_ad hover_add" ng-class="{'current_selected':flag==23||params.columnCode==='b2cAdvertArray'}" ng-click="flag=23;showAdvert('b2cAdvertArray')" ng-init="flag=0">
+                                <span>轮播广告</span>
+                                <i class="iconfont icon-add"></i>
+                                <span class="add_active_bg">
+                                    编辑中
+                                </span>
+                            </a>
+                            <a class="enter_ad hover_add" ng-class="{'current_selected':flag==24||params.columnCode==='b2cQuickEntryArray'}" ng-click="flag=24;showAdvert('b2cQuickEntryArray')">
+                                <span class="slide_icon">
+                                    <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <p class="slide_nav"><span></span><span></span><span></span></p>
+                                </span>
+                                <i class="iconfont icon-add"></i>
+                                <span class="add_active_bg">
+                                    编辑中
+                                </span>
+                            </a>
+                            <div class="base_ad mt_12">
+                                <div class="lg_ad">
+                                    <a class="w_33_l hover_add" ng-class="{'current_selected':flag==25||params.columnCode==='b2cLoveLifeIndex0'}" ng-click="flag=25;showAdvert('b2cLoveLifeIndex0')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">
+                                            编辑中
+                                        </span>
+                                    </a>
+                                    <a class="w_33 hover_add" ng-class="{'current_selected':flag==26||params.columnCode==='b2cLoveLifeIndex1'}" ng-click="flag=26;showAdvert('b2cLoveLifeIndex1')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                    <a class="w_33 hover_add br_none" ng-class="{'current_selected':flag==27||params.columnCode==='b2cLoveLifeIndex2'}" ng-click="flag=27;showAdvert('b2cLoveLifeIndex2')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                    <a class="w_33 hover_add" ng-class="{'current_selected':flag==28||params.columnCode==='b2cLoveLifeIndex3'}" ng-click="flag=28;showAdvert('b2cLoveLifeIndex3')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                    <a class="w_33 hover_add br_none" ng-class="{'current_selected':flag==29||params.columnCode==='b2cLoveLifeIndex4'}" ng-click="flag=29;showAdvert('b2cLoveLifeIndex4')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <a class="full_ad hover_add" ng-class="{'current_selected':flag==30||params.columnCode==='b2cLoveLifeAdvertArray'}" ng-click="flag=30;showAdvert('b2cLoveLifeAdvertArray')">
+                                <span>横幅广告</span>
+                                <i class="iconfont icon-add"></i>
+                                <span class="add_active_bg">编辑中</span>
+                            </a>
+                            <div class="disable_enter">
+                                优惠促销
+                            </div>
+                            <a class="full_ad hover_add" ng-class="{'current_selected':flag==31||params.columnCode==='b2cPromotionAdvertArray'}" ng-click="flag=31;showAdvert('b2cPromotionAdvertArray')">
+                                <span>横幅广告</span>
+                                <i class="iconfont icon-add"></i>
+                                <span class="add_active_bg">编辑中</span>
+                            </a>
+                            <div class="disable_enter">
+                                限时折扣
+                            </div>
+                            <a class="full_ad hover_add" ng-class="{'current_selected':flag==32||params.columnCode==='b2cLimitTimeSaleAdvertArray'}" ng-click="flag=32;showAdvert('b2cLimitTimeSaleAdvertArray')">
+                                <span>横幅广告</span>
+                                <i class="iconfont icon-add"></i>
+                                <span class="add_active_bg">编辑中</span>
+                            </a>
+                            <div class="disable_enter">
+                                热销推荐
+                            </div>
+                        </div>
+                    </div>
+                    <!--社区O2O-stars-->
+                    <div class="ad_phone_show" ng-if="params.displayChannel==='1'&&params.displayPage==='21'">
+                        <div class="phone_header">
+                            <a><i class="iconfont icon-saoyisao" ></i></a>
+                            <input type="text">
+                            <a><i class="icon font icon-duihuakuangneirong2xian" ></i></a>
+                        </div>
+                        <div class="ad_phone_body">
+                            <a class="enter_ad hover_add" ng-class="{'current_selected':flag==23||params.columnCode==='o2ohpQuickEntryArray'}" ng-click="flag=23;showAdvert('o2ohpQuickEntryArray')">
+                                <span class="slide_icon">
+                                    <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <span class="icon_block">icon</span>
+                                <p class="slide_nav"><span></span><span></span><span></span></p>
+                                </span>
+                                <i class="iconfont icon-add"></i>
+                                <span class="add_active_bg">
+                                    编辑中
+                                </span>
+                            </a>
+                            <div class="base_ad mt_12">
+                                <div class="base_ad_tit">
+                                    <p>新人专享</p>
+                                </div>
+                                <div class="lg_ad">
+                                    <a class="w_50 hover_add" ng-class="{'current_selected':flag==24||params.columnCode==='o2ohpNewUserIndex0'}" ng-click="flag=24;showAdvert('o2ohpNewUserIndex0')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                    <a class="w_50 hover_add br_none" ng-class="{'current_selected':flag==25||params.columnCode==='o2ohpNewUserIndex1'}" ng-click="flag=25;showAdvert('o2ohpNewUserIndex1')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                    <a class="full_ad hover_add br_none" ng-class="{'current_selected':flag==26||params.columnCode==='o2ohpNewUserAdvertArray'}" ng-click="flag=26;showAdvert('o2ohpNewUserAdvertArray')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="base_ad mt_12">
+                                <div class="base_ad_tit">
+                                    <p>为你优选</p>
+                                </div>
+                                <div class="lg_ad">
+                                    <a class="w_33 hover_add" ng-class="{'current_selected':flag==27||params.columnCode==='o2ohpPreferredIndex0'}" ng-click="flag=27;showAdvert('o2ohpPreferredIndex0')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                    <a class="w_33 hover_add" ng-class="{'current_selected':flag==28||params.columnCode==='o2ohpPreferredIndex1'}" ng-click="flag=28;showAdvert('o2ohpPreferredIndex1')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                    <a class="w_33 hover_add br_none" ng-class="{'current_selected':flag==29||params.columnCode==='o2ohpPreferredIndex2'}" ng-click="flag=29;showAdvert('o2ohpPreferredIndex2')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                    <a class="w_33 hover_add" ng-class="{'current_selected':flag==30||params.columnCode==='o2ohpPreferredIndex3'}" ng-click="flag=30;showAdvert('o2ohpPreferredIndex3')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                    <a class="w_33 hover_add" ng-class="{'current_selected':flag==31||params.columnCode==='o2ohpPreferredIndex4'}" ng-click="flag=31;showAdvert('o2ohpPreferredIndex4')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                    <a class="w_33 hover_add br_none" ng-class="{'current_selected':flag==32||params.columnCode==='o2ohpPreferredIndex5'}" ng-click="flag=32;showAdvert('o2ohpPreferredIndex5')">
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="disable_enter">猜你喜欢</div>
+                        </div>
+                    </div>
+                    <!--手机端 分行馆-->
+                    <div class="ad_phone_show" ng-if="params.displayChannel==='1'&&params.displayPage==='20'">
+                        <div class="phone_header">
+                            <a><i class="iconfont icon-saoyisao" ></i></a>
+                            <input type="text">
+                            <a><i class="icon font icon-duihuakuangneirong2xian" ></i></a>
+                        </div>
+                        <div class="ad_phone_body">
+                            <a class="slide_ad hover_add" ng-class="{'current_selected':flag==33||params.columnCode==='fhgAdvertArray'}" ng-click="flag=33;showAdvert('fhgAdvertArray')" ng-init="flag=33">
+                                <span>轮播广告</span>
+                                <i class="iconfont icon-add"></i>
+                                <span class="add_active_bg">
+                                    编辑中
+                                </span>
+                            </a>
+                            <div class="base_ad">
+                                <div class="base_ad_tit">
+                                    <p>分行馆</p>
+                                </div>
+                                <div class="lg_ad">
+                                    <a class="w_100p hover_add" ng-class="{'current_selected':flag==34||params.columnCode=='fhgHappyBuyIndex0'}" ng-click="flag=34;showAdvert('fhgHappyBuyIndex0','2')">
+                                        <span>店铺推荐</span>
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--手机端 流量广告-->
+                    <div class="ad_phone_show" ng-if="params.displayChannel==='1'&&params.displayPage==='13'">
+                        <div class="phone_header">
+                            <a><i class="iconfont icon-saoyisao" ></i></a>
+                            <input type="text">
+                            <a><i class="icon font icon-duihuakuangneirong2xian" ></i></a>
+                        </div>
+                        <div class="ad_phone_body base_ad">
+                            <a class="slide_ad hover_add" ng-class="{'current_selected':flag==35||params.columnCode==='startAdvert'}" ng-click="flag=33;showAdvert('startAdvert')" ng-init="flag=35" style="width:400px;height:400px;margin:20px auto;">
+                                <span>启动广告</span>
+                                <i class="iconfont icon-add"></i>
+                                <span class="add_active_bg">
+                                    编辑中
+                                </span>
+                            </a>
+                            <div class="base_ad">
+                                <div class="lg_ad">
+                                    <a class="w_100p hover_add" ng-class="{'current_selected':flag==36||params.columnCode=='popwindowAdvert'}" ng-click="flag=36;showAdvert('popwindowAdvert')" style="width:400px;height:400px;margin:20px auto;margin-left: 38px; border: 1px solid #dddddd;">
+                                        <span>弹出广告</span>
+                                        <i class="iconfont icon-add"></i>
+                                        <span class="add_active_bg">编辑中</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ad_show_r" ng-show="advertListInPagesList">
+                    <h2><span ng-if="params.editAbled!=1">编辑</span>广告内容</h2>
+                    <div class="ad_show_r_tit">
+                        <input id="" class="add_ad_btn" type="button" name="" value="添加广告" ng-click="addAdvertInfo()" ng-if="params.editAbled!=1">
+                        <!-- <span>可添加<span ng-bind="findAdvertColumnInfo.storageStock"></span>个广告图, -->
+                        <span ng-if="findAdvertColumnInfo.displayStock">此广告位可显示<span ng-bind="findAdvertColumnInfo.displayStock"></span>个广告图。</span>
+                    </div>
+                    <table class="list_table">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>标题</th>
+                                <th>广告图</th>
+                                <th>跳转类型</th>
+                                <th>排序</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="c in advertListInPagesList | orderBy:c.ordinal:true" ng-if="advertListInPagesList.length>0" ng-class="{'current_selected_tr':c.id===currentID}">
+                                <td ng-bind="$index+1"></td>
+                                <td ng-bind="c.advertTitle"></td>
+                                <td class="ad_img" ng-click="checkPicInDialog(c.advertIcon)">
+                                    <img alt="广告图" ng-src="{{imgServerUrl+c.advertIcon}}" onerror="javascript:this.src='images/error.png'">
+                                </td>
+                                <td ng-bind="{'1':'商品','2':'店铺','3':'类目','4':'URL','5':'快捷入口','6':'活动专题'}[c.advertMode]"></td>
+                                <td ng-init="c.ordinal=c.ordinal || 0">
+                                    <span ng-if="params.editAbled==1" ng-bind="c.ordinal"></span>
+                                    <input num-input type="text" ng-model='c.ordinal' ng-change="sortAdvert(c.id,c.ordinal)" ng-if="params.editAbled!=1" size="5" ng-model-options="{updateOn: 'blur'}" ng-max="100000">
+                                    <!-- <a class="sort_btn" ng-click="sortAdvert(c.id,$index+2)" ng-if="!$last"><i class="iconfont icon-zhixiangxia"></i></a>
+                                    <a class="sort_btn"  ng-click="sortAdvert(c.id,$index)"  ng-if="!$first"><i class="iconfont icon-zhixiangshang"></i></a> -->
+                                </td>
+                                <td ng-bind="c.finalStatusStr"></td>
+                                <td class="option" ng-if="params.editAbled!=1">
+                                    <a ng-if="c.finalStatus==='5'" ng-click="changeAdvertStatus(c.id,0)">失效</a>
+                                    <a ng-if="c.finalStatus==='6'" ng-click="changeAdvertStatus(c.id,1)">生效</a>
+                                    <a ng-if="c.finalStatus!=='2'" ng-click="addAdvertInfo(c,'')">编辑</a>
+                                    <a ng-if="c.finalStatus!=='2'" ng-click="deleteAdvert(c.id)">删除</a>
+                                    <a ng-click="startWorkFlow(c.id)" ng-if="c.finalStatus==='1'">提交审核</a>
+                                    <a ng-click="addAdvertInfo(c,'readonly')">详情</a>
+                                </td>
+                                <td class="option" ng-if="params.editAbled==1">
+                                    <a ng-click="addAdvertInfo(c,'readonly')">详情</a>
+                                </td>
+                            </tr>
+                            <tr ng-if="advertListInPagesList.length<1">
+                                <td colspan="7">表格无数据</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!--当没有广告时显示-->
+                    <p class="empty_ad">请在左侧页面选择广告模块</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="img">
+    <div class="ngdialog-content img">
+        <div ng-if="checkPicInDialogMsg" ng-bind="checkPicInDialogMsg" class="red"></div>
+        <img ng-if="!checkPicInDialogMsg" ng-src="{{src}}" alt="">
+    </div>
+    <div class="ngdialog-footer">
+        <button class="btn-canle" ng-click="closeThisDialog(0)">关闭</button>
+    </div>
+</script>
+<script type="text/ng-template" id="add-advert">
+    <h1>编辑广告位</h1>
+    <div class="ngdialog-content add-advert-content">
+        <div>
+            <label><span class="red">*</span>广告标题：</label>
+            <input type="text" ng-model="new.advertTitle" maxlength="25" size="52" ng-disabled="readonly">({{new.advertTitle.length||0}}/25)
+        </div>
+        <div>
+            <label><span class="red">*</span>跳转类型：</label>·
+            <select ng-model="new.advertMode" ng-change="resetDvertMode(new.advertMode)" ng-disabled="readonly">
+                <option value="">请选择</option>
+                <option ng-value="c.id" ng-repeat="c in advertModeArray" ng-bind="c.name"></option>
+            </select>
+        </div>
+        <div ng-if="new.advertMode==1">
+            <label><span class="red">*</span>商品编号：</label>
+            <input type="text" ng-model="advertProductId.sid" size="45" disabled="disabled">
+            <div select-shop sparams="advertProductId" select="radio" ng-hide="readonly"></div>
+        </div>
+        <div ng-if="new.advertMode==2">
+            <label><span class="red">*</span>店铺编号：</label>
+            <input type="text" ng-model="advertShopId.sid" size="45" disabled="disabled">
+            <div select-shop sparams="advertShopId" select="radio" ng-hide="readonly"></div>
+        </div>
+        <div ng-if="new.advertMode==3">
+            <label><span class="red">*</span>类目ID:</label>
+            <select-category ng-model="new.advertCategoryId"></select-category>
+        </div>
+        <div ng-if="new.advertMode==4">
+            <label><span class="red">*</span>URL地址：</label>
+            <input type="text" ng-model="new.advertForwardUrl"><span>(请输入对应url，例：http://www.123.com)</span>
+        </div>
+        <div ng-if="new.advertMode==5">
+            <label><span class="red">*</span>快捷入口：</label>
+            <select ng-model="new.advertShortcutId">
+                <option value="">请选择</option>
+                <option value="1">乐购买</option>·
+                <option value="2">领券中心</option>
+                <option value="3">分类</option>
+                <option value="4">地方馆</option>
+            </select>
+        </div>
+        <div ng-if="new.advertMode==6">
+            <label><span class="red">*</span>活动名称：</label>
+            <input type="text" ng-model="new.advertActId"><a ng-click="">选择活动</a>
+        </div>
+        <div>
+            <label><span class="red">*</span>广告图片<span ng-bind="'('+findAdvertColumnInfo.advertSize+')'" ng-if="findAdvertColumnInfo.advertSize"></span>：</label>
+            <span upload-pic-box conf="{picName:'advertIcon',isRequired:true,canDelete:true}" pic-model="new.advertIcon" ng-if="!readonly"></span>
+            <span upload-pic-box conf="{picName:'advertIcon',isRequired:true,canDelete:false}" pic-model="new.advertIcon" ng-if="readonly"></span>
+        </div>
+        <div>
+            <label><span class="red">*</span>有效时间：</label>
+            <input type="text" class="sort_input_skin laydate-icon" istime='true' max-date='{{new.advertEndDate}}' format="YYYY-MM-DD hh:mm:ss" ng-model="new.advertStartDate" ng-disabled="readonly" ng-laydate> 至
+            <input type="text" class="sort_input_skin laydate-icon" istime='true' min-date='{{new.advertStartDate}}' format="YYYY-MM-DD hh:mm:ss" ng-model="new.advertEndDate" ng-disabled="readonly" ng-laydate>
+        </div>
+        <div>
+            <label>扩展值：</label>
+            <textarea rows="3" cols="60" ng-model="new.extendStr" maxlength="100"></textarea>
+        </div>
+        <div ng-if="errMsg">
+            <span class="red" ng-bind="errMsg">
+            </span>
+        </div>
+    </div>
+    <div class="ngdialog-footer">
+        <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+        <button class="btn-enter" ng-click="enter('')" ng-hide="readonly">保存</button>
+        <button class="btn-enter" ng-click="enter(2)" ng-hide="readonly">提交审核</button>
+    </div>
+</script>

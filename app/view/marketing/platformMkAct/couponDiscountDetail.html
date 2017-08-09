@@ -1,0 +1,126 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>营销中心</a><a>平台优惠券活动详情</a>
+            </div>
+            <div class="tab_box">
+                <ul class="tab-title">
+                    <li class="active"><a>活动信息</a></li>
+                    <li><input type="button" class="back_btn" ui-sref="main.couponDiscount" value="返回"></li>
+                </ul>
+                <div class="tab_content">
+                    <table class="form_table tdLeft">
+                        <tr>
+                            <th width="15%">活动名称</th>
+                            <td width="35%" ng-bind="actInfo.actTitle"></td>
+                            <th width="15%">活动编号</th>
+                            <td width="35%" ng-bind="actInfo.id"></td>
+                        </tr>
+                        <tr>
+                            <th>批次有效开始时间</th>
+                            <td ng-bind="actInfo.actStartTime | date:'yyyy-MM-dd HH:mm:ss'"></td>
+                            <th>批次有效结束时间</th>
+                            <td ng-bind="actInfo.actEndTime | date:'yyyy-MM-dd HH:mm:ss'"></td>
+                        </tr>
+                        <tr>
+                            <th>面额</th>
+                            <td ng-bind="actInfo.discountAmount"></td>
+                            <th>每人限领</th>
+                            <td><span ng-bind="actInfo.maxQuantity"></span>张/人</td>
+                        </tr>
+                        <tr>
+                            <th>总金额</th>
+                            <td>
+                                <span ng-if="actInfo.quantityType=='LIMIT'" ng-bind="actInfo.totalNum*actInfo.discountAmount | number:2"></span>
+                                <span ng-if="actInfo.quantityType=='UNLIMIT'">无限制</span>
+                            </td>
+                            <th>发行量</th>
+                            <td>
+                                <span ng-if="actInfo.quantityType=='LIMIT'" ng-bind="actInfo.totalNum"></span>
+                                <span ng-if="actInfo.quantityType=='UNLIMIT'">无限制</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>使用条件</th>
+                            <td>满<span ng-bind="actInfo.orderAmount"></span>元，可使用此券</td>
+                            <th>结算</th>
+                            <td ng-bind="shareTypeStr"></td>
+                        </tr>
+                        <tr>
+                            <th>优惠券的有效期</th>
+                            <td ng-bind="validTxt"></td>
+                            <th>优惠券说明</th>
+                            <td ng-bind="actInfo.description"></td>
+                        </tr>
+                        <tr>
+                            <th>创建账号</th>
+                            <td ng-bind="actInfo.creatorName"></td>
+                            <th>创建时间</th>
+                            <td ng-bind="actInfo.createTime | date:'yyyy-MM-dd HH:mm:ss'"></td>
+                        </tr>
+                        <tr>
+                            <th>适用范围</th>
+                            <td>
+                                <span>指定店铺</span> <a ng-click="showList(actInfo.rangeType,actInfo.categoryType)">点击查看</a>
+                            </td>
+                            <th>活动状态</th>
+                            <td ng-bind="actInfo.queryStatusDescription"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="showList">
+    <h1 ng-bind="dialogTitle"></h1>
+    <div class="ngdialog-content">
+        <div class="list_warp">
+            <table class="list_table" ng-if="conf.type=='PRODUCT'">
+                <thead>
+                <tr>
+                    <th width="20">序号</th>
+                    <th width="150">商品编号</th>
+                    <th class="left">商品名称</th>
+                    <th width="180">所属商户</th>
+                    <th width="120">价格</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in mkList">
+                    <td ng-bind="$index+1"></td>
+                    <td ng-bind="item.id"></td>
+                    <td class="left" ng-bind="item.title" title="{{item.title}}"></td>
+                    <td ng-bind="item.shopName"></td>
+                    <td ng-bind="item.price"></td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="list_table" ng-if="conf.type=='SHOP'">
+                <thead>
+                <tr>
+                    <th width="20">序号</th>
+                    <th width="160">店铺编号</th>
+                    <th class="left">店铺名称</th>
+                    <th width="160">地区</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in mkList">
+                    <td ng-bind="$index+1"></td>
+                    <td ng-bind="item.id"></td>
+                    <td class="left" ng-bind="item.shopName"></td>
+                    <td ng-bind="item.provinceName+item.cityName+item.districtName"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="pages">
+            <div ui-pagination conf="conf"></div>
+        </div>
+    </div>
+    <div class="ngdialog-footer">
+        <button class="btn-enter" ng-click="closeThisDialog(0)">确认</button>
+    </div>
+</script>

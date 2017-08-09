@@ -1,0 +1,14 @@
+<div>
+    <select class="select_skin" name="{{provinceName}}" ng-model="provinceModel" ng-required="isRequired"
+            ng-options="val.id as val.cname for val in provinceGroup" ng-change="selectItem(1)">
+        <option value="">请选择</option>
+    </select>
+    <select class="select_skin" name="{{cityName}}" ng-model="cityModel"  ng-required="isRequired" ng-show="setLevel>1"
+            ng-options="val.id as val.cname for val in cityGroup" ng-change="selectItem(2)">
+        <option value="">请选择</option>
+    </select>
+    <select class="select_skin" name="{{districtName}}" ng-model="districtModel" ng-required="isRequired" ng-show="setLevel>2"
+            ng-options="val.id as val.cname for val in districtGroup" ng-change="selectItem(3)">
+        <option value="">请选择</option>
+    </select>
+</div>

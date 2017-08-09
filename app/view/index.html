@@ -1,0 +1,121 @@
+<div class="main_wrap">
+    <div class="one_part" ng-if="homepage.MerchantAuditTodo || homepage.ProductFlowTodo">
+        <h2>首页\控制台</h2>
+        <div class="item_box">
+            <a class="blue_item" ui-sref="main.merchantExamine" ng-if="homepage.MerchantAuditTodo">
+                <span id="color_icon_1"><em class="iconfont icon-friend_light"></em></span>
+                <p><em ng-bind="homepage.MerchantAuditTodo || 0"></em><br>待审核商户</p>
+            </a>
+            <a class="blue_item" ui-sref="main.goodsExamine" ng-if="homepage.ProductFlowTodo">
+                <span id="color_icon_2"><em class="iconfont icon-bags"></em></span>
+                <p><em ng-bind="homepage.ProductFlowTodo || 0"></em><br>待审核商品</p>
+            </a>
+            <a class="blue_item" ui-sref="main.mkActExamine" ng-if="false">
+                <span id="color_icon_3"><em class="iconfont icon-shopfill"></em></span>
+                <p><em>39</em><br>待审核活动</p>
+            </a>
+            <a class="blue_item" ui-sref="main.index" ng-if="false">
+                <span id="color_icon_4"><em class="iconfont icon-redpacket"></em></span>
+                <p><em>39</em><br>待审核红包</p>
+            </a>
+        </div>
+    </div>
+
+    <div class="one_part">
+        <h2>报表\图表</h2>
+        <div class="item_box">
+            <span class="blue_item_s">
+                <em class="iconfont icon-wodedingdan"></em>
+                <p><em ng-bind="homepage.orderNum || 0"></em><br>今日订单数量</p>
+            </span>
+            <span class="blue_item_s">
+                <em class="iconfont icon-shopfill"></em>
+                <p><em ng-bind="homepage.merchantNum || 0"></em><br>今日新增商家</p>
+            </span>
+            <span class="blue_item_s">
+                <em class="iconfont icon-v"></em>
+                <p><em ng-bind="homepage.newNumberNum || 0"></em><br>今日新增会员</p>
+            </span>
+            <span class="blue_item_s">
+                <em class="iconfont icon-shopping_cart_in"></em>
+                <p><em ng-bind="homepage.ProductOffCount || 0"></em><br>待上架商品总数</p>
+            </span>
+            <span class="blue_item_s">
+                <em class="iconfont icon-shopping_cart_out"></em>
+                <p><em ng-bind="homepage.ProductOnCount || 0"></em><br>已上架商品总数</p>
+            </span>
+            <span class="blue_item_s">
+                <em class="iconfont icon-buy"></em>
+                <p><em ng-bind="homepage.ProductIllegalCount || 0"></em><br>违规商品总数</p>
+            </span>
+        </div>
+    </div>
+
+    <div class="half_part" ng-if="false">
+        <h2>最近访问量</h2>
+        <div class="echart_form">
+            <area-chart config="config" data="data" ></area-chart>
+        </div>
+    </div>
+    <div class="half_part" style="position: relative;">
+        <h2>最近下单量</h2>
+        <div class="echart_form">
+            <area-chart config="config" data="orderCountData" ></area-chart>
+        </div>
+    </div>
+    <div class="half_part">
+        <h2>最近交易额</h2>
+        <div class="echart_form">
+            <area-chart config="config" data="orderAmountData" ></area-chart>
+        </div>
+    </div>
+    <div class="half_part pd_20" ng-if="false">
+        <h2>商品销量排行榜<a class="h_moreBtn"><em class="iconfont icon-arrow"></em></a></h2>
+        <table class="pro_rank">
+            <thead>
+                <th>序号</th>
+                <th>商品名称</th>
+                <th>今日销量</th>
+                <th>上月销量</th>
+                <th>库存</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>乐事薯片</td>
+                    <td>38</td>
+                    <td>380</td>
+                    <td>254</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>乐事薯片</td>
+                    <td>38</td>
+                    <td>380</td>
+                    <td>254</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>乐事薯片</td>
+                    <td>38</td>
+                    <td>380</td>
+                    <td>254</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>乐事薯片</td>
+                    <td>38</td>
+                    <td>380</td>
+                    <td>254</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>乐事薯片</td>
+                    <td>38</td>
+                    <td>380</td>
+                    <td>254</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

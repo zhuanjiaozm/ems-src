@@ -1,0 +1,88 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b>
+                <a>首页</a>
+                <a>内容管理</a>
+                <a class="last-e">楼层管理</a>
+                <div class="operate">
+                    <button ui-sref="main.addNotice">新建楼层</button>
+                </div>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">展示端:</div>
+                        <select class="w-medium" ng-model="req.channel" ng-change="channelChange(req.channel)">
+                            <option value="">全部</option>
+                            <option ng-value="c.code" ng-repeat="c in channels" ng-bind="c.name"></option>
+                        </select>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">页面:</div>
+                        <select class="w-medium" ng-model="req.advertSpace" ng-change="spaceChange(req.channel,req.advertSpace)">
+                            <option value="">全部</option>
+                            <option ng-value="c.code" ng-repeat="c in spaces" ng-bind="c.name"></option>
+                        </select>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">楼层名称:</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">是否显示:</div>
+                        <select  class="w-medium" >
+                            <option value="">全部</option>
+                            <option value="0">显示</option>
+                            <option value="1">不显示</option>
+                        </select>
+                    </div>
+                    <div class="item">
+                        <div class="sch-btn">
+                            <input type="button" class="sort_btn" value="搜索">
+                        </div>
+                    </div>
+                </div>
+                <table class="list_table">
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th class="left">楼层名称</th>
+                            <th class="left">展示端</th>
+                            <th>页面</th>
+                            <th>更新时间</th>
+                            <th>修改人</th>
+                            <th>是否显示</th>
+                            <th>排序</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="l in list">
+                            <td ng-bind="$index+1"></td>
+                            <td class="left" ng-bind="l.floorName"></td>
+                            <td class="left" ng-bind="{'1':'手机端','2':'电脑端'}[l.channel]"></td>
+                            <td class="left" ng-bind="{'10':'首页','11':'乐购买','12':'首页'}[l.displayPage]"></td>
+                            <td>{{l.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td ng-bind="l.updator"></td>
+                            <td ng-bind="l.isShow"></td>
+                            <td>
+                                <input type="text" ng-model="l.sort">
+                            </td>
+                            <td class="option">
+                                <a>详情</a>
+                                <a>编辑</a>
+                                <a>失效</a>
+                                <a>删除</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pages">
+                    <div ui-pagination conf="conf"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

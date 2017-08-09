@@ -1,0 +1,164 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <ul class="breadcrumb">
+                <li>您当前所在的位置：</li>
+                <li><a href="main.index"> 首页</a></li>
+                <li><a href="#">系统管理</a></li>
+                <li><a ui-href="main.devices">设备管理</a></li>
+            </ul>
+            <div class="search-form">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="exampleInputName2" placeholder="设备名称 / 空间 / 状态">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-default" type="submit">
+                            <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                            导出
+                        </button>
+                        <button class="btn btn-default" type="submit">
+                            <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                            导入
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+
+            <table class="table  table-striped">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>类型</th>
+                        <th>型号</th>
+                        <th>编号</th>
+                        <th>协议</th>
+                        <th>所属空间</th>
+                        <th>激活日期</th>
+                        <th>添加人</th>
+                        <th>添加日期</th>
+                        <th>状态</th>
+                        <th>读取频率</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="s in sitesArray" ng-if="sitesArray.length>0">
+                        <td ng-bind="$index+1"></td>
+                        <td ng-bind="s.siteName"></td>
+                        <td ng-bind="s.orgName"></td>
+                        <td>
+                            <button type="button" class="sites-btn sites-btn-success" ng-if="s.isShow=='1'" ng-click="toggle(s)">
+                                    是
+                                </button>
+                            <button type="button" class="sites-btn" ng-if="s.isShow==='0'" ng-click="toggle(s)">
+                                    否
+                                </button>
+                        </td>
+                        <td ng-bind="s.createTime | date:'yyyy-MM-dd HH:mm:ss'"></td>
+                        <td ng-bind="s.updateByname"></td>
+                        <td ng-bind="s.updateTime | date:'yyyy-MM-dd HH:mm:ss'"></td>
+                        <td>
+                            <a href="" ng-click="deleteSite(s)" class="delete-href">
+                                    删除
+                                </a>
+                        </td>
+                        <td>添加日期</td>
+                        <td>状态</td>
+                        <td>读取频率</td>
+                        <td>操作</td>
+                    </tr>
+                    <tr ng-if="!sitesArray.length>0">
+                        <td colspan="12">
+                            查询无结果！
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <!-- <div class="pages">
+                    <div ui-pagination conf="conf"></div>
+                </div> -->
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="add-site">
+    <h1>新建设备</h1>
+    <div class="ngdialog-content">
+        <dl>
+            <dt><span class="red">*</span>选择地区:</dt>
+            <dd>
+                <select ng-model="add.parentId" ng-change="queryCites(add.parentId)">
+                    <option value="">请选择省份</option>
+                    <option value="{{p.id}}" ng-repeat="p in proviceArray">
+                        {{p.cname}}
+                    </option>
+                </select>
+                <select ng-model="add.id" ng-change="saveCity(add.id)">
+                    <option value="">请选择城市</option>
+                    <option value="{{c.id}}" ng-repeat="c in citiesArray">
+                        {{c.cname}}
+                    </option>
+                </select>
+            </dd>
+        </dl>
+        <dl>
+            <dt><span class="red">*</span>所属机构:</dt>
+            <dd>
+                <span organize-select organize-id="add.organizeId" organize-ids="add.organizeIds" conf="{firstRequired:true,nameFlag:'->',level:2}" organize-names="add.orgName"></span>
+            </dd>
+        </dl>
+        <dl>
+            <dt><span class="red">*</span>是否显示:</dt>
+            <dd ng-init="add.isShow=1">
+                <input type="radio" name="show" ng-value=1 ng-model="add.isShow">是
+                <input type="radio" name="show" ng-value=0 ng-model="add.isShow">否
+            </dd>
+        </dl>
+        <dl ng-if="msg">
+            <dt>提示：</dt>
+            <dd>
+                <span class="red" ng-bind="msg"></span>
+            </dd>
+        </dl>
+    </div>
+    <div class="ngdialog-footer">
+        <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+        <button class="btn-enter" ng-click="enter(add)">确认</button>
+    </div>
+</script>
+
+<!-- <script type="text/ng-template" id="add-site">
+    <h1>新建设备</h1>
+    <div class="ngdialog-content">
+        <div class="tree-for-site">
+            <div class="left-tree">
+                <div class="title">请选择城市</div>
+                <ul id="siteTree" class="ztree"></ul>
+            </div>
+            <div class="right-seleted">
+                <div class="title">已选择城市</div>
+                <ul class="result">
+                    <li ng-repeat="s in selected">
+                        <input type="checkbox" name="selectedSites" ng-click="updateSelection($event,s)" ng-value="s.id" ng-model="s.checked">
+                        {{$index+1}}.<span ng-bind="s.name"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            是否显示：
+            <input type="radio" name="show" value="1" ng-model="state" ng-checked="true" required>是
+            <input type="radio" name="show" value="0" ng-model="state">否
+        </div>
+    </div>
+    <div class="infosub" ng-show="selected.length<1">
+        <i>(请至少选择一个设备后提交)</i>
+    </div>
+    <div class="ngdialog-footer">
+    <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+        <button class="btn-enter" ng-click="enter()" ng-disabled="selected.length<1" ng-class="selected.length<1?'disabledsub':''">确认
+        </button>
+    </div>
+</script> -->

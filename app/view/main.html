@@ -1,0 +1,45 @@
+<header class="header">
+    <ul class="flex">
+        <li class="platform_login">
+            <img src="images/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80">
+            <span>
+                云能大数据平台
+            </span>
+        </li>
+        <li>
+            <a ui-sref="main.index">首页</a>
+            <a ui-sref="main.devices">设备库</a>
+        </li>
+        <li>
+            <img src="./images/user_img.png" class="user_img"></img>
+            <span>{{profile.username}}</span>
+        </li>
+    </ul>
+</header>
+
+
+<div class="parent">
+    <div class="stable">
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="item in menuList | orderBy:item.ordinal:'desc'" ng-init="item.showList=false">
+                <div class="menu-name" ng-click="item.showList=!item.showList">
+                    <i class="{{item.icon||'fa fa-rub'}}"></i>
+                    <span>{{item.name}}</span>
+                    <i class="fa fa-angle-down" aria-hidden="true" style="float:right;margin-right:15px;"></i>
+                </div>
+                <div class="menu-list" ng-show="item.showList">
+                    <ul>
+                        <li ng-repeat="list in item.list">
+                            <a ui-sref-active="cut" ui-sref="{{'main.'+list.authCode}}">
+                                {{list.name}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="change" ui-view>
+
+    </div>
+</div>

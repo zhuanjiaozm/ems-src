@@ -1,0 +1,54 @@
+<div class="form_r">
+    <form name="settleForm">
+        <p>
+            <label><input type="radio" ng-value="'RATIO'" ng-model="addParams.act.shareType"
+                          name="shareType">按比例</label>
+            <label><input type="radio" ng-value="'FIXED'" ng-model="addParams.act.shareType"
+                          name="shareType">固定金额</label>
+        </p>
+        <p ng-if="addParams.act.shareType==='RATIO'">
+            <b style="margin-right: 10px;">用户减免金额</b>
+            银行承担部分: <input num-input type="text" ng-model="addParams.act.headDiscountPercent"
+                           class="ssize_input" name="headDiscountPercent" ng-change="discountPercent()" required>%
+            <span ng-if="addParams.act.discountAmount>0">({{((addParams.act.discountAmount||0)*(addParams.act.headDiscountPercent||0)/100)}}元)</span>，
+            店铺承担部分: <input num-input type="text" ng-model="addParams.act.merchantDiscountPercent"
+                           class="ssize_input" name="merchantDiscountPercent" ng-change="discountPercent()" required>%
+            <span ng-if="addParams.act.discountAmount>0">({{((addParams.act.discountAmount||0)*(addParams.act.merchantDiscountPercent||0)/100)}}元)</span>，
+            其他: <input num-input type="text" name="branchDiscountPercent" class="ssize_input"
+                       ng-change="discountPercent()" ng-model="addParams.act.branchDiscountPercent" required>%
+            <span ng-if="addParams.act.discountAmount>0">({{((addParams.act.discountAmount||0)*(addParams.act.branchDiscountPercent||0)/100)}}元)</span>
+        </p>
+        <p ng-if="addParams.act.shareType==='FIXED'">
+            <b style="margin-right: 10px;">用户减免金额</b>
+            银行承担部分: <input num-input type="text" ng-model="addParams.act.headDiscountAmount" name="headDiscountAmount"
+                           class="ssize_input" ng-max="addParams.act.discountAmount" ng-change="discountAmount()" required>(元)，
+            店铺承担部分: <input num-input type="text" ng-model="addParams.act.merchantDiscountAmount"
+                           class="ssize_input" name="merchantDiscountAmount" ng-change="discountAmount()" required>(元)，
+            其他: <input num-input type="text" name="branchDiscountAmount" class="ssize_input"
+                       ng-change="discountAmount()" ng-model="addParams.act.branchDiscountAmount" required>(元)
+        </p>
+        <p ng-messages="settleForm.shareType.$error" ng-if="settleForm.shareType.$touched" class="red">
+            <span required-error></span>
+        </p>
+        <p ng-messages="settleForm.headDiscountPercent.$error" ng-if="settleForm.headDiscountPercent.$touched"
+           class="red">
+            <span required-error></span>
+        </p>
+        <p ng-messages="settleForm.merchantDiscountPercent.$error" ng-if="settleForm.merchantDiscountPercent.$touched"
+           class="red">
+            <span required-error></span>
+        </p>
+        <p ng-messages="settleForm.branchDiscountPercent.$error" ng-if="settleForm.branchDiscountPercent.$touched"
+           class="red">
+            <span required-error></span>
+        </p>
+        <p ng-messages="settleForm.headDiscountAmount.$error" ng-if="settleForm.headDiscountAmount.$touched"
+           class="red">
+            <span required-error></span>
+        </p>
+        <p ng-messages="settleForm.merchantDiscountAmount.$error" ng-if="settleForm.merchantDiscountAmount.$touched"
+           class="red">
+            <span required-error></span>
+        </p>
+    </form>
+</div>

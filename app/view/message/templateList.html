@@ -1,0 +1,103 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>消息中心</a><a class="last-e">模板设置</a>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">消息类型:</div>
+                        <div class="sch-input">
+                            <input type="text" class="sort_input_skin" ng-model="params.mesgFlagName">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-btn">
+                            <input type="button" class="sort_btn" value="查询" ng-click="searchList()">
+                        </div>
+                    </div>
+                </div>
+                <table class="list_table">
+                    <thead>
+                        <tr>
+                            <th>消息类型编码</th>
+                            <th>消息类型</th>
+                            <th>站内信</th>
+                            <th>邮件</th>
+                            <th>推送</th>
+                            <th>短信</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="t in list" ng-if="list&&list.length>0">
+                            <td ng-bind="t.id"></td>
+                            <td ng-bind="t.name"></td>
+                            <td>
+                                <input type="checkbox" ng-checked="t.siteFlag==='1'" ng-click="messageFlag(t.siteFlag,t.id,0)">
+                                <a ng-click="editMsgtemplets(t.id,0,t.name)">编辑</a>
+                            </td>
+                            <td>
+                                <input type="checkbox" ng-checked="t.smsFlag==='1'" ng-click="messageFlag(t.smsFlag,t.id,2)">
+                                <a ng-click="editMsgtemplets(t.id,2,t.name)">编辑</a>
+                            </td>
+                            <td>
+                                <input type="checkbox" ng-checked="t.emailFlag==='1'" ng-click="messageFlag(t.emailFlag,t.id,3)">
+                                <a ng-click="editMsgtemplets(t.id,3,t.name)">编辑</a>
+                            </td>
+                            <td>
+                                <input type="checkbox" ng-checked="t.pushFlag==='1'" ng-click="messageFlag(t.pushFlag,t.id,1)">
+                                <a ng-click="editMsgtemplets(t.id,1,t.name)">编辑</a>
+                            </td>
+
+                        </tr>
+                        <tr ng-if="list.length<1">
+                            <td colspan="7">
+                                暂无数据
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pages">
+                    <div ui-pagination conf="conf"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="editMsgtemplets">
+    <div class="text-center">
+        <span class="title" ng-bind="m.mesgFlagName"></span>
+    </div>
+    <ul class="editMsgtemplets">
+        <li>
+            <strong>发送形式：</strong>
+            <span ng-bind="sdenumsObj[m.sendChnl]"></span>
+        </li>
+        <li ng-if="m.code">
+            <strong>模板编码：</strong>
+            <input type="text" ng-model="m.code" disabled="disabled" class="long sort_input_skin">
+        </li>
+        <!-- <li ng-if="!m.code">
+		    <strong>模板编码：</strong>
+            <input type="text" ng-model="m.code" maxlength="25" ng-change="checkExit(m.code)">
+            <i ng-if="m.msg" ng-class="{true: 'seccess', false: 'red'}[m.flag]">({{m.msg}})</i>
+		</li> -->
+        <li ng-if="sendTypeid!=='1'">
+            <strong>消息标题：</strong>
+            <input type="text" ng-model="m.title" maxlength="25" class="long sort_input_skin">
+        </li>
+        <li>
+            <strong>消息模板：</strong>
+            <textarea ng-model="m.content" rows="5" style="margin-left: 6px" class="content sort_input_skin w-large"></textarea>
+        </li>
+        <li>
+            <strong>变量参数：</strong>
+            <span ng-bind="m.variables"></span>
+        </li>
+    </ul>
+    <div class="ngdialog-footer">
+        <button class="btn-enter" ng-click="enter(m)" ng-hide="sendTypeid=='1'">保存</button>
+        <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+    </div>
+</script>

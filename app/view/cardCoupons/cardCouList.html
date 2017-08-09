@@ -1,0 +1,108 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>卡券管理</a><a>卡券列表</a>
+                <div class="operate">
+                    <button ui-sref="main.publishCouponCategory({type:'SELF'})">添加卡券</button>
+                </div>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">券批次：</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin" ng-model="couponInfo.batchNo"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">发布人：</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin" ng-model="couponInfo.createUserName"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">卡券名称：</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin" ng-model="couponInfo.name"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">价格：</div>
+                        <div class="sch-input">
+                            <input type="text" class="w-small" ng-model="couponInfo.minPrice"> 至
+                            <input type="text" class="w-small" ng-model="couponInfo.maxPrice">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">发布时间：</div>
+                        <div class="sch-input">
+                            <input ng-laydate type="text" class="sort_input_skin laydate-icon" ng-model="couponInfo.minCreateTime" format="YYYY-MM-DD"> 至
+                            <input ng-laydate type="text" class="sort_input_skin laydate-icon" ng-model="couponInfo.maxCreateTime" format="YYYY-MM-DD" min-date="{{couponInfo.minCreateTime | date:'yyyy-MM-dd'}}">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">类型：</div>
+                        <div class="sch-input">
+                            <select class="sort_input_skin" ng-model="couponInfo.couponType" ng-options="key as val for (key, val) in couponTypes">
+                                <option value="">请选择</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">状态：</div>
+                        <div class="sch-input">
+                            <select class="sort_input_skin" ng-model="couponInfo.status">
+                                <option value="0">未上架</option>
+                                <option value="1">上架</option>
+                                <option value="2">下架</option>
+                                <option value="-1">已删除</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-btn">
+                            <input type="button" class="sort_btn" value="搜索" ng-click="getSearch()">
+                        </div>
+                    </div>
+                </div>
+                <table class="list_table">
+                    <thead>
+                    <tr>
+                        <th><input type="checkbox"></th>
+                        <th>发布人</th>
+                        <th>卡券批次</th>
+                        <th>卡券名称</th>
+                        <th>面额</th>
+                        <th>价格</th>
+                        <th>类型</th>
+                        <th>状态</th>
+                        <th>库存</th>
+                        <th>发布时间</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-if="couponList.length>0" ng-repeat="item in couponList">
+                            <td><input type="checkbox"></td>
+                            <td ng-bind="item.createUserName">admin</td>
+                            <td ng-bind="item.batchNo">PC029938493849</td>
+                            <td ng-bind="item.name">封测平台满减券</td>
+                            <td ng-bind="item.outPrice">110</td>
+                            <td ng-bind="item.price">10</td>
+                            <td ng-bind="couponTypes[item.couponType]">满减</td>
+                            <td ng-bind="statusName(item.status)">上架</td>
+                            <td ng-bind="item.stock">1111</td>
+                            <td ng-bind="item.sellDatetime | date:'yyyy-MM-dd HH:mm:ss'">2017-01-10 10:11:49</td>
+                            <td class="option">
+                                <a ui-sref="main.cardCouponDetail({id: item.couponId})">详情</a>
+                                <a ng-if="!((item.status==='0'||item.status==='2')&&(item.auditStat==='2'))"
+                                   ui-sref="main.publishCoupon({categoryId:item.categoryId,id:item.couponId})">编辑</a>
+                            </td>
+                        </tr>
+                        <tr ng-if="!couponList||couponList.length<1">
+                            <td colspan="11">暂无数据！</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pages">
+                    <div ui-pagination conf="conf"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,93 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>营销管理</a><a>商户活动列表</a>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">活动编号:</div>
+                        <div class="sch-input"><input type="text" num-input class="sort_input_skin" ng-model="params.actId"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">活动名称:</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin" ng-model="params.actName"></div>
+                    </div>
+                    <!--<div class="item">
+                        <div class="sch-txt">活动类型：</div>
+                        <div class="sch-input">
+                            <select>
+                                <option value="0">全部</option>
+                                <option value="0">限时抢购</option>
+                            </select>
+                        </div>
+                    </div>-->
+                    <div class="item">
+                        <div class="sch-txt">活动状态：</div>
+                        <div class="sch-input">
+                            <select class="w-medium" ng-model="params.status">
+                                <option value="all">--全部--</option>
+                                <option value="notBegin">未开始</option>
+                                <option value="begin">进行中</option>
+                                <option value="end">已结束</option>
+                                <option value="terminate">已终止</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">创建时间:</div>
+                        <div class="sch-input"><input type="text" istime="true" format="YYYY-MM-DD hh:mm:ss" ng-model="params.beginCreateTime" ng-laydate
+                                max-date="{{params.endCreateTime}}" class="sort_input_date laydate-icon"> -
+                            <input type="text" istime="true" format="YYYY-MM-DD hh:mm:ss" ng-model="params.endCreateTime" min-date="{{params.beginCreateTime}}" ng-laydate
+                                class="sort_input_date laydate-icon"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-btn">
+                            <input type="button" class="sort_btn" value="搜索" ng-click="loadData()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="list_table">
+                <thead>
+                    <tr>
+                        <th>活动编号</th>
+                        <th class="left">活动名称</th>
+                        <th>优惠方式</th>
+                        <th>店铺名称</th>
+                        <th>所属商户</th>
+                        <th class="w-xs">创建时间</th>
+                        <th class="w-xs">预热时间</th>
+                        <th class="w-xs">开始时间</th>
+                        <th class="w-xs">结束时间</th>
+                        <th>活动状态</th>
+                        <th class="w-small">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in vm">
+                        <td>{{item.id}}</td>
+                        <td class="left">{{item.actName}}</td>
+                        <td>{{getActType(item.actType)}}</td>
+                        <td>{{item.shopName}}</td>
+                        <td>{{item.merchantName}}</td>
+                        <td>{{item.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td>{{item.preheatTime | date:'yyyy-MM-dd HH:mm'}}</td>
+                        <td>{{item.beginTime | date:'yyyy-MM-dd HH:mm'}}</td>
+                        <td>{{item.endTime | date:'yyyy-MM-dd HH:mm'}}</td>
+                        <td>{{item.queryStatusDescription}}</td>
+                        <td class="option">
+                            <a ui-sref="main.shopMkActDetail({id:item.id})">详情</a>
+                            <a ng-if="item.endTime > now && item.queryStatus != 'terminate'" ng-click="terminate(item)">终止</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="pages">
+                <div ui-pagination conf="conf"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

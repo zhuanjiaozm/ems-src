@@ -1,0 +1,54 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><span>店铺管理</span><span>门店详情</span>
+            </div>
+            <div class="tab_box">
+                <ul class="tab-title">
+                    <li class="active"><a>门店信息</a></li>
+                    <li><input type="button" class="back_btn" onclick="history.go(-1)" value="返回"></li>
+                </ul>
+                <div class="show-form">
+                    <dl class="form_row">
+                        <dt>门店名称：</dt>
+                        <dd ng-bind="store.name"></dd>
+                    </dl>
+                    <dl class="form_row">
+                        <dt>所属店铺：</dt>
+                        <dd ng-bind="store.shopName"></dd>
+                    </dl>
+                    <dl class="form_row">
+                        <dt>所属商户：</dt>
+                        <dd ng-bind="store.merchantName"></dd>
+                    </dl>
+                    <dl class="form_row">
+                        <dt>所在地区：</dt>
+                        <dd ng-bind="store.provinceName + '-' + store.cityName + '-' + districtName"></dd>
+                    </dl>
+                    <dl class="form_row">
+                        <dt>详细通讯地区：</dt>
+                        <dd ng-bind="store.address"></dd>
+                    </dl>
+                    <dl class="form_row">
+                        <dt>门店介绍：</dt>
+                        <dd ng-bind="store.description"></dd>
+                    </dl>
+                    <dl class="form_row">
+                        <dt>营业时间：</dt>
+                        <dd ng-bind="store.businessHoursStart + ' 至 ' + store.businessHoursEnd"></dd>
+                    </dl>
+                    <dl class="form_row">
+                        <dt>联系人：</dt>
+                        <dd ng-bind="store.linkman"></dd>
+                    </dl>
+                    <dl class="form_row">
+                        <dt>客服电话：</dt>
+                        <dd ng-bind="store.telephone"></dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

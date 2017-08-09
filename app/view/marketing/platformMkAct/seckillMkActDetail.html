@@ -1,0 +1,110 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>营销管理</a><a>平台秒杀活动详情</a>
+            </div>
+            <div class="tab_box">
+                <ul class="tab-title">
+                    <li class="active"><a>活动信息</a></li>
+                    <li><input type="button" class="back_btn" ui-sref="main.seckillMkAct" value="返回"></li>
+                </ul>
+                <div class="tab_content">
+                    <table class="form_table">
+                        <tr>
+                            <th width="15%">活动编号</th>
+                            <td width="35%" ng-bind="actInfo.id"></td>
+                            <th width="15%">活动名称</th>
+                            <td width="35%" ng-bind="actInfo.actName"></td>
+                        </tr>
+                        <tr>
+                            <th>活动类型</th>
+                            <td>秒杀</td>
+                            <th>活动标签</th>
+                            <td>--</td>
+                        </tr>
+                        <tr>
+                            <th>活动状态</th>
+                            <td  ng-bind="actInfo.queryStatusDescription"></td>
+                            <th>活动介绍</th>
+                            <td ng-bind="actInfo.description"></td>
+                        </tr>
+                        <tr>
+                            <th>创建时间</th>
+                            <td ng-bind="actInfo.createTime | date:'yyyy-MM-dd HH:mm:Ss'"></td>
+                            <th>预热时间</th>
+                            <td ng-bind="actInfo.preheatTime | date:'yyyy-MM-dd HH:mm:Ss'"></td>
+                        </tr>
+                        <tr>
+                            <th>活动开始时间</th>
+                            <td ng-bind="actInfo.beginTime | date:'yyyy-MM-dd HH:mm:Ss'"></td>
+                            <th>活动结束时间</th>
+                            <td ng-bind="actInfo.endTime | date:'yyyy-MM-dd HH:mm:Ss'"></td>
+                        </tr>
+                    </table>
+                    <div>
+                        <h2 class="title">活动商品</h2>
+                        <table class="form_table">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>商品信息</th>
+                                <th>所属商户</th>
+                                <th>所属店铺</th>
+                                <th>商城价</th>
+                                <th>活动价</th>
+                                <th>SKU优惠</th>
+                                <th>限购数量</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="product in selectedProductList">
+                                <td ng-bind="$index+1 + goodsParams.size*goodsParams.index"></td>
+                                <td ng-bind="product.productTitle"></td>
+                                <td ng-bind="product.merchantName"></td>
+                                <td ng-bind="product.shopName"></td>
+                                <td ng-bind="product.productPrice"></td>
+                                <td ng-bind="product.actPrice"></td>
+                                <td>
+                                    <a class="blue_txt" ng-click="openSkuSetBox(product)">查看SKU优惠</a>
+                                </td>
+                                <td ng-bind="product.limitBuyAmount"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="pages">
+                            <div ui-pagination conf="conf"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="skuSettingTemplate">
+    <div class="tab_box" style="padding:0">
+        <div class="tab_content">
+            <table class="form_table">
+                <thead>
+                <tr class="bgGrey_th">
+                    <th>SKU</th>
+                    <th>单价</th>
+                    <th>促销价</th>
+                    <th>活动库存</th>
+                </tr>
+                </thead>
+                <tbody class="has_con">
+                <tr ng-repeat="item in skuList">
+                    <td>
+                        <p class="pro_tit" ng-bind="item.skuDescription"></p>
+                    </td>
+                    <td class="orange_txt" ng-bind="item.skuPrice"></td>
+                    <td ng-bind="item.actPrice"></td>
+                    <td ng-bind="item.actStock"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</script>

@@ -1,0 +1,131 @@
+<div>
+    <h1>{{ngDialogTitle}}</h1>
+    <div class="ngdialog-content" style="padding:0;">
+        <div class="list_warp" style="margin-top: 10px;">
+            <table class="list_table" ng-if="sparams.type=='category'">
+                <thead>
+                <tr>
+                    <th width="30">
+                        <input type="checkbox" ng-checked="checkAlls" ng-click="checkAll()" ng-if="select=='checkbox'"/>
+                        <span ng-if="select=='radio'">选择</span>
+                    </th>
+                    <th>店铺编号</th>
+                    <th>店铺名称</th>
+                    <th>店铺分类</th>
+                    <th>所属商户</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in list">
+                    <td>
+                        <input name="shop" type="radio" ng-value="item.id" ng-checked="sid==item.id"
+                                   ng-model="vm.sid" ng-if="select=='radio'">
+                        <input name="shop" type="checkbox" ng-checked="item.checked" ng-click="check(item)"
+                               ng-if="select=='checkbox'">
+                    </td>
+                    <td ng-bind="item.id"></td>
+                    <td ng-bind="item.shopName"></td>
+                    <td ng-bind="item.keyword"></td>
+                    <td ng-bind="item.merchantName"></td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="list_table" ng-if="sparams.type=='shop'">
+                <thead>
+                <tr>
+                    <th width="30">
+                        <input type="checkbox" ng-checked="checkAlls" ng-click="checkAll()"
+                               ng-if="select=='checkbox'"/>
+                        <span ng-if="select=='radio'">选择</span>
+                    </th>
+                    <th>店铺编号</th>
+                    <th>店铺名称</th>
+                    <th>店铺分类</th>
+                    <th>所属商户</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in list">
+                    <td>
+                        <input name="shop" type="radio" ng-value="item.id" ng-checked="sid==item.id"
+                                   ng-model="vm.sid" ng-if="select=='radio'">
+                        <input name="shop" type="checkbox" ng-checked="item.checked" ng-click="check(item)"
+                               ng-if="select=='checkbox'">
+                    </td>
+                    <td ng-bind="item.id"></td>
+                    <td ng-bind="item.shopName"></td>
+                    <td>
+                        <div class="ellipsis w-medium" ng-bind="item.businessCatName"></div>
+                    </td>
+                    <td ng-bind="item.merchantName"></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="table_warp" ng-if="sparams.type=='product'">
+                <ul class="select-product-tab" ng-init="tabCut='0'" ng-if="!sparams.category">
+                    <li ng-class="{'cut':tabCut=='0'}" ng-click="getProduct('0');tabCut='0'">实物类</li>
+                    <li ng-class="{'cut':tabCut=='1'}" ng-click="getProduct('1');tabCut='1'">服务类</li>
+                </ul>
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">商品编号:</div>
+                        <div class="sch-input"><input type="text" class="w-medium" ng-model="productParams.id"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">商品名称:</div>
+                        <div class="sch-input"><input type="text" class="w-medium" ng-model="productParams.title"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">所属店铺:</div>
+                        <div class="sch-input"><input type="text" class="w-medium" ng-model="productParams.shopName"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-btn">
+                            <input type="button" class="sort_btn" value="搜索" ng-click="search()">
+                        </div>
+                    </div>
+                </div>
+                <table class="list_table" ng-if="sparams.type=='product'">
+                    <thead>
+                    <tr>
+                        <th>
+                            <input type="checkbox" ng-checked="checkAlls" ng-click="checkAll()"
+                                   ng-if="select=='checkbox'"/>
+                            <span ng-if="select=='radio'">选择</span>
+                        </th>
+                        <th width="140">商品编号</th>
+                        <th width="240">商品名称</th>
+                        <th width="180">所属店铺</th>
+                        <th>商品分类</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in list">
+                        <td>
+                            <input name="product" type="radio" ng-value="item.id" ng-checked="sid==item.id"
+                                   ng-model="vm.sid" ng-if="select=='radio'">
+                            <input name="product" type="checkbox" ng-checked="item.checked" ng-click="check(item)"
+                                   ng-if="select=='checkbox'">
+                        </td>
+                        <td ng-bind="item.id"></td>
+                        <td>
+                            <div class="ellipsis" ng-bind="item.title" title="{{item.title}}" style="width:200px;"></div>
+                        </td>
+                        <td>
+                            <div class="ellipsis w-medium" ng-bind="item.shopName"></div>
+                        </td>
+                        <td ng-bind="item.categoryPathname"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="pages">
+            <div ui-pagination conf="conf"></div>
+        </div>
+    </div>
+    <div class="ngdialog-footer">
+        <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+        <button class="btn-enter" ng-click="enter()">确认</button>
+    </div>
+</div>

@@ -1,0 +1,59 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>审核管理</a><a>广告审核</a>> 审核详情
+            </div>
+            <div class="tab_box" ng-init="showMain='base'">
+                <ul class="tab-title">
+                    <li ng-class="{'active':showMain=='base'}" ng-click="showMain='base'"><a>广告基本详情</a></li>
+                    <li ng-class="{'active':showMain=='examine'}" ng-click="getExamine()"><a>审核信息</a></li>
+                    <li><input type="button" class="back_btn" ui-sref="main.advertExamine" value="返回"></li>
+                </ul>
+                <div class="tab_content" ng-if="showMain=='base'&&params.tid!==0">
+                    <table class="form_table">
+                        <tr>
+                            <th width="15%">标题</th>
+                            <td width="85%">{{advertInfo.advertTitle}}</td>
+                        </tr>
+                        <tr>
+                            <th>显示端</th>
+                            <td ng-bind="{'1':'手机端','2':'电脑端'}[advertInfo.displayChannel]"></td>
+                        </tr>
+                        <tr>
+                            <th>页面</th>
+                            <td ng-bind="{'10':'首页','11':'乐购买','12':'首页'}[advertInfo.displayPage]"></td>
+                        </tr>
+                        <tr>
+                            <th>城市</th>
+                            <td ng-bind="advertInfo.citySiteName"></td>
+                        </tr>
+                        <tr>
+                            <th>创建人</th>
+                            <td ng-bind="advertInfo.creator"></td>
+                        </tr>
+                        <tr>
+                            <th>创建时间</th>
+                            <td ng-bind="advertInfo.createDatetime | date:'yyyy-MM-dd HH:mm:ss'"></td>
+                        </tr>
+                        <tr>
+                            <th>广告图</th>
+                            <td><img ng-src="{{advertInfo.advertIcon ? imgBaseUrl + advertInfo.advertIcon : ''}}" width="200"></td>
+                        </tr>
+                        <tr>
+                            <th>有效时间</th>
+                            <td ng-bind="(advertInfo.advertStartDate | date:'yyyy-MM-dd HH:mm:ss')+' 至 '+(advertInfo.advertEndDate | date:'yyyy-MM-dd HH:mm:ss')"></td>
+                        </tr>
+                    </table>
+
+                </div>
+                <div class="show-form" ng-if="showMain=='examine'">
+                    <div examine-info info="auditInfo"></div>
+                </div>
+            </div>
+            <div class="tab_box" ng-if="taskData.taskId!='detail' && advertInfo.auditStatus==2">
+                <div examine-form conf="{id:taskData.taskId, flag:'advert'}"></div>
+            </div>
+        </div>
+    </div>
+</div>

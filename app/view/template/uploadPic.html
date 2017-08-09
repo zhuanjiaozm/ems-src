@@ -1,0 +1,16 @@
+<span class="add_one">
+    <input type="hidden" name="{{picName}}" ng-model="picModel" ng-required="isRequired">
+    <span class="img_box">
+        <a class="add_img">
+            <img ng-src="{{picModel ? imgBaseUrl+picModel+$root.$imgSize.S : ''}}" alt="" ng-click="showBigPic()" ng-show="picModel">
+            <i class="iconfont icon-add" ng-click="uploadPic()"></i>
+            <div class="delete_img" ng-if="canDelete && picModel" ng-click="delete()">删除</div>
+        </a>
+    </span>
+    <span ng-show="false">
+        <input name="upload_file_{{picName}}" id="{{picName}}"
+               onchange="angular.element(this).scope().imageUpload.changeFn(this, {w:150,h:150,module:'merchant', ret: angular.element(this).scope().ret, fileElementId:this.id, maxSize:angular.element(this).scope().maxSize})"
+               type="file" class="up_file" accept="image/jpeg,image/png,image/jpg,image/bmp"/>
+    </span>
+    {{title}}
+</span>

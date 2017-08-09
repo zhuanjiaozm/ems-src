@@ -1,0 +1,8 @@
+<div class="main_wrap">
+    <textarea
+            ng-ueditor="Controller.ueditorConfig"
+            ready="Controller.ready($editor)"
+            ng-model="ueditorContent"
+    ></textarea>
+    <div ng-bind="ueditorContent"></div>
+</div>

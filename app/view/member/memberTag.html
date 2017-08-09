@@ -1,0 +1,77 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>会员管理</a><a>标签管理</a>
+                <div class="operate">
+                    <button ng-click="operateLabel()">新建标签</button>
+                </div>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">标签名:</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin" ng-model="labelParams.labelName">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <input type="button" class="sort_btn" value="搜索" ng-click="searchTag()">
+                    </div>
+                </div>
+                <table class="list_table">
+                    <thead>
+                    <tr>
+                        <th>标签名</th>
+                        <th>客户</th>
+                        <th>添加时间</th>
+                        <th width="25%">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in tagList">
+                        <td>{{ item.labelName }}</td>
+                        <td>{{ item.userCount }}</td>
+                        <td>{{ item.createDate | date : 'yyyy-MM-dd HH:mm:ss' }}</td>
+                        <td class="option">
+                            <a ng-click="operateLabel(item)">编辑</a>
+                            <a ng-click="deleteLabel(item.labelId)">删除</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tbody ng-if="blackArray.length<1">
+                    <tr>
+                        <td colspan="5">暂无数据！</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="pages">
+                    <div ui-pagination conf="conf"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="addLabel">
+    <h1 ng-bind="dialogTitle"></h1>
+    <div class="ngdialog-content">
+        <form name="labelForm">
+            <dl>
+                <dt><span class="red">*</span>标签名：</dt>
+                <dd>
+                    <input class="w-medium" ng-model="addParams.labelName" maxlength="10">
+                </dd>
+            </dl>
+            <dl>
+                <dt>备注：</dt>
+                <dd>
+                    <textarea class="w-large" rows="5" ng-model="addParams.remark" maxlength="50"></textarea>
+                </dd>
+            </dl>
+        </form>
+    </div>
+    <div class="ngdialog-footer">
+        <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+        <button class="btn-enter" ng-click="enter()">确认</button>
+    </div>
+</script>

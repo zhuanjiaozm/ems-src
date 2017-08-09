@@ -1,0 +1,115 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>系统管理</a><a class="last-e">系统用户</a>
+                <div class="operate">
+                    <button ng-click="addUser('add')">新建用户</button>
+                </div>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">账号:</div>
+                        <div class="sch-input">
+                            <input type="text" class="sort_input_skin" ng-model="userParams.account">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <input type="button" class="sort_btn" value="搜索" ng-click="searchList()">
+                    </div>
+                </div>
+                <table class="list_table">
+                    <thead>
+                    <tr>
+                        <th width="35">序号</th>
+                        <th>账号</th>
+                        <th>姓名</th>
+                        <th>所属机构</th>
+                        <th>手机号码</th>
+                        <th>角色</th>
+                        <th>账户状态</th>
+                        <th class="w-xs">创建时间</th>
+                        <th class="w-xs">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody ng-if="userArray.length>0">
+                        <tr ng-repeat="item in userArray">
+                            <td>{{$index+1}}</td>
+                            <td>{{ item.account }}</td>
+                            <td>{{ item.realName }}</td>
+                            <td>{{ item.organizeNames }}</td>
+                            <td>{{ item.mobile }}</td>
+                            <td>{{item.roleList[0].roleName}}</td>
+                            <td>{{item.enabled==1?'正常':'禁用'}}</td>
+                            <td>{{item.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td class="option">
+                                <a ng-click="addUser('edit',item)">编辑</a>
+                                <a ng-click="limitUser(item.id,item.enabled==1?0:1)" ng-bind="item.enabled==1?'禁用':'解禁'"></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-if="userArray.length<1">
+                        <tr>
+                            <td colspan="9">暂无数据！</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pages">
+                    <div ui-pagination conf="conf"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="addUser">
+    <h1 ng-bind="dialogTitle"></h1>
+    <div class="ngdialog-content">
+        <form name="userForm">
+            <dl>
+                <dt><span class="red">*</span>登录名：</dt>
+                <dd>
+                    <span ng-if="!loginName" ng-bind="systemUser.account"></span>
+                    <input type="text" class="w-medium" ng-if="loginName" ng-model="systemUser.account" maxlength="10">
+                </dd>
+            </dl>
+            <dl>
+                <dt><span class="red" ng-if="loginName">*</span>密码：</dt>
+                <dd><input type="password" class="w-medium" ng-model="systemUser.password" maxlength="32" placeholder="密码长度6-32位"></dd>
+            </dl>
+            <dl>
+                <dt><span class="red" ng-if="loginName">*</span>确认密码：</dt>
+                <dd><input type="password" class="w-medium" ng-model="systemUser.repeatPassword" maxlength="32" placeholder="密码长度6-32位"></dd>
+            </dl>
+            <dl>
+                <dt>姓名：</dt>
+                <dd><input type="text" class="w-medium" ng-model="systemUser.realName" maxlength="10"></dd>
+            </dl>
+            <dl>
+                <dt>手机号码：</dt>
+                <dd><input type="text" class="w-medium" ng-model="systemUser.mobile" maxlength="11"></dd>
+            </dl>
+            <dl>
+                <dt><span class="red">*</span>所属机构：</dt>
+                <dd>
+                    <span organize-select organize-id="systemUser.organizeId" organize-ids="systemUser.organizeIds" organize-names="systemUser.orgName"></span>
+                </dd>
+            </dl>
+            <dl>
+                <dt><span class="red">*</span>角色：</dt>
+                <dd>
+                    <select class="w-medium" ng-model="selectRole">
+                        <option value="">--请选择角色--</option>
+                        <option ng-repeat="role in roleList" value="{{role.id}}" ng-selected="role.id==selectRole.id">{{role.roleName}}</option>
+                    </select>
+                </dd>
+            </dl>
+        </form>
+    </div>
+    <div class="ngdialog-footer">
+        <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+        <button class="btn-enter" ng-click="enter()">确认</button>
+    </div>
+</script>
+

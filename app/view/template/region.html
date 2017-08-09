@@ -1,0 +1,14 @@
+<div>
+    <select class="select_skin" 
+            ng-options="val.id as val.cname for val in provinceGroup" ng-model="provinceModel" ng-change="selectItem(provinceModel, 'cityGroup')">
+        <option value="">请选择</option>
+    </select>
+    <select class="select_skin"
+            ng-options="val.id as val.cname for val in cityGroup" ng-model="cityModel" ng-change="selectItem(cityModel, 'districtGroup')">
+        <option value="">请选择</option>
+    </select>
+    <select class="select_skin"
+            ng-options="val.id as val.cname for val in districtGroup" ng-model="districtModel" ng-change="selectItem(districtModel)">
+        <option value="">请选择</option>
+    </select>
+</div>

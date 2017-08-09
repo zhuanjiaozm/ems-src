@@ -1,0 +1,76 @@
+<!-- <div class="login-main">
+    <div class="login-head">
+        <img src="../images/login_logo.png" width="160" alt="">
+    </div>
+    <div class="login-content">
+        <div class="box">
+            <div class="main">
+                <div class="loading" ng-show="loading"></div>
+                <h2 class="title">账号登录</h2>
+                密码登录
+                <div class="user-login">
+                    <div class="form-item">
+                        <span class="fi-icon"><i class="iconfont icon-usernameicon"></i></span>
+                        <div class="fi-text"><input type="text" ng-model="user.username" placeholder="请输入用户名" /></div>
+                    </div>
+                    <div class="form-item">
+                        <span class="fi-icon"><i class="iconfont icon-password"></i></span>
+                        <div class="fi-text"><input type="password" ng-model="user.password" ng-keypress="enter($event)" placeholder="请输入密码" /></div>
+                    </div>
+                    <div class="form-item">
+                        <input type="text" class="code" ng-model="user.captcha" ng-keypress="enter($event)" placeholder="请输入验证码" maxlength="5" />
+                        <img class="code" ng-src="{{verifyImageStr}}" ng-click="refreshCode()" title="点击刷新">
+                    </div>
+
+                    <div class="form-btn">
+                        <a class="login-btn" ng-click="login()" href="javascript:void(0);">登录</a>
+                    </div>
+                </div>
+                扫描登录
+                <div class="code-login"></div>
+            </div>
+        </div>
+    </div>
+    <div class="login-footer">
+        <div class="login-link">
+            关于我们｜服务条款｜友情链接｜帮助中心
+        </div>
+        Copyright © 2014 BERChina All Rights Reserved<br> 北京宝润兴业科技股份有限公司 版权所有<br> 京ICP备14032681号
+    </div>
+</div> -->
+
+
+<div class="login-main">
+    <div class="login-head">
+        <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80">
+        <span>
+            云能大数据平台
+        </span>
+    </div>
+    <div class="login-content">
+        <form class="form-inline">
+            <div class="form-item">
+                <label for="exampleInputName2">用户名：</label>
+                <input type="text" class="form-control" id="exampleInputName2" placeholder="账号/邮箱/手机号" ng-model="user.username">
+            </div>
+            <div class="form-item">
+                <label for="exampleInputEmail2">密码：</label>
+                <input type="password" class="form-control" id="exampleInputEmail2" placeholder="至少6位" ng-model="user.password">
+            </div>
+            <div class="form-item">
+                <input type="text" class="form-control captcha" id="captcha" placeholder="请输入验证码" ng-model="user.captcha">
+                <img class="code" ng-src="{{verifyImageStr}}" ng-click="refreshCode()" title="点击刷新">
+            </div>
+
+            <div class="form-item">
+                <button type="button" class="btn btn-success" ng-click="login()">登录</button>
+            </div>
+        </form>
+    </div>
+    <div class="login-footer">
+        <div class="login-link">
+            关于我们｜服务条款｜友情链接｜帮助中心
+        </div>
+        Copyright © 2014 BERChina All Rights Reserved<br> 北京宝润兴业科技股份有限公司 版权所有<br> 京ICP备14032681号
+    </div>
+</div>

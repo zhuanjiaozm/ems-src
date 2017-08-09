@@ -1,0 +1,11 @@
+<div>
+    <select class="select_xs" ng-model="levelFirst" ng-change="selectItem(1)" ng-options="item.name for item in catsList.firstCate">
+        <option value="">--请选择--</option>
+    </select>
+    <select class="select_xs" ng-model="levelSecond" ng-change="selectItem(2)" ng-show="levelFirst.isParent" ng-options="item.name for item in catsList.secondCate">
+        <option value="">--请选择--</option>
+    </select>
+    <select class="select_xs" ng-model="levelThird" ng-change="selectItem(3)" ng-show="levelSecond.isParent" ng-options="item.name for item in catsList.thirdCate">
+        <option value="">--请选择--</option>
+    </select>
+</div>

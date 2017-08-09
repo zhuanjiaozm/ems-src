@@ -1,0 +1,148 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>交易管理</a><a>实物类订单列表</a>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">订单编号:</div>
+                        <div class="sch-input"><input type="text" num-input class="sort_input_skin" ng-model="params.id"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">店铺名称:</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin" ng-model="params.shopName"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">商品名称:</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin" ng-model="params.title"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">买家账号:</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin" ng-model="params.memberAccount"></div>
+                    </div>
+                    <!--<div class="item">
+                        <div class="sch-txt">订单类型：</div>
+                        <div class="sch-input">
+                            <select>
+                                <option value="0">全部</option>
+                                <option value="0">实物类订单</option>
+                                <option value="0">服务类订单</option>
+                                <option value="0">酒店类订单</option>
+                                <option value="0">旅游类订单</option>
+                            </select>
+                        </div>
+                    </div>-->
+                    <div class="item">
+                        <div class="sch-txt">下单时间:</div>
+                        <div class="sch-input">
+                            <input type="text" ng-laydate max-date='{{params.end}}' class="sort_input_skin_s laydate-icon" ng-model="params.begin">                            -
+                            <input type="text" ng-laydate min-date='{{params.begin}}' class="sort_input_skin_s laydate-icon" ng-model="params.end">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">评价状态：</div>
+                        <div class="sch-input">
+                            <select class="sort_input_skin">
+                                <option value="0">全部</option>
+                                <option value="0">待评价</option>
+                                <option value="0">已评价</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--<div class="item">
+                        <div class="sch-txt">验证码:</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin"></div>
+                    </div>-->
+                    <div class="item">
+                        <div class="sch-txt">订单状态：</div>
+                        <div class="sch-input">
+                            <select class="sort_input_skin" ng-model="params.orderStat">
+                                <option value="">全部</option>
+                                <option value="waitPay">等待买家付款</option>
+                                <option value="waitSend">买家已付款</option>
+                                <option value="waitReceive">卖家已发货</option>
+                                <option value="waitMemberComment">待评价</option>
+                                <option value="waitMerchantComment">待回复</option>
+                                <option value="waitConsume">待消费</option>
+                                <option value="waitRefund">退款中</option>
+                                <option value="finish">已完成</option>
+                                <option value="close">交易关闭</option>
+                                <option value="cancel">已取消</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">发货状态：</div>
+                        <div class="sch-input">
+                            <select class="sort_input_skin">
+                                <option value="0">全部</option>
+                                <option value="0">待发货</option>
+                                <option value="0">已发货</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-btn">
+                            <input type="button" class="sort_btn" value="搜索">
+                        </div>
+                    </div>
+                </div>
+                <table class="trade-table_title">
+                    <thead>
+                        <tr>
+                            <th width="2%"><input type="checkbox"></th>
+                            <th width="18%" class="t-left">商品名称</th>
+                            <th width="10%">单价(元)</th>
+                            <th width="10%">数量</th>
+                            <th width="10%">买家</th>
+                            <th width="10%">状态</th>
+                            <th width="10%">订单金额</th>
+                            <th width="10%">退款状态</th>
+                            <th width="10%">操作</th>
+                        </tr>
+                    </thead>
+                </table>
+                <table class="trade-table_item" ng-repeat="item in vm">
+                    <thead>
+                        <tr>
+                           <th colspan="2" class="t-left">
+                                订单编号：{{item.id}}</th>
+                            <th colspan="3">下单时间：{{item.createTime|date:'yyyy-MM-dd HH:mm:ss'}}</th>
+                            <th></th>
+                            <!--<th colspan="2">出行时间：2015-03-16 12:11:55</th>-->
+                            <th colspan="2">店铺名称：{{item.shop.shopName}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                         <tr ng-repeat="product in item.products">
+                            <td width="20%" class="left">
+                                <div class="td-pro">
+                                    <img ng-src="{{imgBaseUrl + product.picUrl}}" width="50" height="50">
+                                    <p>{{product.title}}</p>
+                                </div>
+                            </td>
+                            <td width="10%">{{product.productPrice}}</td>
+                            <td width="10%">{{product.productCount}}</td>
+                            <td width="10%" rowspan="{{item.products.length}}" ng-if="!$index">{{item.memberAccount}}</td>
+                            <td width="10%" rowspan="{{item.products.length}}" ng-if="!$index">{{item.status}}</td>
+                            <td width="10%" rowspan="{{item.products.length}}" ng-if="!$index">{{item.cashAmount}}</td>
+                            <td width="10%" rowspan="{{item.products.length}}" ng-if="!$index"></td>
+                            <!--<td width="10%" rowspan="item.products.length" ng-if="!$index">1234 5678 908</td>-->
+                            <td width="10%" rowspan="{{item.products.length}}" ng-if="!$index" class="option">
+                                <a ui-sref="main.b2cTradeDetail({id:item.id})">详情</a>
+                                <!--<a>退款</a>
+                                <a>冻结</a>-->
+                          
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pages">
+                    <div ui-pagination conf="conf"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

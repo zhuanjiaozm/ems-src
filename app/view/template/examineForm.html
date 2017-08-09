@@ -1,0 +1,22 @@
+<div class="show-form" style="border: none;">
+    <form name="examineForm">
+    <dl class="form_row">
+        <dt>审核操作：</dt>
+        <dd>
+            <label class="examine-select"><input type="radio" name="result" ng-model="examine.ideaType" value="1">通过</label>
+            <label class="examine-select"><input type="radio" name="result" ng-model="examine.ideaType" value="2">不通过</label>
+        </dd>
+    </dl>
+    <dl class="form_row">
+        <dt>审核意见：</dt>
+        <dd><textarea class="area-reason" ng-model="examine.ideaContent"></textarea></dd>
+    </dl>
+    <dl class="form_row">
+        <dt>&nbsp;</dt>
+        <dd>
+            <button class="btn-blue" ng-click="submitExamine()">确认</button>
+            <button class="btn-gray" ng-click="cancel()">取消</button>
+        </dd>
+    </dl>
+    </form>
+</div>

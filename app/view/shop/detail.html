@@ -1,0 +1,259 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a>
+                <span ng-if="!isExamine">
+                <a>商户管理</a><a>商户详情</a>
+                </span>
+                <span ng-if="isExamine">
+                <a>审核管理</a><a>商户入驻审核</a>>审核详情
+                </span>
+            </div>
+            <div class="tab_box" ng-init="showMain='base'">
+                <ul class="tab-title">
+                    <li ng-class="{'active':showMain=='base'}" ng-click="showMain='base'"><a>基本信息</a></li>
+                    <li ng-class="{'active':showMain=='shop'}" ng-click="showMain='shop'" ng-show="detail.merchantDto.enterStatus!=='0'"><a>店铺信息</a></li>
+                    <li ng-class="{'active':showMain=='pic'}" ng-click="showMain='pic'"><a>图片信息</a></li>
+                    <li ng-class="{'active':showMain=='settlement'}" ng-click="showMain='settlement'"><a>结算账户信息</a></li>
+                    <li ng-class="{'active':showMain=='recommend'}" ng-click="showMain='recommend'"><a>推荐人信息</a></li>
+                    <li ng-class="{'active':showMain=='examine'}" ng-click="getExamine()"><a>审核信息</a></li>
+                    <li><input type="button" class="back_btn" ui-sref="{{isExamine ? 'main.merchantExamine' : 'main.shopList'}}" value="返回"></li>
+                </ul>
+                <div class="tab_content" ng-if="showMain=='base'">
+                    <table class="form_table">
+                        <tr>
+                            <th width="15%">商户编号</th>
+                            <td width="35%">{{detail.merchantDto.id}}</td>
+                            <th width="15%">商户账号</th>
+                            <td width="35%">{{detail.merchantDto.account}}</td>
+                        </tr>
+                        <tr>
+                            <th>公司名称</th>
+                            <td>{{detail.merchantDto.name}}</td>
+                            <th>法定代表人</th>
+                            <td>{{detail.merchantDto.legalPerson}}</td>
+                        </tr>
+                        <tr>
+                            <th>公司所在地</th>
+                            <td ng-bind="detail.enterpriseDto.companyProvinceName.length>0 ? detail.enterpriseDto.companyProvinceName+'-'+detail.enterpriseDto.companyCityName+'-'+detail.enterpriseDto.companyDistrictName : ''"></td>
+                            <th>法人代表身份证</th>
+                            <td>{{detail.enterpriseDto.legalCertCode}}</td>
+                        </tr>
+                        <tr>
+                            <th>公司电话</th>
+                            <td>{{detail.merchantDto.companyTel}}</td>
+                            <th>公司详细地址</th>
+                            <td>{{detail.enterpriseDto.companyAddress}}</td>
+                        </tr>
+                        <tr>
+                            <th>公司紧急联系人手机</th>
+                            <td>{{detail.enterpriseDto.companyLinkmanMobile}}</td>
+                            <th>公司紧急联系人</th>
+                            <td>{{detail.enterpriseDto.companyLinkman}}</td>
+                        </tr>
+                        <tr>
+                            <th>营业执照号码</th>
+                            <td>{{detail.enterpriseDto.licenseNo}}</td>
+                            <th>营业执照所在地</th>
+                            <td ng-bind="detail.enterpriseDto.licenseProvinceName.length>0 ? detail.enterpriseDto.licenseProvinceName+'-'+detail.enterpriseDto.licenseCityName+'-'+detail.enterpriseDto.licenseDistrictName : ''"></td>
+                        </tr>
+                        <tr>
+                            <th>营业执照详细地址</th>
+                            <td>{{detail.enterpriseDto.licenseAddress}}</td>
+                            <th>成立日期</th>
+                            <td>{{detail.enterpriseDto.startingTime | date:'yyyy-MM-dd'}}</td>
+                        </tr>
+                        <tr>
+                            <th>营业执照有效期</th>
+                            <td>{{detail.enterpriseDto.licensePeriodBegin | date:'yyyy-MM-dd'}}  到
+                                {{detail.enterpriseDto.licensePeriodLongTime ? '长期' : detail.enterpriseDto.licensePeriodEnd | date:'yyyy-MM-dd'}}</td>
+                            <th>注册资本</th>
+                            <td>{{detail.enterpriseDto.regCapital || '--'}}万元</td>
+                        </tr>
+                        <tr>
+                            <th>营业执照经营范围</th>
+                            <td>{{detail.enterpriseDto.businessScope}}</td>
+                            <th>组织机构代码</th>
+                            <td>{{detail.enterpriseDto.orgCode}}</td>
+                        </tr>
+                        <tr>
+                            <th>组织机构代码证有效期</th>
+                            <td>{{detail.enterpriseDto.orgPeriodBegin | date:'yyyy-MM-dd'}}  到
+                                {{detail.enterpriseDto.orgPeriodLongTime ? '长期' : detail.enterpriseDto.orgPeriodEnd | date:'yyyy-MM-dd'}}</td>
+                            <th>税务证号码</th>
+                            <td>{{detail.enterpriseDto.taxpayerIdentityNo}}</td>
+                        </tr>
+                        <tr>
+                            <th>税码</th>
+                            <td>{{detail.enterpriseDto.taxTypeCode}}</td>
+                            <th>账户状态</th>
+                            <td>{{detail.merchantDto.merchantStat ? '锁定' : '正常'}}</td>
+                        </tr>
+                        <tr>
+                            <th>最后登录时间</th>
+                            <td ng-bind="detail.userDto.loginTime | date:'yyyy-MM-dd HH:mm:ss' "></td>
+                            <th>登录IP地址</th>
+                            <td ng-bind="detail.userDto.loginIp"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="show-form" ng-if="showMain=='shop' && detail.merchantDto.enterStatus!=='0'">
+                    <div>
+                        <dl>
+                            <dt>店铺名称：</dt>
+                            <dd>{{detail.shopDto.shopName}}</dd>
+                        </dl>
+                        <dl ng-if="detail.shopDto.shopType">
+                            <dt>店铺分类：</dt>
+                            <dd ng-bind="{'1':'总店','2':'分店'}[detail.shopDto.shopType]"></dd>
+                        </dl>
+                        <dl>
+                            <dt>所在地区：</dt>
+                            <dd ng-bind="detail.shopDto.provinceName + '-' + detail.shopDto.cityName + '-' + detail.shopDto.districtName"></dd>
+                        </dl>
+                        <dl>
+                            <dt>详细地址：</dt>
+                            <dd>{{detail.shopDto.address}}</dd>
+                        </dl>
+                        <dl>
+                            <dt>店铺介绍：</dt>
+                            <dd>{{detail.shopDto.description}}</dd>
+                        </dl>
+                        <dl>
+                            <dt>经营商品分类：</dt>
+                            <dd ng-bind="{'0':'实物类','1':'服务类'}[detail.shopDto.categoryType]"></dd>
+                        </dl>
+                        <dl>
+                            <dt>经营类目：</dt>
+                            <dd ng-bind="detail.shopDto.businessCatName"></dd>
+                        </dl>
+                        <dl>
+                            <dt>营业时间：</dt>
+                            <dd>{{detail.shopDto.businessHoursStart}}-{{detail.shopDto.businessHoursEnd}}</dd>
+                        </dl>
+                        <dl>
+                            <dt>客服电话：</dt>
+                            <dd>{{detail.shopDto.serviceTel}}</dd>
+                        </dl>
+                        <dl>
+                            <dt>是否支持开票：</dt>
+                            <dd>
+                                {{detail.shopDto.invoice ? '支持' : '不支持开票'}}
+                                <span ng-if="detail.shopDto.invoice">
+                                    <span ng-if="detail.shopDto.invoiceStatus == '2' || detail.shopDto.invoiceStatus === '0'">电子发票</span>
+                                    <span ng-if="detail.shopDto.invoiceStatus == '2' || detail.shopDto.invoiceStatus == '1'">纸质发票</span>
+                                </span>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>是否支持积分支付：</dt>
+                            <dd>{{detail.shopDto.support=='1' ? '不支持' : '支持积分支付'}}</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="show-form" ng-if="showMain=='pic'">
+                    <div>
+                        <ul class="images-list">
+                            <li class="w-320">
+                                <div class="imgbox">
+                                    <img src="images/tem_pro.png" ng-src="{{imgBaseUrl + detail.enterpriseDto.legalCertImgFront + $root.$imgSize.L}}" alt="法人身份证正面" title="法人身份证正面">
+                                </div>
+                                <div class="imgtitle">法人身份证正面</div>
+                            </li>
+                            <li class="w-320">
+                                <div class="imgbox">
+                                    <img src="images/tem_pro.png" ng-src="{{imgBaseUrl + detail.enterpriseDto.legalCertImgBack + $root.$imgSize.L}}" alt="法人身份证反面" title="法人身份证反面">
+                                </div>
+                                <div class="imgtitle">法人身份证反面</div>
+                            </li>
+                            <li class="w-320">
+                                <div class="imgbox">
+                                    <img src="images/tem_pro.png" ng-src="{{imgBaseUrl + detail.enterpriseDto.licenseImg1 + $root.$imgSize.L}}" alt="营业执照" title="营业执照">
+                                </div>
+                                <div class="imgtitle">营业执照</div>
+                            </li>
+                            <li class="w-320" ng-if="detail.enterpriseDto.licenseImg2">
+                                <div class="imgbox">
+                                    <img src="images/tem_pro.png" ng-src="{{imgBaseUrl + detail.enterpriseDto.licenseImg2 + $root.$imgSize.L}}" alt="营业执照" title="营业执照">
+                                </div>
+                                <div class="imgtitle">营业执照2</div>
+                            </li>
+                            <li class="w-320" ng-if="detail.enterpriseDto.orgImg">
+                                <div class="imgbox">
+                                    <img src="images/tem_pro.png" ng-src="{{imgBaseUrl + detail.enterpriseDto.orgImg + $root.$imgSize.L}}" alt="组织机构代码证" title="组织机构代码证">
+                                </div>
+                                <div class="imgtitle">组织机构代码证</div>
+                            </li>
+                            <li class="w-320" ng-if="detail.enterpriseDto.bankLicenseImg">
+                                <div class="imgbox">
+                                    <img src="images/tem_pro.png" ng-src="{{imgBaseUrl + detail.enterpriseDto.bankLicenseImg + $root.$imgSize.L}}" alt="银行开户许可证" title="银行开户许可证">
+                                </div>
+                                <div class="imgtitle">银行开户许可证</div>
+                            </li>
+                            <li class="w-320" ng-if="detail.enterpriseDto.taxRegImg">
+                                <div class="imgbox">
+                                    <img src="images/tem_pro.png" ng-src="{{imgBaseUrl + detail.enterpriseDto.taxRegImg + $root.$imgSize.L}}" alt="公司税务证" title="公司税务证">
+                                </div>
+                                <div class="imgtitle">公司税务证</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="show-form" ng-if="showMain=='settlement'">
+                    <div>
+                        <dl>
+                            <dt>收款户名：</dt>
+                            <dd>{{detail.settlementInfoDto.bankAccountName}}</dd>
+                        </dl>
+                        <dl>
+                            <dt>商户结算收款账号：</dt>
+                            <dd>{{detail.settlementInfoDto.bankAccountNo}}</dd>
+                        </dl>
+                        <dl>
+                            <dt>收款账号开户银行：</dt>
+                            <dd>{{detail.settlementInfoDto.bankBranchName}}</dd>
+                        </dl>
+                        <dl>
+                            <dt>开户银行所在地：</dt>
+                            <dd>
+                                {{detail.settlementInfoDto.provinceName}}
+                                {{detail.settlementInfoDto.cityName}}
+                                {{detail.settlementInfoDto.districtName}}
+                            </dd>
+                        </dl>
+                        <!--<button class="btn-blue">修改</button>-->
+                    </div>
+                </div>
+                <div class="show-form" ng-if="showMain=='recommend'">
+                    <div ng-if="!detail.shopDto.recommendMerchant">
+                        <dl>
+                            <dt>推荐人工号：</dt>
+                            <dd>{{detail.shopDto.recommendManagerId}}</dd>
+                        </dl>
+                        <dl>
+                            <dt>推荐人姓名：</dt>
+                            <dd>{{detail.shopDto.recommendManagerName}}</dd>
+                        </dl>
+                    </div>
+                    <div ng-if="detail.shopDto.recommendMerchant">
+                        <dl>
+                            <dt>推荐商户编号：</dt>
+                            <dd>{{detail.shopDto.recommendMerchant}}</dd>
+                        </dl>
+                        <dl>
+                            <dt>推荐商户名称：</dt>
+                            <dd>{{detail.shopDto.recommendMerchantName}}</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="show-form" ng-if="showMain=='examine'">
+                    <div examine-info info="auditInfo"></div>
+                </div>
+            </div>
+            <div class="tab_box" ng-if="isExamine && taskData.taskStatus==1">
+                <div examine-form conf="{id:taskData.taskId, flag:'merchant', formParams:{merchantid: detail.merchantDto.id}}" ng-if="detail.merchantDto.id"></div>
+            </div>
+        </div>
+    </div>
+</div>

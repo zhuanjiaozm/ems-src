@@ -1,0 +1,57 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>会员管理</a><a>会员黑名单</a>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <!-- <div class="item">
+                        <div class="sch-txt">会员编号:</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin" ng-model="params.memberId">
+                        </div>
+                    </div> -->
+                    <div class="item">
+                        <div class="sch-txt">会员账号:</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin" ng-model="params.account">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <input type="button" class="sort_btn" value="搜索" ng-click="search()">
+                    </div>
+                </div>
+                <table class="list_table">
+                    <thead>
+                    <tr>
+                        <th>会员编号</th>
+                        <th>会员账号</th>
+                        <th>联系方式</th>
+                        <th>注册时间</th>
+                        <th width="25%">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in blackArray">
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.account }}</td>
+                        <td>{{ item.mobile }}</td>
+                        <td>{{ item.createTime | date : 'yyyy-MM-dd HH:mm:ss' }}</td>
+                        <td class="option">
+                            <a ui-sref="main.memberDetail({memberId:item.id,flag:2})">详情</a>
+                            <a ng-click="operateMemberStatus(item.id)">恢复</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tbody ng-if="blackArray.length<1">
+                    <tr>
+                        <td colspan="5">暂无数据！</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="pages">
+                    <div ui-pagination conf="conf"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

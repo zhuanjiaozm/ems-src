@@ -1,0 +1,120 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><span>交易管理</span><span>服务类订单详情</span>
+            </div>
+            <div class="tab_box">
+                <ul class="tab-title">
+                    <li class="active"><a>订单信息</a></li>
+                    <!--<li><a>物流信息</a></li>-->
+                    <li><input type="button" class="back_btn" ui-sref="main.o2oOrderList" value="返回"></li>
+                </ul>
+                <div class="tab_content">
+                    <table class="form_table">
+                        <tr>
+                            <th width="15%">订单编号：</th>
+                            <td width="35%">{{vm.order.id}}</td>
+                            <th width="15%">订单状态：</th>
+                            <td width="35%">{{vm.status}}</td>
+                        </tr>
+                        <tr>
+                            <th>下单时间：</th>
+                            <td>{{vm.order.createTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <th>付款时间：</th>
+                            <td>{{vm.order.payTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        </tr>
+                        <tr>
+                            <th>消费时间：</th>
+                            <td>{{vm.order.commentTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <th>订单金额：</th>
+                            <td class="red">{{vm.orderAmounts.orderAmount | currency:'￥'}}</td>
+                        </tr>
+                        <tr>
+                            <th>实付金额：</th>
+                            <td class="red">{{vm.orderAmounts.cashAmount | currency:'￥'}}</td>
+                            <th>支付方式：</th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>支付渠道：</th>
+                            <td></td>
+                            <td></th>
+                            <td></td>
+                        </tr>
+                    </table>
+                    <div>
+                        <h2 class="title">买家信息</h2>
+                        <table class="form_table">
+                            <tr>
+                                <th width="15%">买家账号：</th>
+                                <td width="35%">{{vm.order.memberAccount}}</td>
+                                <th width="15%">手机号：</th>
+                                <td width="35%">{{vm.order.mobile || vm.other.mobile}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                        <h2 class="title">商户信息</h2>
+                        <table class="form_table">
+                            <tr>
+                                <th width="15%">商户名称：</th>
+                                <td width="35%">{{vm.shop.shopName}}</td>
+                                <th width="15%">联系电话：</th>
+                                <td width="35%">{{vm.shopMore.serviceTel}}</td>
+                            </tr>
+                            <tr>
+                                <th width="15%">商户地址：</th>
+                                <td colspan="3">{{vm.shopMore.address}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div ng-if="vm.orderAmounts.bonusPointAmount || vm.orderAmounts.redPacketAmount || vm.orderAmounts.shopCouponAmount || vm.orderAmounts.platCouponAmount">
+                        <h2 class="title">优惠信息</h2>
+                        <ul class="clearfix">
+                            <li class="fleft" style="width: 33%" ng-if="vm.orderAmounts.bonusPointAmount">
+                                <span>综合积分：</span>
+                                <span>-{{vm.orderAmounts.bonusPointAmount}}</span>
+                            </li>
+                            <li class="fleft" style="width: 33%" ng-if="vm.orderAmounts.redPacketAmount">
+                                <span>红包：</span>
+                                <span>-{{vm.orderAmounts.redPacketAmount}}</span>
+                            </li>
+                            <li class="fleft" style="width: 33%" ng-if="vm.orderAmounts.shopCouponAmount || vm.orderAmounts.platCouponAmount">
+                                <span>优惠券：</span>
+                                <span>-{{((vm.orderAmounts.shopCouponAmount || '') + (vm.orderAmounts.platCouponAmount || '')) | currency:'￥'}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h2 class="title">商品信息</h2>
+                        <table class="form_table">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">商品</th>
+                                    <th>单价</th>
+                                    <th>数量</th>
+                                    <!--<th>发布时间</th>-->
+                                    <th>消费码</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="product in vm.products">
+                                    <td rowspan="{{vm.consumes.length || 1}}" width="10%"><img ng-src="{{imgBaseUrl + product.picUrl}}" width="80"></td>
+                                    <td rowspan="{{vm.consumes.length || 1}}">{{product.title}}</td>
+                                    <td rowspan="{{vm.consumes.length || 1}}">{{product.productPrice}}</td>
+                                    <td rowspan="{{vm.consumes.length || 1}}">{{product.productCount}}</td>
+                                    <!--<td>2013-09-11 22:56</td>-->
+                                    <td>{{vm.consumes[0].verificationCode}}</td>
+                                </tr>
+                                <tr ng-repeat="consume in vm.consumes" ng-if="!$first">
+                                    <td>{{consume.verificationCode}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

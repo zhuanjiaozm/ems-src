@@ -1,0 +1,188 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b>
+                <a>首页</a>
+                <a>内容管理<span ng-bind="flag==='0'?'(总行)':'(分行)'"></span></a>
+                <a class="last-e">广告列表</a>
+                <div class="operate">
+                    <button ng-click="add()">新建广告</button>
+                </div>
+            </div>
+            <div class="table_warp" readonly="true">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">展示端:</div>
+                        <div class="sch-input">
+                            <select class="w-medium" ng-model="req.displayChannel"
+                                    ng-change="channelChange(req.displayChannel)">
+                                <option value="">全部</option>
+                                <option ng-value="c.code" ng-repeat="c in channels" ng-bind="c.name"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">页面:</div>
+                        <div class="sch-input">
+                            <select class="w-medium" ng-model="req.displayPage">
+                                <option value="">全部</option>
+                                <option ng-value="c.code" ng-repeat="c in spaces" ng-bind="c.name"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item" ng-if="req.displayPage=='21'&&flag=='1'">
+                        <div class="sch-txt">城市:</div>
+                        <div class="sch-input">
+                            <select class="w-medium" ng-model="req.citySiteId">
+                                <option value="">全部</option>
+                                <option ng-value="c.siteId" ng-repeat="c in sitesArray" ng-bind="c.siteName"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item" ng-if="flag=='1'">
+                        <div class="sch-txt">机构:</div>
+                        <div class="sch-input">
+                            <span organize-select conf="{nameFlag:'->',level:2}" organize-id="organizeId" organize-ids="$parent.req.organizeIds" organize-names="organizeNames">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">有效时间:</div>
+                        <div class="sch-input">
+                            <input type="text" class="sort_input_skin laydate-icon" ng-model="req.startTime" ng-laydate max-date="{{req.endTime}}"> 至
+                            <input type="text" class="sort_input_skin laydate-icon" ng-model="req.endTime"  ng-laydate  min-date="{{req.startTime}}">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">状态:</div>
+                        <div class="sch-input">
+                            <select class="w-medium" ng-model="req.finalStatus">
+                                <option value="">全部</option>
+                                <option ng-value="a.code" ng-repeat="a in advertsFinalStatus" ng-bind="a.name"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="sch-btn">
+                            <input type="button" class="sort_btn" value="搜索" ng-click="search()">
+                            <!-- <ber-resert reset-obj="req"></ber-resert> -->
+                        </div>
+                    </div>
+                </div>
+                <table class="list_table">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>广告编号</th>
+                        <th>广告标题</th>
+                        <th>广告图</th>
+                        <th>展示端</th>
+                        <th>城市</th>
+                        <th>页面</th>
+                        <th>有效时间</th>
+                        <th>修改人</th>
+                        <th>状态</th>
+                        <th width="10%">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat='item in items' ng-if="items.length>0">
+                        <td ng-bind="$index+1"></td>
+                        <td ng-bind="item.id"></td>
+                        <td ng-bind="item.advertTitle"></td>
+                        <td ng-click="checkPicInDialog(item.advertIcon)">
+                            <img style="max-width:150px" alt="广告图" ng-src="{{imgServerUrl+item.advertIcon+$root.$imgSize.S}}" onerror="javascript:this.src='images/error.png'">
+                        </td>
+                        <td ng-bind="{'1':'手机端','2':'电脑端'}[item.displayChannel]"></td>
+
+                        <td ng-bind="item.citySiteName"></td>
+
+                        <td ng-bind="{'10':'首页','11':'乐购买','20':'分行馆','21':'享生活'}[item.displayPage]"></td>
+
+                        <td>{{'起 '+(item.advertStartDate | date:'yyyy-MM-dd HH:mm:ss')}}<br>{{'止 '+(item.advertEndDate | date:'yyyy-MM-dd HH:mm:ss')}}
+                        </td>
+                        <td ng-bind="item.updator"></td>
+                        <td ng-bind="item.finalStatusStr"></td>
+                        <td class="option">
+                            <a ng-click="showAdvertDetail(item,1)">详情</a>
+                            <a ng-if="item.finalStatus!=='2'" ng-click="showAdvertDetail(item,2)">编辑</a>
+                            <a ng-click="toggle(item,0)" ng-if="item.finalStatus==='5'">失效</a>
+                            <a ng-click="toggle(item,1)" ng-if="item.finalStatus==='6'">生效</a>
+                            <a ng-click="delete(item.id)" ng-if="item.finalStatus!=='2'">删除</a>
+                            <a ng-click="startWorkFlow(item.id)" ng-if="item.finalStatus==='1'">提交审核</a>
+                        </td>
+                    </tr>
+                    <tr ng-if="items.length<1">
+                        <td colspan="12" color="red">
+                            <font color="red">查询结果为空!</font>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="pages">
+                    <div ui-pagination conf="conf" total="total"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="addAdvert">
+    <h1>请选择</h1>
+    <div class="ngdialog-content addAdvertPanel">
+        <ul>
+            <li>
+                <label>选择展示端：</label>
+                <select class="w-medium" ng-model="new.displayChannel" ng-change="channelChange(new.displayChannel)">
+                    <option value="">全部</option>
+                    <option ng-value="c.code" ng-repeat="c in channels" ng-bind="c.name"></option>
+                </select>
+            </li>
+            <li>
+                <label>选择页面:</label>
+                <select class="w-medium" ng-model="new.displayPage" ng-change="resetOrganize()">
+                    <option value="">全部</option>
+                    <option ng-value="c.code" ng-repeat="c in spaces" ng-bind="c.name"></option>
+                </select>
+            </li>
+            <li ng-if="flag==='1'&&new.displayPage&&new.displayPage==='21'">
+                <label>选择城市:</label>
+                <select class="w-medium" ng-model="new.citySiteId">
+                    <option value="">全部</option>
+                    <option ng-value="c.siteId" ng-repeat="c in sitesArray" ng-bind="c.siteName"></option>
+                </select>
+            </li>
+            <li ng-if="flag==='1'&&new.displayPage&&new.displayPage!=='21'">
+                <label>选择机构:</label>
+                <span organize-select conf="{nameFlag:'->',level:2}" organize-id="new.organizeId" organize-ids="new.organizeIds" organize-names="new.organizeNames">
+            </li>
+            <li ng-show="addResultMsg">
+                <label>错误提示:</label>
+                <span class="red" ng-bind="addResultMsg"></span>
+            </li>
+        </ul>
+    </div>
+    <div class="ngdialog-footer">
+        <button class="btn-enter" ng-click="enter(new)">确认</button>
+        <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+    </div>
+</script>
+<script type="text/ng-template" id="delete">
+    <h1>删除确认</h1>
+    <div class="ngdialog-content">
+        确定要删除本广告吗？
+    </div>
+    <div class="ngdialog-footer">
+        <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+        <button class="btn-enter" ng-click="enter()">确认</button>
+    </div>
+</script>
+<script type="text/ng-template" id="img">
+    <div class="ngdialog-content img">
+        <div ng-if="checkPicInDialogMsg" ng-bind="checkPicInDialogMsg" class="red"></div>
+        <img ng-if="!checkPicInDialogMsg" ng-src="{{src}}" alt="">
+    </div>
+    <div class="ngdialog-footer">
+        <button class="btn-canle" ng-click="closeThisDialog(0)">关闭</button>
+    </div>
+</script>

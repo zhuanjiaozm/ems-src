@@ -1,0 +1,145 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>供应商管理</a><a>供应商列表</a>
+                <div class="operate">
+                    <button ui-sref="main.addSupplier">添加供应商</button>
+                </div>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">供应商编号:</div>
+                        <div class="sch-input"><input type="text" class="w-medium" ng-model="supplierParams.code"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">供应商名称:</div>
+                        <div class="sch-input"><input type="text" class="w-medium" ng-model="supplierParams.name"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">供应商账号:</div>
+                        <div class="sch-input"><input type="text" class="w-medium" ng-model="supplierParams.account">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">所属分行:</div>
+                        <div class="sch-input">
+                            <span organize-select conf="{nameFlag:','}" organize-id="supplierParams.organizeId"
+                                  organize-ids="supplierParams.organizeIds"
+                                  organize-names="supplierParams.orgName"></span>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-btn">
+                            <input type="button" class="sort_btn" ng-click="getSearch()" value="搜索">
+                        </div>
+                    </div>
+                </div>
+                <table class="list_table">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>供应商编号</th>
+                        <th>供应商名称</th>
+                        <th>帐户名</th>
+                        <th>所属分行</th>
+                        <th>状态</th>
+                        <th width="120">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-if="suppliers&&suppliers.length>0" ng-repeat="item in suppliers">
+                        <td>{{$index+1}}</td>
+                        <td ng-bind="item.code"></td>
+                        <td ng-bind="item.name">潮牌股份有限公司</td>
+                        <td ng-bind="item.account">admin</td>
+                        <td ng-bind="item.orgName">东圃支行</td>
+                        <td ng-bind="statusName(item.status)">可用</td>
+                        <td class="option">
+                            <a ng-click="deleteSupplier(item.supplierId)">删除</a>
+                            <a ui-sref="main.addSupplier({id:item.supplierId})">编辑</a>
+                        </td>
+                    </tr>
+                    <tr ng-if="suppliers.length<1">
+                        <td colspan="7">
+                            暂无数据！
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="pages">
+                    <div ui-pagination conf="conf"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="supplierInfo">
+    <form name="supplierForm">
+        <h1 ng-bind="ngDialogTitle"></h1>
+        <div class="ngdialog-content">
+            <dl>
+                <dt><span class="red">*</span>供应商名称：</dt>
+                <dd>
+                    <input type="text" name="name" class="w-medium" required ng-model="supplierInfo.name" maxlength="16">
+                    <span ng-show="supplierForm.name.$error.required&&supplierForm.name.$touched" class="red">供应商名称不能为空</span>
+                </dd>
+            </dl>
+            <dl>
+                <dt><span class="red">*</span>供应商编号：</dt>
+                <dd>
+                    <input type="text" name="code" class="w-medium" required ng-model="supplierInfo.code" maxlength="15">
+                    <span ng-show="supplierForm.code.$error.required&&supplierForm.code.$touched" class="red">供应商编号不能为空</span>
+                </dd>
+            </dl>
+            <dl>
+                <dt><span class="red">*</span>账号：</dt>
+                <dd>
+                    <input type="text" name="account" class="w-medium" ng-pattern="/^([A-Z]|[a-z]|\d|_){6,20}$/"
+                           ng-model="supplierInfo.account" required>
+                    <span ng-show="supplierForm.account.$error.pattern" class="red">输入格式不正确</span>
+                    <span ng-show="supplierForm.account.$error.required&&supplierForm.account.$touched" class="red">账号不能为空</span>
+                </dd>
+            </dl>
+            <dl>
+                <dt><span class="red">*</span>密码：</dt>
+                <dd>
+                    <input type="text" name="password" class="w-medium" ng-minlength="6" ng-maxlength="16"
+                           ng-model="supplierInfo.password" required>
+                    <span ng-show="supplierForm.password.$error.minlength&&form_wrap.password.maxlength" class="red">密码长度为6-16位</span>
+                    <span ng-show="supplierForm.password.$error.required&&supplierForm.password.$touched" class="red">密码不能为空</span>
+                </dd>
+            </dl>
+            <dl>
+                <dt><span class="red">*</span>所属分行：</dt>
+                <dd>
+                    <span organize-select conf="{nameFlag:',',firstRequired:true}" organize-id="supplierInfo.organizeId"
+                          organize-ids="supplierInfo.organizeIds" organize-names="supplierInfo.orgName"></span>
+                    <span ng-show="supplierForm.firstName.$error.required&&supplierForm.firstName.$touched" class="red">所属分行不能为空</span>
+                </dd>
+            </dl>
+            <dl>
+                <dt><span class="red">*</span>地区：</dt>
+                <dd>
+                    <div city-select
+                         province-model="supplierInfo.province" province-name-model="supplierInfo.provinceName"
+                         city-model="supplierInfo.city" city-name-model="supplierInfo.cityName"
+                         district-model="supplierInfo.district" district-name-model="supplierInfo.districtName">
+                    </div>
+                </dd>
+            </dl>
+            <dl>
+                <dt>详细地址：</dt>
+                <dd>
+                    <textarea class="w-large" rows="3" ng-model="supplierInfo.addressDetail" maxlength="100"></textarea>
+                </dd>
+            </dl>
+        </div>
+        <div class="ngdialog-footer">
+            <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+            <button class="btn-enter" ng-disabled="supplierForm.$invalid" ng-click="enter()">确认</button>
+        </div>
+    </form>
+</script>

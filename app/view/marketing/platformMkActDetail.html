@@ -1,0 +1,123 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>营销管理</a><a>平台活动详情</a>
+            </div>
+            <div class="tab_box">
+                <ul class="tab-title">
+                    <li class="active"><a>活动信息</a></li>
+                    <li><input type="button" class="back_btn" ui-sref="main.platformMkAct" value="返回"></li>
+                </ul>
+                <div class="tab_content">
+                    <table class="form_table">
+                        <tr>
+                            <th width="15%">活动编号</th>
+                            <td width="35%">112310013</td>
+                            <th width="15%">活动名称</th>
+                            <td width="35%">范思哲限时活动</td>
+                        </tr>
+                        <tr>
+                            <th>活动类型</th>
+                            <td>团购</td>
+                            <th>活动标签</th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>活动状态</th>
+                            <td>待审核</td>
+                            <th>活动介绍</th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>创建时间</th>
+                            <td>2017-01-22 14:31:43</td>
+                            <th>报名开始时间</th>
+                            <td>2017-01-22 16:30:00</td>
+                        </tr>
+                        <tr>
+                            <th>报名结束时间</th>
+                            <td>2017-01-22 17:00:00</td>
+                            <th>上架时间</th>
+                            <td>2017-01-22 17:30:00</td>
+                        </tr>
+                        <tr>
+                            <th>活动开始时间</th>
+                            <td>2017-01-22 17:00:00</td>
+                            <th>活动结束时间</th>
+                            <td>2017-01-22 17:30:00</td>
+                        </tr>
+                        <tr>
+                            <th>报名对象</th>
+                            <td>所有商户 / 指定商户  <a ng-click="shopList(33)">点击查看</a></td>
+                            <th>商户报名费用</th>
+                            <td>0.00 元</td>
+                        </tr>
+                        <tr>
+                            <th>活动招商联系人</th>
+                            <td>XXX</td>
+                            <th>活动招商联系人</th>
+                            <td>13888888888</td>
+                        </tr>
+                    </table>
+                    <div>
+                        <h2 class="title">已报名商品</h2>
+                        <table class="form_table">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>商品信息</th>
+                                <th>商品属性</th>
+                                <th>所属商户</th>
+                                <th>市场价</th>
+                                <th>商城价</th>
+                                <th>活动价</th>
+                                <th>限购数量</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>服务范思哲香水（全部分店自提）</td>
+                                <td>50ml</td>
+                                <td>XX店</td>
+                                <td>100.00</td>
+                                <td>90.00</td>
+                                <td>75.00</td>
+                                <td>100</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>服务范思哲香水（全部分店自提）</td>
+                                <td>100ml</td>
+                                <td>XX店</td>
+                                <td>200.00</td>
+                                <td>185.00</td>
+                                <td>158.00</td>
+                                <td>100</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>服务范思哲香水（全部分店自提）</td>
+                                <td>50ml</td>
+                                <td>XX店</td>
+                                <td>100.00</td>
+                                <td>90.00</td>
+                                <td>75.00</td>
+                                <td>100</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="pages">
+                            <div ui-pagination conf="conf"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="actShop">
+    <div shop-list></div>
+</script>

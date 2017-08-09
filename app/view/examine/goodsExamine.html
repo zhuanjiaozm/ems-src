@@ -1,0 +1,95 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>审核管理</a><a>商品审核</a>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">商品编号:</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin" ng-model="params.productId"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">商品名称:</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin" ng-model="params.title"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">店铺名称:</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin" ng-model="params.shopName"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">申请时间:</div>
+                        <div class="sch-input">
+                            <input type="text" class="sort_input_skin laydate-icon" id="applyDateStart" ng-laydate max-date="{{params.endTime}}" name="applyDateStart" ng-model="params.createTime">
+                            至
+                            <input type="text" class="sort_input_skin laydate-icon" id="applyDateEnd" ng-laydate min-date="{{params.createTime}}" name="applyDateEnd" ng-model="params.endTime">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">审核状态:</div>
+                        <div class="sch-input">
+                            <select class="w-medium" ng-model="params.taskStatus">
+                                <option value="1">待办</option>
+                                <option value="2">已办</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-btn">
+                            <input type="button" class="sort_btn" value="搜索" ng-click="goSearch()">
+                        </div>
+                    </div>
+                </div>
+                <table class="list_table">
+                    <thead>
+                    <tr>
+                        <th width="4%" ng-if="false"><input type="checkbox" ng-if="canBatch"></th>
+                        <th class="w-m">商品编号</th>
+                        <th class="left">商品名称</th>
+                        <th class="left w-min-medium">店铺名称</th>
+                        <th class="w-xs">价格</th>
+                        <th class="w-xxs">库存</th>
+                        <th>审核状态</th>
+                        <th class="w-xs">申请时间</th>
+                        <th class="w-xs">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="goods in goodsList">
+                        <td ng-if="false"><input type="checkbox" ng-if="goods.taskStatus==1"></td>
+                        <td>{{goods.productId}}</td>
+                        <td>
+                            <div class="td-pro">
+                                <img ng-src="{{imgBaseUrl + goods.mainPicUrl + $root.$imgSize.XS}}" width="50" height="50">
+                                <p>{{goods.title}}</p>
+                            </div>
+                        </td>
+                        <td class="left">{{goods.shopName}}</td>
+                        <td>{{goods.price | currency : '￥'}}</td>
+                        <td>{{goods.stock}}</td>
+                        <td ng-bind="examineStatus[goods.taskStatus]"></td>
+                        <td>{{goods.createTime | date:'yyyy-MM-dd'}}</td>
+                        <td class="option">
+                            <a ui-sref="main.goodsExamineDetail({tid:goods.taskId,id:goods.productId,type:goods.categoryType.length>0 ? goods.categoryType:1})">
+                                {{goods.taskStatus==1 ? '审核' : '详情'}}
+                            </a>
+                        </td>
+                    </tr>
+                    <tr ng-if="!goodsList || goodsList.length==0">
+                        <td colspan="9">暂无数据</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="pages" ng-if="goodsList">
+                    <div class="batch-operate" ng-if="canBatch">
+                        <button class="bo-red">批量审核通过</button>
+                        <button class="bo-red">批量审核不通过</button>
+                    </div>
+                    <div ui-pagination conf="conf"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

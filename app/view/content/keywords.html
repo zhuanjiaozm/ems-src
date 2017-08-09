@@ -1,0 +1,135 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b>
+                <a>首页</a>
+                <a>内容管理</a>
+                <a class="last-e">关键词列表</a>
+                <div class="operate">
+                    <button ng-click="edit(0,l)">新建关键词</button>
+                </div>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">关键词:</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin w-medium" ng-model="userParams.content"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">类型:</div>
+                        <div class="sch-input">
+                            <select class="w-medium" ng-model="userParams.keywordType">
+                                <option value="">全部</option>
+                                <option value="0">普通</option>
+                                <option value="1">热门</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">状态:</div>
+                        <div class="sch-input">
+                            <select class="w-medium" ng-model="userParams.keywordStatus">
+                                <option value="">全部</option>
+                                <option value="0">生效</option>
+                                <option value="1">失效</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-btn">
+                            <input type="button" class="sort_btn" value="搜索" ng-click="searchList()">
+                        </div>
+                    </div>
+                </div>
+                <table class="list_table">
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>关键词</th>
+                            <th>类型</th>
+                            <th>状态</th>
+                            <th>排序</th>
+                            <th width="15%">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-if="list&&list.length>0" ng-repeat="l in list | orderBy:l.ordinal">
+                            <td ng-bind="$index+1">
+
+                            </td>
+                            <td ng-bind="l.content"></td>
+                            <td ng-bind="{'0':'普通','1':'热门'}[l.keywordType]"></td>
+                            <td ng-bind="{'0':'生效','1':'失效'}[l.keywordStatus]"></td>
+                            <td><input type="text" size="5" ng-model="l.ordinal" maxlength="5" ng-blur="sort(l)"></td>
+                            <td class="option">
+                                <a ng-click="edit(1,l)">编辑</a>
+                                <a ng-if="l.keywordStatus==='0'" ng-click="changeStatus(l.id,1)">失效</a>
+                                <a ng-if="l.keywordStatus==='1'" ng-click="changeStatus(l.id,0)">生效</a>
+                                <a ng-click="deleteKeyWord(l.id)">删除</a>
+                            </td>
+                        </tr>
+                        <tr ng-if="!list||list.length<1">
+                            <td colspan="6">
+                                暂无数据
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pages">
+                    <div ui-pagination conf="conf" total="total"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="edit">
+    <h1><span ng-bind="flag"></span>关键词</h1>
+    <div class="ngdialog-content">
+        <dl>
+            <dt><span class="red">*</span>关键词:</dt>
+            <dd>
+                <input type="text" ng-model="new.content" maxlength="15" size="40">
+            </dd>
+        </dl>
+        <dl>
+            <dt><span class="red">*</span>类型:</dt>
+            <dd>
+                <select class="w-medium" ng-model="new.keywordType">
+                    <option value="">全部</option>
+                    <option value="0">普通</option>
+                    <option value="1">热门</option>
+                </select>
+            </dd>
+        </dl>
+        <dl>
+            <dt><span class="red">*</span>排序:</dt>
+            <dd>
+                <input type="text" ng-model="new.ordinal" size="40" maxlength="5">
+            </dd>
+        </dl>
+        <dl>
+            <dt><span class="red">*</span>是否生效:</dt>
+            <dd ng-init="new.keywordStatus=new.keywordStatus||'0'">
+                <input type="radio" ng-model="new.keywordStatus" name="keywordStatus" value="1">否
+                <input type="radio" ng-model="new.keywordStatus" name="keywordStatus" value="0">是
+            </dd>
+        </dl>
+        <dl>
+            <dt>备注:</dt>
+            <dd>
+                <textarea class="w-large" ng-model="new.remark" maxlength="30" rows="5"></textarea>
+            </dd>
+        </dl>
+        <dl ng-if="errMsg">
+            <dt>操作提示:</dt>
+            <dd class="red" ng-bind="errMsg">
+
+            </dd>
+        </dl>
+    </div>
+    <div class="ngdialog-footer">
+        <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+        <button class="btn-enter" ng-click="enter(new)">确认</button>
+    </div>
+</script>

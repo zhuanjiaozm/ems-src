@@ -1,0 +1,84 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>商品管理</a><a>分类列表</a>
+            </div>
+            <div class="two-part">
+                <div class="left-tree">
+                    <ul id="treeDemo" class="ztree"></ul>
+                </div>
+                <div class="table_warp">
+                    <div class="operate">
+                        <span ng-bind="'当前分类：'+parentName"></span>
+                        <button ng-click="addClassify('add')" class="m-l">新增</button>
+                    </div>
+                    <table class="list_table">
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>分类名称</th>
+                            <th>是否显示</th>
+                            <th>显示顺序</th>
+                            <th width="120">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in classifyList">
+                            <td>{{$index+1}}</td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.visible?'是':'否'}}</td>
+                            <td>{{item.ordinal}}</td>
+                            <td class="option">
+                                <a ng-if="item.parentId" ng-click="editCats(item,'edit')">编辑</a>
+                                <a ng-if="item.parentId" ng-click="delCats(item)">删除</a>
+                            </td>
+                        </tr>
+                        <tr ng-if="classifyList<1">
+                            <td colspan="5">
+                                暂无数据！
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="addClassify">
+    <h1 ng-bind="dailogTitle"></h1>
+    <div class="ngdialog-content">
+        <dl>
+            <dt><span class="red">*</span>分类名称：</dt>
+            <dd><input type="text" class="w-large" placeholder="请输入分类名称，最多支持10个字" ng-model="classifyParams.name" maxlength="10"></dd>
+        </dl>
+        <dl>
+            <dt><span class="red">*</span>排序编号：</dt>
+            <dd><input type="text" class="w-medium" placeholder="用作排序" ng-model="classifyParams.ordinal" num-input required maxlength="5">
+            </dd>
+        </dl>
+        <dl>
+            <dt><span class="red">*</span>是否显示：</dt>
+            <dd ng-init="classifyParams.visible='1'">
+                <label><input type="radio" ng-model="classifyParams.visible" value="0">否</label>
+                <label><input type="radio" ng-model="classifyParams.visible" value="1">是</label>
+            </dd>
+        </dl>
+        <dl>
+            <dt>关键字：</dt>
+            <dd><input type="text" class="w-large" placeholder="供搜索引擎搜索使用" minlength="5" maxlength="10"></dd>
+        </dl>
+        <dl>
+            <dt><span class="red">*</span>分类描述：</dt>
+            <dd>
+                <textarea rows="5" class="w-large" ng-model="classifyParams.description" maxlength="50"></textarea>
+            </dd>
+        </dl>
+    </div>
+    <div class="ngdialog-footer">
+        <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+        <button class="btn-enter" ng-click="enter()">确认</button>
+    </div>
+</script>
+

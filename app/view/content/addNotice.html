@@ -1,0 +1,45 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>内容管理</a><span>新建公告</span>
+            </div>
+
+            <form class="form_wrap">
+                <div class="form_row">
+                    <div class="form_l">
+                        <span class="red">*</span>公告标题：</div>
+                    <div class="form_r">
+                        <input type="text" class="form_input_skin" style="width: 500px;" placeholder="" ng-model="notice.title" ng-disabled="notice.flag==1" ng-class="notice.flag==1?'notice-disabled':''" maxlength="30">
+                    </div>
+                    <div class="form_r">({{notice.title.length||0}}/30)</div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l">
+                        <span class="red">*</span>公告摘要：
+                    </div>
+                    <div class="form_r">
+                        <textarea rows="6" style="width: 500px;" ng-model="notice.summary"  ng-disabled="notice.flag==1"  ng-class="notice.flag==1?'notice-disabled':''" ng-model="notice.summary" maxlength="100"></textarea>
+                    </div>
+                    <div class="form_r">({{notice.summary.length||0}}/100)</div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l"><span class="red">*</span>公告内容{{flag}}：</div>
+                    <div class="form_r" style="width: 700px;">
+
+                        <div ng-if="notice.flag!=1">
+                            <div ueditor config="config" ng-model="notice.content"></div>
+                        </div>
+                        <div data-ng-bind-html="infoContent" ng-if="notice.flag==1" class="ngBindHtml"></div>
+                        <!--<textarea ng-ueditor="Controller.ueditorConfig" ready="Controller.ready($editor)" ng-model="notice.content"  ></textarea>-->
+                    </div>
+                </div>
+                <div class="form_row">
+                    <input type="button" class="form_btn" value="确定" ng-click="sub(notice)" ng-if="notice.flag!=1">
+                    <input type="button" class="form_btn" value="取消"  ng-click="goBack()">
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

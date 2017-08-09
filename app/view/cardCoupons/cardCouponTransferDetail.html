@@ -1,0 +1,149 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a>
+                <span ng-if="!isExamine">
+                <a>卡券管理</a><a>卡券详情</a>
+                </span>
+                <span ng-if="isExamine">
+                <a>审核管理</a><a>卡券转让管理</a>>卡券转让管理详情
+                </span>
+            </div>
+            <div class="tab_box" ng-init="showMain='base'">
+                <ul class="tab-title">
+                    <li ng-class="{'active':showMain=='base'}" ng-click="showMain='base'"><a>基本信息</a></li>
+                    <li ng-class="{'active':showMain=='examine'}" ng-click="showMain='examine'"><a>转让信息</a></li>
+                    <li><input type="button" class="back_btn" ui-sref="main.cardCouTransfer" value="返回"></li>
+                </ul>
+                <div class="show-form" ng-if="showMain=='base'">
+                    <div>
+                        <dl>
+                            <dt>卡券名称：</dt>
+                            <dd ng-bind="cardCouponInfo.couponName"></dd>
+                        </dl>
+                        <dl>
+                            <dt>卡券批次：</dt>
+                            <dd ng-bind="cardCouponInfo.batchNo"></dd>
+                        </dl>
+                        <dl>
+                            <dt>卡券类型：</dt>
+                            <dd ng-bind="couponTypes[cardCouponInfo.couponDto.couponType]"></dd>
+                        </dl>
+                        <dl>
+                            <dt>所属分类：</dt>
+                            <dd ng-bind="cardCouponInfo.couponDto.categoryPathName"></dd>
+                        </dl>
+                        <dl>
+                            <dt>面额：</dt>
+                            <dd ng-bind="cardCouponInfo.couponDto.outPrice"></dd>
+                        </dl>
+                        <dl>
+                            <dt>使用说明：</dt>
+                            <dd ng-bind="cardCouponInfo.couponDto.serviceRules"></dd>
+                        </dl>
+                        <dl>
+                            <dt>市场价：</dt>
+                            <dd ng-bind="cardCouponInfo.price"></dd>
+                        </dl>
+                        <!--<dl>
+                            <dt>积分兑换价：</dt>
+                            <dd ng-bind="cardCouponInfo.integralValue"></dd>
+                        </dl>-->
+                        <!--<dl>
+                            <dt>服务承诺：</dt>
+                            <dd ng-bind=""></dd>
+                        </dl>-->
+                        <dl>
+                            <dt>使用有效期：</dt>
+                            <dd>
+                                <span ng-bind="cardCouponInfo.couponDto.expiryStartDate | date:'yyyy-MM-dd'"></span> 至
+                                <span ng-bind="cardCouponInfo.couponDto.expiryEndDate | date:'yyyy-MM-dd'"></span>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>限购数量：</dt>
+                            <dd ng-bind="cardCouponInfo.limitNum"></dd>
+                        </dl>
+                        <dl>
+                            <dt>消费方式：</dt>
+                            <dd ng-bind="consumeTypes[cardCouponInfo.couponDto.consumeType]"></dd>
+                        </dl>
+                        <dl>
+                            <dt>适用商户：</dt>
+                            <dd ng-bind="cardCouponInfo.price"></dd>
+                        </dl>
+                        <dl>
+                            <dt>发行数量：</dt>
+                            <dd ng-bind="cardCouponInfo.stock"></dd>
+                        </dl>
+                        <dl>
+                            <dt>主图：</dt>
+                            <dd>
+                                <img ng-src="{{imgBaseUrl+cardCouponInfo.mainImgUrl+$imgSize.M}}" style="max-width: 200px">
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>发布人：</dt>
+                            <dd ng-bind="cardCouponInfo.createUserName"></dd>
+                        </dl>
+                        <dl>
+                            <dt>发布账号：</dt>
+                            <dd ng-bind="cardCouponInfo.createUserId"></dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="show-form" ng-if="showMain=='examine'">
+                    <div class="orderTabel">
+                        <table border="0">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        序号
+                                    </th>
+                                    <th>
+                                        订单ID
+                                    </th>
+                                    <th>
+                                        卡券名称
+                                    </th>
+                                    <th>
+                                        采购数量
+                                    </th>
+                                    <th>
+                                        受让方名称
+                                    </th>
+                                    <th>
+                                        供应商名称
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="o in cardCouponInfo.orders">
+                                    <td>
+                                        {{$index+1}}
+                                    </td>
+                                    <td>
+                                        {{o.orderId}}
+                                    </td>
+                                    <td>
+                                        {{o.couponName}}
+                                    </td>
+                                    <td>
+                                        {{o.amount}}
+                                    </td>
+                                    <td>
+                                        {{o.inCommercialAgentName}}
+                                    </td>
+                                    <td>
+                                        {{o.supplierName}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

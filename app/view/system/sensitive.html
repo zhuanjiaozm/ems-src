@@ -1,0 +1,105 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>系统管理</a><a>敏感词管理</a>
+                <div class="operate">
+                    <button ng-click="addSensitive()">添加</button>
+                </div>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">敏感词:</div>
+                        <div class="sch-input">
+                            <input type="text" class="sort_input_skin" ng-model="params.sensitiveWord">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <input type="button" class="sort_btn" value="搜索" ng-click="getList(params)">
+                    </div>
+                </div>
+
+                <table class="list_table">
+                    <thead>
+                    <tr>
+                        <th width="30">
+                            <input type="checkbox" ng-click="selectAll($event)" ng-checked="isSelectedAll()"/>
+                        </th>
+                        <th width="40">序号</th>
+                        <th>敏感词</th>
+                        <th>状态</th>
+                        <th>创建时间</th>
+                        <th width="120">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="l in list" ng-if="list.length>0">
+                        <td>
+                            <input type="checkbox" name="selected" ng-checked="isSelected(l.id)" ng-click="updateSelection($event,l.id)"/>
+                        </td>
+                        <td ng-bind="$index+1"></td>
+                        <td ng-bind="l.sensitiveWord"></td>
+                        <td ng-bind="{'1':'启用','0':'禁用'}[l.sensitivewordStatus]"></td>
+                        <td ng-bind="l.createDatetime | date:'yyyy-MM-dd HH:mm:ss'"></td>
+                        <td class="option">
+                            <a ng-click="deleteSensitiveWord(l.id)">删除</a>
+                            <a ng-click="addSensitive(l)">编辑</a>
+                            <a ng-click="changeWordStatus(l.id,0)" ng-if="l.sensitivewordStatus=='1'">禁用</a>
+                            <a ng-click="changeWordStatus(l.id,1)" ng-if="l.sensitivewordStatus=='0'">启用</a>
+                        </td>
+                    </tr>
+                    <tr ng-if="list.length<1">
+                        <td colspan="6">
+                            暂无数据
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="pages">
+                    <div class="batch-operate"  ng-if="list.length>0">
+                        <label><input type="checkbox" ng-click="selectAll($event)" ng-checked="isSelectedAll()"/>全选</label>
+                        <button class="bo-red" ng-click="batch(1)">批量删除</button>
+                        <button class="bo-red" ng-click="batch(2)">批量禁用</button>
+                    </div>
+                    <div ui-pagination conf="conf"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="addSensi">
+    <h1>添加角色</h1>
+    <div class="ngdialog-content">
+        <form name="userForm">
+            <dl>
+                <dt><span class="red">*</span>敏感词：</dt>
+                <dd><input type="text" class="w-medium" ng-model="newObj.sensitiveWord" maxlength=50></dd>
+            </dl>
+            <dl>
+                <dt><span class="red">*</span>状态：</dt>
+                <dd >
+                    <label><input type="radio" ng-model="newObj.sensitivewordStatus" value="1" name="sensitivewordStatus">启用</label>
+                    <label><input type="radio"  ng-model="newObj.sensitivewordStatus" value="0" name="sensitivewordStatus">禁用</label>
+                </dd>
+            </dl>
+            <dl>
+                <dt>备注：</dt>
+                <dd>
+                    <textarea class="w-large" rows="5" ng-model="newObj.description" maxlength="36"></textarea>
+                </dd>
+            </dl>
+            <dl ng-if="addErrMsg">
+                <dt> 提示：</dt>
+                <dd>
+                    <span class="red" ng-bind='addErrMsg'></span>
+                </dd>
+            </dl>
+        </form>
+    </div>
+    <div class="ngdialog-footer">
+        <button class="btn-enter" ng-click="addSensitiveOpeate()">确认</button>
+        <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+    </div>
+</script>

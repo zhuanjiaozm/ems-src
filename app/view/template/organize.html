@@ -1,0 +1,24 @@
+<div>
+    <select class="select_skin" name="firstName" ng-model="firstModel" ng-required="firstRequired"
+            ng-options="val.id as val.orgName for val in firstGroup" ng-change="selectItem(1)">
+        <option value="" ng-if="operaterLevel==1">请选择</option>
+    </select>
+    <select class="select_skin" name="secondName" ng-model="secondModel" ng-required="secondRequired" ng-show="selectLevel>1"
+            ng-options="val.id as val.orgName for val in secondGroup" ng-change="selectItem(2)">
+        <option value="">请选择</option>
+    </select>
+    <select class="select_skin" name="thirdName" ng-model="thirdModel" ng-required="thirdRequired" ng-show="selectLevel>2 && thirdGroup.length>0"
+            ng-options="val.id as val.orgName for val in thirdGroup" ng-change="selectItem(3)">
+        <option value="">请选择</option>
+    </select>
+    <select class="select_skin" name="fourthName" ng-model="fourthModel" ng-required="fourthRequired" ng-show="selectLevel>3 && fourthGroup.length>0"
+            ng-options="val.id as val.orgName for val in fourthGroup" ng-change="selectItem(4)">
+        <option value="">请选择</option>
+    </select>
+    <select class="select_skin" name="fifthName" ng-model="fifthModel" ng-required="fifthRequired" ng-show="selectLevel>4 && fifthGroup.length>0"
+            ng-options="val.id as val.orgName for val in fifthGroup" ng-change="selectItem(5)">
+        <option value="">请选择</option>
+    </select>
+    <input type="text" ng-model="{{organizeIds}}" ng-if="false">
+    <input type="text" ng-model="{{organizeId}}" ng-if="false">
+</div>

@@ -1,0 +1,116 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>营销中心</a><a>平台优惠券</a>
+                <div class="operate">
+                    <button ui-sref="main.addCouponDiscount">新建平台优惠券</button>
+                </div>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">名称:</div>
+                        <div class="sch-input"><input type="text" class="w-medium" ng-model="params.actTitle"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">批次:</div>
+                        <div class="sch-input">
+                            <div class="sch-input"><input type="text" class="w-medium " ng-model="params.id" num-input is-negative="true"></div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">状态:</div>
+                        <div class="sch-input">
+                            <select ng-model="params.queryStatus" ng-options="key as val for (key, val) in couponActStatus"></select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">活动时间:</div>
+                        <div class="sch-input">
+                            <input type="text" class="sort_input_skin laydate-icon" ng-model="params.actStartTime" ng-laydate format="YYYY-MM-DD" max-date="{{params.actEndTime}}"> 至
+                            <input type="text" class="sort_input_skin laydate-icon" ng-model="params.actEndTime" ng-laydate format="YYYY-MM-DD" min-date="{{params.actStartTime}}">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-btn">
+                            <input type="button" class="sort_btn" value="搜索" ng-click="goSearch()">
+                            <span ber-resert reset-obj="params"></span>
+                        </div>
+                    </div>
+                </div>
+                <table class="list_table">
+                    <thead>
+                        <tr>
+                            <th>批次</th>
+                            <th>名称</th>
+                            <th>面额</th>
+                            <th>时间</th>
+                            <th>条件</th>
+                            <th>发行量</th>
+                            <th>已领量</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="act in actList">
+                            <td ng-bind="act.id"></td>
+                            <td ng-bind="act.actTitle"></td>
+                            <td ng-bind="act.discountAmount"></td>
+                            <td>
+                                <div>
+                                    起&nbsp;&nbsp;
+                                    <span ng-bind="act.actStartTime | date:'yyyy-MM-dd HH:mm:ss'"></span>
+                                </div>
+                                <div>
+                                    止&nbsp;&nbsp;
+                                    <span ng-bind="act.actEndTime | date:'yyyy-MM-dd HH:mm:ss'"></span>
+                                </div>
+                            </td>
+                            <td>满<span ng-bind="act.orderAmount"></span></td>
+                            <td>
+                                <span ng-if="act.quantityType=='LIMIT'" ng-bind="act.totalNum"></span>
+                                <span ng-if="act.quantityType=='UNLIMIT'">无限制</span>
+                            </td>
+                            <td ng-bind="act.getNum||0"></td>
+                            <td ng-bind="act.queryStatusDescription"></td>
+                            <td class="option">
+                                <a ui-sref="main.couponDiscountDetail({id:act.id})">详情</a>
+                                <a ng-if="(act.actStartTime-dateNow)>1200000 && act.queryStatus=='notBegin'" ng-click="editAct(act)">编辑</a>
+                                <a ng-if="false" ui-sref="main.couponReceiveRecord({id:act.id})">统计分析</a>
+                                <a ng-if="act.actStatus==='NORMAL' && (act.queryStatus=='notBegin' || act.queryStatus=='begin')" ng-click="terminateAct(act.id)">终止</a>
+                            </td>
+                        </tr>
+                        <tr ng-if="!actList||actList.length<1">
+                            <td colspan="9">
+                                暂无数据
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pages">
+                    <div ui-pagination conf="conf"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="terminateAct">
+    <h1>终止活动</h1>
+    <div class="ngdialog-content">
+        <form name="userForm">
+            <dl>
+                <dt><span class="red">*</span>终止原因：</dt>
+                <dd>
+                    <textarea ng-model="terminate.reason" rows="5" class="w-large" maxlength="50"></textarea>
+                </dd>
+            </dl>
+        </form>
+    </div>
+    <div class="ngdialog-footer">
+        <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+        <button class="btn-enter" ng-click="enter()">确认</button>
+    </div>
+</script>

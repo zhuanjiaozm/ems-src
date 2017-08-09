@@ -1,0 +1,53 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>个人资料</a>
+            </div>
+            <form class="form_wrap">
+                <div class="form_row">
+                    <div class="form_l">登录名：</div>
+                    <div class="form_r" ng-bind="personal.account"></div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l">角色：</div>
+                    <div class="form_r">
+                        <span ng-bind="selectedRole.roleName"></span>
+                        <!--<select class="form_input_skin" ng-model="selectedRole">
+                            <option value="">&#45;&#45;请选择角色&#45;&#45;</option>
+                            <option ng-repeat="role in roleList" value="{{role.id}}" ng-selected="selectedRole.id==role.id">{{role.roleName}}</option>
+                        </select>-->
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l">机构：</div>
+                    <div class="form_r" ng-bind="personal.organizeNames"></div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l">姓名：</div>
+                    <div class="form_r">
+                        <input type="text" class="form_input_skin" ng-model="personalParams.realName" maxlength="7" placeholder="最长七位的中文字符">
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l">手机号码：</div>
+                    <div class="form_r"><input type="text" class="form_input_skin" ng-model="personalParams.mobile" maxlength="11" minlength="11" placeholder="11位的手机号码"></div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l">邮箱：</div>
+                    <div class="form_r"><input type="text" class="form_input_skin" ng-model="personalParams.email" placeholder="请输入有效的邮箱号码"></div>
+                </div>
+                <div ng-if="msg">
+                    <div class="form_l">提示：</div>
+                    <div class="form_r red">
+                        <span ng-bind="msg"></span>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <input type="button" class="form_btn" value="确定" ng-click="changePersonal(personalParams)">
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

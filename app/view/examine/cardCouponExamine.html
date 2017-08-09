@@ -1,0 +1,96 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>审核管理</a><a>卡券发布审核</a>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">卡券名称:</div>
+                        <div class="sch-input"><input type="text" class="w-medium" ng-model="params.name"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">卡券批次:</div>
+                        <div class="sch-input"><input type="text" class="w-medium" ng-model="params.batchNo"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">审核状态:</div>
+                        <div class="sch-input">
+                            <select class="w-medium" ng-model="params.taskStatus">
+                                <option value="1">待办</option>
+                                <option value="2">已办</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">卡券类型:</div>
+                        <div class="sch-input">
+                            <select class="w-medium" ng-model="params.couponType" ng-options="key as val for (key, val) in couponTypes">
+                                <option value="">请选择</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">发布时间:</div>
+                        <div class="sch-input">
+                            <input type="text" class="w-small laydate-icon" ng-laydate max-date="{{params.minCreateTime}}" ng-model="params.maxCreateTime">
+                            至
+                            <input type="text" class="w-small laydate-icon"  ng-laydate min-date="{{params.maxCreateTime}}" ng-model="params.minCreateTime">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">所属分行:</div>
+                        <div class="sch-input">
+                            <span organize-select organize-id="params.organizeId" organize-ids="params.organizeIds" organize-names="organizeNames"></span>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-btn">
+                            <input type="button" class="sort_btn" ng-click="goSearch()" value="搜索">
+                        </div>
+                    </div>
+                </div>
+                <table class="list_table">
+                    <thead>
+                    <tr>
+                        <th>卡券批次</th>
+                        <th>卡券名称</th>
+                        <th>卡券类型</th>
+                        <th>价格</th>
+                        <th>库存</th>
+                        <th>所属分行</th>
+                        <th>审核状态</th>
+                        <th>发布时间</th>
+                        <th width="15%">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="cardCoupon in cardCouponList">
+                        <td ng-bind="cardCoupon.batchNo"></td>
+                        <td ng-bind="cardCoupon.name"></td>
+                        <td ng-bind="couponTypes[cardCoupon.couponType]"></td>
+                        <td ng-bind="cardCoupon.price"></td>
+                        <td ng-bind="cardCoupon.stock"></td>
+                        <td ng-bind="cardCoupon.organizeName"></td>
+                        <td ng-bind="examineStatus[cardCoupon.taskStatus]"></td>
+                        <td ng-bind="cardCoupon.sellDatetime | date:'yyyy-MM-dd'"></td>
+                        <td class="option">
+                            <a ui-sref="main.cardCouponExamineDetail({id: cardCoupon.couponId,tid:cardCoupon.taskId})">
+                                {{cardCoupon.taskStatus==1 ? '审核' : '详情'}}
+                            </a>
+                        </td>
+                    </tr>
+                    <tr ng-if="!cardCouponList || cardCouponList.length==0">
+                        <td colspan="9">暂无数据</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="pages" ng-if="cardCouponList">
+                    <div ui-pagination conf="conf"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>云能大数据平台</title>
+    <!--[if lt IE 9]>
+    <style>
+        body{overflow: hidden;}
+        .browse-upgrade{
+            background:#000;
+            opacity: 0.6;
+            filter:alpha(opacity=60);
+            color: #fff;
+            position: absolute;
+            top:0;2
+            bottom:0;
+            left:0;
+            right:0;
+            z-index: 100000;
+            text-align: center;
+            line-height: 500px;
+        }
+        .browse-upgrade a{
+            font-size: 16px;
+            color: #fff;
+            font-weight: bold;
+        }
+    </style>
+    <![endif]-->
+    <link rel="shortcut icon" href="./images/favicon.ico">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/common.css">
+    <script src="app/components/fontawesome.js"></script>
+</head>
+
+<body>
+    <div ui-view></div>
+    <!--[if lt IE 9]>
+<p class="browse-upgrade">你使用的浏览器版本 <strong>太低</strong> . 请 <a href="http://browsehappy.com/">升级</a> 你的浏览器以达到最佳的体验.</p>
+<![endif]-->
+    <!--[if IE 8]>
+<script type="text/javascript" src="//cdn.bootcss.com/es5-shim/4.0.5/es5-shim.min.js"></script>
+<![endif]-->
+    <script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+    <script>
+        if (typeof require == 'undefined') {
+            document.write(unescape("%3Cscript src='lib/require.js' type='text/javascript'%3E%3C/script%3E"));
+        }
+    </script>
+    <script>
+        require.config({
+            waitSeconds: 0,
+            baseUrl: '/',
+            paths: {
+                'angular': ['lib/angular.min'],
+                'angular-ui-router': ['lib/angular-ui-router.min'],
+                'angular-async-loader': 'lib/angular-async-loader',
+                'angular-animate': ['lib/angular-animate.min'],
+                'angular-sanitize': ['lib/angular-sanitize'],
+                'angular-pagination': 'lib/angular-pagination',
+                'angular-messages': 'lib/angular-messages',
+                'ng-dialog': ['lib/ngDialog'],
+                'app': 'app/config/app',
+                'router': 'app/config/router',
+                'constants': 'app/config/constants',
+                'factories': 'app/config/factories',
+                'page': 'app/components/page',
+                'jquery': ['lib/jquery'],
+                'cookie': ['lib/jquery.cookie'],
+                'layDate': 'lib/laydate',
+                'echarts': ['lib/echarts-all'],
+                'angular-echarts': 'lib/angular-echarts.min',
+                'ueditorConfig': 'lib/ueditor/ueditor.config',
+                'ueditor': 'lib/ueditor/ueditor.all.min',
+                'zeroClipboard': 'lib/ueditor/third-party/zeroclipboard/ZeroClipboard',
+                'ztree': 'lib/jquery.ztree.all-3.5',
+                'jqueryUi': 'lib/jquery-ui',
+                'jOrgChart': 'app/components/jquery.jOrgChart',
+                'toast': ['lib/jquery.toast.min'],
+                'underscore': ['lib/underscore-min'],
+                'jquery-ui': 'app/components/diyPage/jquery-ui',
+                'clipboard': ['lib/clipboard'],
+                'ngclipboard': 'app/components/ngclipboard',
+                'color-picker': 'lib/color-picker.min'
+            },
+            shim: {
+                'angular': {
+                    exports: 'angular',
+                    deps: ['jquery']
+                },
+                'angular-ui-router': {
+                    deps: ['angular']
+                },
+                'angular-animate': {
+                    deps: ['angular']
+                },
+                'angular-async-loader': {
+                    deps: ['angular']
+                },
+                'angular-echarts': {
+                    deps: ['angular']
+                },
+                'angular-messages': {
+                    deps: ['angular']
+                },
+                'jquery': {
+                    exports: 'jquery'
+                },
+                'ztree': {
+                    deps: ['jquery']
+                },
+                'cookie': {
+                    deps: ['jquery']
+                },
+                'toast': {
+                    deps: ['jquery']
+                },
+                'jqueryUi': {
+                    deps: ['jquery']
+                },
+                'jOrgChart': {
+                    deps: ['jqueryUi'],
+                    exports: 'jOrgChart'
+                }
+            }
+        });
+        require(['angular', 'app', 'router', 'constants', 'factories'], function(angular, app, router, constants, factories) {
+            constants.regConstants(app);
+            factories.regFactories(app);
+            router.regRoutes(app);
+            angular.element(document).ready(function() {
+                angular.bootstrap(document, ['app']);
+                angular.element(document).find('html').addClass('ng-app');
+            });
+        });
+
+        window.UEDITOR_HOME_URL = "./lib/ueditor/";
+    </script>
+</body>
+
+</html>

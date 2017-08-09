@@ -1,0 +1,82 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>营销管理</a><a>营销活动详情</a>
+            </div>
+            <div class="tab_box">
+                <ul class="tab-title">
+                    <li class="active"><a>活动信息</a></li>
+                    <li><input type="button" class="back_btn" ui-sref="main.shopMkAct" value="返回"></li>
+                </ul>
+                <div class="tab_content">
+                    <table class="form_table">
+                        <tr>
+                            <th width="15%">活动编号</th>
+                            <td width="35%">{{vm.act.id}}</td>
+                            <th width="15%">活动名称</th>
+                            <td width="35%">{{vm.act.actName}}</td>
+                        </tr>
+                        <tr>
+                            <th>活动类型</th>
+                            <td>限时优惠</td>
+                            <th>活动状态</th>
+                            <td>{{vm.act.queryStatusDescription}}</td>
+                        </tr>
+                        <tr>
+                            <th>创建时间</th>
+                            <td>{{vm.act.createTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <th>预热时间</th>
+                            <td>{{vm.act.preheatTime|date:'yyyy-MM-dd HH:mm'}}</td>
+                        </tr>
+                        <tr>
+                            <th>开始时间</th>
+                            <td>{{vm.act.beginTime|date:'yyyy-MM-dd HH:mm'}}</td>
+                            <th>结束时间</th>
+                            <td>{{vm.act.endTime|date:'yyyy-MM-dd HH:mm'}}</td>
+                        </tr>
+                        <tr>
+                            <th>活动说明</th>
+                            <td colspan="3">{{vm.act.description}}</td>
+                        </tr>
+                    </table>
+                    <div>
+                        <h2 class="title">活动商品信息</h2>
+                        <table class="form_table">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>商品信息</th>
+                                <th>所属商户</th>
+                                <th ng-if="vm.act.actLevel == 'sku'">SKU</th>
+                                <th>商城价</th>
+                                <th>活动价</th>
+                                <th>限购数量</th>
+                            </tr>
+                            </thead>
+                            <tbody ng-repeat="item in vm.prodList">
+                            <tr ng-if="vm.act.actLevel == 'sku'" ng-repeat="sku in item.skuList">
+                                <td ng-if="!$index" rowspan="{{item.skuList.length}}">{{$index+1}}</td>
+                                <td ng-if="!$index" rowspan="{{item.skuList.length}}">{{item.productTitle}}</td>
+                                <td ng-if="!$index"  rowspan="{{item.skuList.length}}">{{vm.act.merchantName}}</td>
+                                <td>{{sku.skuDescription}}</td>
+                                <td>{{(sku.skuPrice || item.productPrice)|currency:'￥'}}</td>
+                                <td>{{(sku.actPrice || item.actPrice)|currency:'￥'}}</td>
+                                <td>{{sku.limitBuyAmount || item.limitBuyAmount}}</td>
+                            </tr>
+                            <tr ng-if="vm.act.actLevel == 'spu'">
+                                <td>{{$index+1}}</td>
+                                <td>{{item.productTitle}}</td>
+                                <td>{{vm.act.merchantName}}</td>
+                                <td>{{item.productPrice|currency:'￥'}}</td>
+                                <td>{{item.actPrice|currency:'￥'}}</td>
+                                <td>{{sku.limitBuyAmount || item.limitBuyAmount}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

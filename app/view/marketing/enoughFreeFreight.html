@@ -1,0 +1,93 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>营销管理</a><a>满减运费</a>
+                <div class="operate">
+                    <button ui-sref="main.addEnoughFreeFreight">新建满减运费</button>
+                </div>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">活动名称:</div>
+                        <div class="sch-input"><input type="text" class="w-medium" ng-model="edParams.actTitle"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">活动时间:</div>
+                        <div class="sch-input">
+                            <input ng-laydate type="text" class="laydate-icon" ng-model="edParams.actStartTime" format="YYYY-MM-DD"> 至
+                            <input ng-laydate type="text" class="laydate-icon" ng-model="edParams.actEndTime" format="YYYY-MM-DD">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">活动状态:</div>
+                        <div class="sch-input">
+                            <select class="w-medium" ng-model="edParams.queryStatus">
+                                <option ng-repeat="item in queryStatus" value="{{item.value}}">{{item.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-btn">
+                            <input type="button" class="sort_btn" value="搜索" ng-click="getSearch()">
+                            <span ber-resert reset-obj="edParams"></span>
+                        </div>
+                    </div>
+                </div>
+                <table class="list_table">
+                    <thead>
+                    <tr>
+                        <th>活动编号</th>
+                        <th>活动名称</th>
+                        <th>促销类型</th>
+                        <th>活动时间</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in actList">
+                        <td ng-bind="item.id">45556767</td>
+                        <td ng-bind="item.actTitle">3.8限时优惠活动</td>
+                        <td>{{discountTypeName(item.discountType)}} <span class="red" ng-bind="'('+rangeTypeName(item.rangeType)+')'">(全场)</span></td>
+                        <td>
+                            <div ng-bind="'起 '+(item.actStartTime | date:'yyyy-MM-dd HH:mm:ss')"></div>
+                            <div ng-bind="'止 '+(item.actEndTime | date:'yyyy-MM-dd HH:mm:ss')"></div>
+                        </td>
+                        <td ng-bind="item.queryStatusDescription">未开始</td>
+                        <td class="option">
+                            <a ui-sref="main.settleDiscountDetail({id:item.id,type:'mkfreight'})">详情</a>
+                            <a ng-if="(item.actStartTime-dateNow)>1200000" ng-click="editAct(item.actStartTime,item.id)">编辑</a>
+                            <a ng-if="item.actStatus==='NORMAL'&&item.queryStatus==='begin'" ng-click="terminateAct(item.id)">终止</a>
+                        </td>
+                    </tr>
+                    <tr ng-if="confPage.total<1">
+                        <td colspan="6">暂无数据！</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="pages">
+                    <div ui-pagination conf="confPage"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="terminateAct">
+    <h1>终止活动</h1>
+    <div class="ngdialog-content">
+        <form name="userForm">
+            <dl>
+                <dt><span class="red">*</span>终止原因：</dt>
+                <dd>
+                    <textarea ng-model="terminate.reason" rows="5" class="w-large" maxlength="50"></textarea>
+                </dd>
+            </dl>
+        </form>
+    </div>
+    <div class="ngdialog-footer">
+        <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+        <button class="btn-enter" ng-click="enter()">确认</button>
+    </div>
+</script>

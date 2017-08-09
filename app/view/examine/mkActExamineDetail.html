@@ -1,0 +1,105 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>审核管理</a><a>营销活动审核</a>>审核详情
+            </div>
+            <div class="tab_box"  ng-init="showMain='base'">
+                <ul class="tab-title">
+                    <li ng-class="{'active':showMain=='base'}" ng-click="showMain='base'"><a>活动信息</a></li>
+                    <li ng-class="{'active':showMain=='examine'}" ng-click="showMain='examine'"><a>审核信息</a></li>
+                    <li><input type="button" class="back_btn" ui-sref="main.mkActExamine" value="返回"></li>
+                </ul>
+                <div class="tab_content" ng-if="showMain=='base'">
+                    <table class="form_table">
+                        <tr>
+                            <th width="15%">活动编号</th>
+                            <td width="35%">112310013</td>
+                            <th width="15%">活动名称</th>
+                            <td width="35%">范思哲限时活动</td>
+                        </tr>
+                        <tr>
+                            <th>活动类型</th>
+                            <td>团购</td>
+                            <th>活动状态</th>
+                            <td>待审核</td>
+                        </tr>
+                        <tr>
+                            <th>创建时间</th>
+                            <td>2017-01-22 14:31:43</td>
+                            <th>上架时间</th>
+                            <td>2017-01-22 16:30:00</td>
+                        </tr>
+                        <tr>
+                            <th>开始时间</th>
+                            <td>2017-01-22 17:00:00</td>
+                            <th>结束时间</th>
+                            <td>2017-01-22 17:30:00</td>
+                        </tr>
+                        <tr>
+                            <th>活动规则</th>
+                            <td>范思哲限时活动</td>
+                            <th>限购数量</th>
+                            <td>2</td>
+                        </tr>
+                    </table>
+                    <div>
+                        <h2 class="title">活动商品信息</h2>
+                        <table class="form_table">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>商品信息</th>
+                                <th>商品属性</th>
+                                <th>所属商户</th>
+                                <th>市场价</th>
+                                <th>商城价</th>
+                                <th>活动价</th>
+                                <th>限购数量</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>服务范思哲香水（全部分店自提）</td>
+                                <td>50ml</td>
+                                <td>XX店</td>
+                                <td>100.00</td>
+                                <td>90.00</td>
+                                <td>75.00</td>
+                                <td>100</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>服务范思哲香水（全部分店自提）</td>
+                                <td>100ml</td>
+                                <td>XX店</td>
+                                <td>200.00</td>
+                                <td>185.00</td>
+                                <td>158.00</td>
+                                <td>100</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>服务范思哲香水（全部分店自提）</td>
+                                <td>50ml</td>
+                                <td>XX店</td>
+                                <td>100.00</td>
+                                <td>90.00</td>
+                                <td>75.00</td>
+                                <td>100</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="show-form" ng-if="showMain=='examine'">
+                    <div examine-info></div>
+                </div>
+            </div>
+            <div class="tab_box">
+                <div examine-form></div>
+            </div>
+        </div>
+    </div>
+</div>

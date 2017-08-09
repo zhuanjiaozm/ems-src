@@ -1,0 +1,97 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>代理商管理</a><a>代理商列表</a>
+                <div class="operate">
+                    <button ui-sref="main.addAgent">添加代理商</button>
+                </div>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">代理商编号:</div>
+                        <div class="sch-input"><input type="text" class="w-medium" ng-model="agentParams.code"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">代理商名称:</div>
+                        <div class="sch-input"><input type="text" class="w-medium" ng-model="agentParams.name"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">代理商账号:</div>
+                        <div class="sch-input"><input type="text" class="w-medium" ng-model="agentParams.account">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">所属分行:</div>
+                        <div class="sch-input">
+                            <span organize-select conf="{nameFlag:','}" organize-id="agentParams.organizeId"
+                                  organize-ids="agentParams.organizeIds"
+                                  organize-names="agentParams.orgName"></span>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-btn">
+                            <input type="button" class="sort_btn" ng-click="getSearch()" value="搜索">
+                        </div>
+                    </div>
+                </div>
+                <table class="list_table">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>代理商编号</th>
+                        <th>代理商名称</th>
+                        <th>帐户名</th>
+                        <th>所属分行</th>
+                        <th>状态</th>
+                        <th width="120">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-if="agents&&agents.length>0" ng-repeat="item in agents">
+                        <td>{{$index+1}}</td>
+                        <td ng-bind="item.code"></td>
+                        <td ng-bind="item.name">潮牌股份有限公司</td>
+                        <td ng-bind="item.account">admin</td>
+                        <td ng-bind="item.orgName">东圃支行</td>
+                        <td ng-bind="statusName(item.status)">可用</td>
+                        <td class="option">
+                            <a ng-click="deleteAgent(item.agentId)">删除</a>
+                            <a ui-sref="main.addAgent({id:item.agentId})">编辑</a>
+                            <a ng-click="setAmount(item.agentId)">设置额度</a>
+                        </td>
+                    </tr>
+                    <tr ng-if="agents.length<1">
+                        <td colspan="7">
+                            暂无数据！
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="pages">
+                    <div ui-pagination conf="conf"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="amount">
+    <form name="agentForm">
+        <h1>设置代理商资产额度</h1>
+        <div class="ngdialog-content">
+            <dl>
+                <dt><span class="red">*</span>资产额度：</dt>
+                <dd>
+                    <input num-input type="text" name="amount" class="w-medium" required ng-model="amount" maxlength="16">
+                    <span ng-show="agentForm.amount.$error.required&&agentForm.amount.$touched" class="red">资产额度称不能为空</span>
+                </dd>
+            </dl>
+        </div>
+        <div class="ngdialog-footer">
+            <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+            <button class="btn-enter" ng-disabled="agentForm.$invalid" ng-click="enter()">确认</button>
+        </div>
+    </form>
+</script>

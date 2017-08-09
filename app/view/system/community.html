@@ -1,0 +1,80 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>系统管理</a><a>商圈管理</a>
+            </div>
+            <div class="two-part">
+                <div class="left-tree">
+                    <ul id="treeDemo" class="ztree"></ul>
+                </div>
+                <div class="table_warp">
+                    <div class="operate">
+                        <button ng-click="operateCommunity('add')">新增</button>
+                    </div>
+                    <table class="list_table">
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>商圈名称</th>
+                            <th>地区名称</th>
+                            <th>商户数</th>
+                            <th>描述</th>
+                            <th width="120">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in community">
+                            <td>{{$index+1}}</td>
+                            <td>{{item.communityname}}</td>
+                            <td>{{item.regionName}}</td>
+                            <td>{{item.marchartNum}}</td>
+                            <td>{{item.communityDesc}}</td>
+                            <td class="option">
+                                <a ng-click="operateCommunity('edit',item)">编辑</a>
+                                <a ng-click="delCommunity(item.communityId)">删除</a>
+                            </td>
+                        </tr>
+                        <tr ng-if="community<1">
+                            <td colspan="6">
+                                暂无数据！
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="pages">
+                        <div ui-pagination conf="conf"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="addCommunity">
+    <h1>{{ngDialogTitle}}</h1>
+    <div class="ngdialog-content">
+        <dl>
+            <dt><span class="red">*</span>区/县：</dt>
+            <dd>
+                <select ng-model="selectArea" ng-options="item.cname for item in areaList">
+                    <option value="">--请选择--</option>
+                </select>
+            </dd>
+        </dl>
+        <dl>
+            <dt><span class="red">*</span>商圈名称：</dt>
+            <dd><input type="text" class="w-large" placeholder="请输入商圈名称，最多支持10个字" required ng-model="addParams.communityname" maxlength="10"></dd>
+        </dl>
+        <dl>
+            <dt>商圈描述：</dt>
+            <dd>
+                <textarea rows="5" class="w-large" ng-model="addParams.communityDesc" maxlength="200"></textarea>
+            </dd>
+        </dl>
+    </div>
+    <div class="ngdialog-footer">
+        <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+        <button class="btn-enter" ng-click="enter()">确认</button>
+    </div>
+</script>
+

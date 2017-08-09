@@ -1,0 +1,238 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>卡券管理</a><span>{{isThirdCoupon?'新增第三方卡券':'创建卡券'}}</span>
+            </div>
+            <ul class="third-step" ng-if="isThirdCoupon">
+                <li ng-class="{'cut':!isCreate}"><span>1</span>创建卡券</li>
+                <li ng-class="{'cut':isCreate}"><span>2</span>导入第三方卡券</li>
+            </ul>
+            <div class="step-first" ng-show="!isCreate">
+                <form class="form_wrap" name="actForm">
+                    <div class="form_row">
+                        <div class="form_l">卡券分类：</div>
+                        <div class="form_r">{{categoryName}}</div>
+                        <div class="form_r" ng-if="!couponId"><a ui-sref="{{isThirdCoupon?'main.publishCouponCategory({type:\'THIRDPARTY\'})':'main.publishCouponCategory({type:\'SELF\'})'}}" class="blue">返回修改分类</a></div>
+                    </div>
+                    <div class="form_row">
+                        <div class="form_l">
+                            <span class="red">*</span>卡券名称：
+                        </div>
+                        <div class="form_r">
+                            <input type="text" name="name" class="form_input_skin_big" ng-model="couponInfo.name" maxlength="30" required> ({{couponInfo.name.length||0}}/30)
+                        </div>
+                        <div ng-messages="actForm.name.$error" ng-if="actForm.name.$touched" class="form_r red">
+                            <span required-error></span>
+                            <span maxlength-error conf="{maxLength:15}"></span>
+                        </div>
+                    </div>
+                    <div class="form_row" ng-if="isThirdCoupon">
+                        <div class="form_l">
+                            <span class="red">*</span>第三方卡券名称：
+                        </div>
+                        <div class="form_r">
+                            <input type="text" name="thirdpartyName" class="form_input_skin_big" ng-model="couponInfo.thirdpartyName" maxlength="30" required> ({{couponInfo.thirdpartyName.length||0}}/30)
+                        </div>
+                        <div ng-messages="actForm.thirdpartyName.$error" ng-if="actForm.thirdpartyName.$touched" class="form_r red">
+                            <span required-error></span>
+                            <span maxlength-error conf="{maxLength:15}"></span>
+                        </div>
+                    </div>
+                    <div class="form_row">
+                        <div class="form_l">
+                            <span class="red">*</span>面额：
+                        </div>
+                        <div class="form_r">
+                            <input num-input type="text" name="outPrice" class="msize_input" ng-model="couponInfo.outPrice" maxlength="15" required> 元
+                        </div>
+                        <div ng-messages="actForm.outPrice.$error" ng-if="actForm.outPrice.$touched" class="form_r red">
+                            <span required-error></span>
+                            <span maxlength-error conf="{maxLength:15}"></span>
+                        </div>
+                    </div>
+                    <div class="form_row">
+                        <div class="form_l">
+                            <span class="red">*</span>现价：
+                        </div>
+                        <div class="form_r">
+                            <input num-input type="text" name="price" class="msize_input" ng-model="couponInfo.price" maxlength="15" required> 元
+                        </div>
+                        <div ng-messages="actForm.price.$error" ng-if="actForm.price.$touched" class="form_r red">
+                            <span required-error></span>
+                            <span maxlength-error conf="{maxLength:15}"></span>
+                        </div>
+                    </div>
+                    <div class="form_row">
+                        <div class="form_l">
+                            <span class="red">*</span>批次号：
+                        </div>
+                        <div class="form_r">
+                            <input type="text" name="batchNo" class="msize_input" ng-model="couponInfo.batchNo" maxlength="15" required>
+                        </div>
+                        <div ng-messages="actForm.batchNo.$error" ng-if="actForm.batchNo.$touched" class="form_r red">
+                            <span required-error></span>
+                            <span maxlength-error conf="{maxLength:15}"></span>
+                        </div>
+                    </div>
+                    <div class="form_row">
+                        <div class="form_l">服务承诺：</div>
+                        <div class="form_r">
+                            <label><input type="checkbox" ng-model="selectCheck.anytimeRefund">支持随时退</label>
+                            <label><input type="checkbox" ng-model="selectCheck.invalidRefund">支持过期退</label>
+                        </div>
+                    </div>
+                    <div class="form_row">
+                        <div class="form_l">消费方式：</div>
+                        <div class="form_r">
+                            <label><input type="radio" name="consumeType" ng-model="couponInfo.consumeType" ng-value="'0'">直接消费</label>
+                            <label>
+                                <input type="radio" name="consumeType" ng-model="couponInfo.consumeType" ng-value="'1'">预约消费
+                                <span>请提前 <input num-input type="text" class="ssize_input" ng-model="couponInfo.appointmentDays"> 天 <input num-input type="text" class="ssize_input" ng-model="couponInfo.appointmentHours"> 时，预约</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form_row">
+                        <div class="form_l">
+                            <span class="red">*</span>发行数量：
+                        </div>
+                        <div class="form_r">
+                            <input num-input type="text" name="stock" class="msize_input" ng-model="couponInfo.stock" maxlength="15" required> 张
+                        </div>
+                        <div ng-messages="actForm.stock.$error" ng-if="actForm.stock.$touched" class="form_r red">
+                            <span required-error></span>
+                            <span maxlength-error conf="{maxLength:15}"></span>
+                        </div>
+                    </div>
+                    <div class="form_row">
+                        <div class="form_l">
+                            <span class="red">*</span>使用有效期：
+                        </div>
+                        <div class="form_r">
+                            <input ng-laydate ng-model="couponInfo.expiryStartDate" min-date="{{canPreheatTime | date:'yyyy-MM-dd'}}" type="text" name="expiryStartDate"
+                                   class="msize_input laydate-icon" istime="true" issecond="false" format="YYYY-MM-DD"  minuteset="half" required> 至
+                            <input ng-laydate ng-model="couponInfo.expiryEndDate" min-date="{{couponInfo.expiryStartDate | date:'yyyy-MM-dd'}}" type="text" name="expiryEndDate"
+                                   class="msize_input laydate-icon" istime="true" issecond="false" format="YYYY-MM-DD"  minuteset="half" required>
+                            <label><input type="checkbox" ng-model="selectCheck.supportWeekend">周末通用</label>
+                            <label><input type="checkbox" ng-model="selectCheck.supportHoliday">节假日通用</label>
+                        </div>
+                        <div ng-messages="actForm.expiryStartDate.$error" ng-if="actForm.expiryStartDate.$touched" class="form_r red">
+                            <span required-error></span>
+                        </div>
+                        <div ng-messages="actForm.expiryStartDate.$error" ng-if="actForm.expiryStartDate.$touched" class="form_r red">
+                            <span required-error></span>
+                        </div>
+                    </div>
+                    <div class="form_row">
+                        <div class="form_l">
+                            <span class="red">*</span>限购数量：
+                        </div>
+                        <div class="form_r">
+                            <input type="text" name="stock" class="msize_input" ng-model="couponInfo.limitNum" maxlength="15" required> 张
+                        </div>
+                        <div ng-messages="actForm.limitNum.$error" ng-if="actForm.limitNum.$touched" class="form_r red">
+                            <span required-error></span>
+                            <span maxlength-error conf="{maxLength:15}"></span>
+                        </div>
+                    </div>
+                    <div class="form_row">
+                        <div class="form_l">
+                            <span class="red">*</span>所属供应商：
+                        </div>
+                        <div class="form_r">
+                            <select name="supplierId" ng-model="couponInfo.supplierId" ng-options="item.supplierId as item.name for item in suppliers"></select>
+                        </div>
+                        <div ng-messages="actForm.supplierId.$error" ng-if="actForm.supplierId.$touched" class="form_r red">
+                            <span required-error></span>
+                            <span maxlength-error conf="{maxLength:15}"></span>
+                        </div>
+                    </div>
+                    <div class="form_row">
+                        <div class="form_l">
+                            <span class="red">*</span>渠道：
+                        </div>
+                        <div class="form_r">
+                            <label ng-repeat="item in channelsList"><input type="checkbox" name="salesChannel" ng-model="item.selected" ng-click="selectChannel(item)">{{item.name}}</label>
+                        </div>
+                        <div ng-messages="actForm.salesChannel.$error" ng-if="actForm.salesChannel.$touched" class="form_r red">
+                            <span required-error></span>
+                        </div>
+                    </div>
+                    <div class="form_row">
+                        <div class="form_l">适用城市：</div>
+                        <div class="form_r">
+                            <label><input type="checkbox" name="citys" ng-model="cityIsSelected" ng-click="selectCity()">选择适用城市</label>
+                        </div>
+                        <div class="form_r gray">不选默认为全国通用</div>
+                    </div>
+                    <div class="form_row">
+                        <div class="form_l"><span class="red">*</span>使用规则：</div>
+                        <div class="form_r">
+                            <textarea class="form_input_skin_big" role="5" ng-model="couponInfo.serviceRules"></textarea>
+                        </div>
+                    </div>
+                    <div class="form_row">
+                        <div class="form_l">
+                            <span class="red">*</span>卡券主图：
+                        </div>
+                        <div class="form_r">
+                            <span upload-pic-box conf="{picName:'mainImgUrl',canDelete:true}" pic-model="couponInfo.mainImgUrl"></span>
+                        </div>
+                    </div>
+
+                    <div class="form_row">
+                        <div class="form_l">
+                            <span class="red">*</span>卡券详情：
+                        </div>
+                        <div class="form_r" style="width: 600px;">
+                            <div ueditor config="config" ng-model="couponInfo.couponDesc.description"></div>
+                        </div>
+                        <div ng-messages="actForm.desc.$error" ng-if="actForm.desc.$touched" class="form_r red">
+                            <span required-error></span>
+                            <span maxlength-error conf="{maxLength:15}"></span>
+                        </div>
+                    </div>
+                    <div class="form_row">
+                        <div class="form_l">
+                            <span class="red">*</span>上架时间：
+                        </div>
+                        <div class="form_r">
+                            <label><input type="radio" ng-model="couponInfo.sellType" ng-value="'0'" name="sellType">立即上架</label>
+                            <label>
+                                <input type="radio" ng-model="couponInfo.sellType" ng-value="'1'" name="sellType">指定时间
+                                <input ng-laydate ng-model="couponInfo.sellDatetime" min-date="{{canPreheatTime | date:'yyyy-MM-dd'}}" type="text" name="expiryStartDate"
+                                       class="msize_input laydate-icon" istime="true" format="YYYY-MM-DD" ng-required="couponInfo.sellType==1">
+                            </label>
+                        </div>
+                        <div ng-messages="actForm.sellType.$error" ng-if="actForm.sellType.$touched" class="form_r red">
+                            <span required-error></span>
+                        </div>
+                    </div>
+                    <div class="form_row sub">
+                        <input type="button" class="sort_btn" ng-disabled="actForm.$invalid" ng-class="{'gray':actForm.$invalid}" value="完成创建" ng-click="createCoupon()">
+                        <input type="button" class="sort_btn gray" value="返回" ui-sref="{{isThirdCoupon?'main.thirdCouponList':'main.cardCouList'}}">
+                    </div>
+                </form>
+            </div>
+            <div class="step-second" ng-if="isCreate">
+                <form class="form_wrap" name="importsForm">
+                    <div class="form_row">
+                        <div class="form_l">
+                            <span class="red">*</span>导入：
+                        </div>
+                        <div class="form_r">
+                            <input name="fileName" id="thirdParams" type="file">
+                        </div>
+                        <div ng-messages="importsForm.fileName.$error" ng-if="importsForm.sellType.$touched" class="form_r red">
+                            <span required-error></span>
+                        </div>
+                    </div>
+                    <div class="form_row sub">
+                        <input type="button" class="sort_btn" ng-disabled="importsForm.$invalid" ng-class="{'gray':actForm.$invalid}" value="完成导入，提交审核" ng-click="importsSubmit()">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

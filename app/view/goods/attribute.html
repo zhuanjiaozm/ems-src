@@ -1,0 +1,120 @@
+<div class="main_wrap">
+     <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>商品管理</a><a>属性列表</a>
+            </div>
+            <div class="two-part">
+                <div class="left-tree">
+                    <ul id="treeDemo" class="ztree"></ul>
+                </div>
+                <div class="table_warp">
+                    <div class="operate">
+                        <span ng-bind="'当前分类：'+parentName"></span>
+                        <button ng-click="addAttribute()">新增</button>
+                    </div>
+                    <table class="list_table">
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>属性ID</th>
+                            <th>属性名</th>
+                            <th>属性类型</th>
+                            <th>组件类型</th>
+                            <th width="130">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody ng-if="attrList.length>0">
+                            <tr ng-repeat="item in attrList">
+                                <td>{{$index+1}}</td>
+                                <td ng-bind="item.id"></td>
+                                <td ng-bind="item.name"></td>
+                                <td>{{item.attributeType==0?'普通属性':'Sku属性'}}</td>
+                                <td>{{item.fieldType | fieldType}}</td>
+                                <td class="option">
+                                    <a ng-click="editAttribute(item)">编辑</a>
+                                    <a ng-click="deleteAttribute(item)">删除</a>
+                                    <a ng-if="item.fieldType>0" ng-click="attrValue(item.categoryId,item.id)">属性值</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody ng-if="attrList.length<1">
+                            <tr>
+                                <td colspan="7">暂无数据!</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+     </div>
+</div>
+
+<script type="text/ng-template" id="addAttribute">
+    <h1 ng-bind="dialogTitle"></h1>
+    <div class="ngdialog-content">
+        <dl>
+            <dt><span class="red">*</span>属性名称：</dt>
+            <dd><input type="text" class="w-large" placeholder="请输入分类名称，最多支持10个字" maxlength="10" ng-model="addParams.name"></dd>
+        </dl>
+        <dl>
+            <dt><span class="red">*</span>组件：</dt>
+            <dd>
+                <select class="w-medium" ng-model="addParams.fieldType">
+                    <option value="">--请选择--</option>
+                    <option value="0">文本</option>
+                    <option value="1">单选</option>
+                    <option value="2">多选</option>
+                </select>
+            </dd>
+        </dl>
+        <dl>
+            <dt><span class="red">*</span>是否必选：</dt>
+            <dd>
+                <label><input type="radio" name="required" ng-model="addParams.required" ng-value=false>否</label>
+                <label><input type="radio" name="required" ng-model="addParams.required" ng-value=true>是</label>
+            </dd>
+        </dl>
+        <dl>
+            <dt><span class="red">*</span>属性类型：</dt>
+            <dd>
+                <label><input type="radio" name="fieldType" ng-model="addParams.attributeType" ng-checked="addParams.attributeType==0" ng-value="0">商品属性</label>
+                <label><input type="radio" name="fieldType" ng-model="addParams.attributeType" ng-checked="addParams.attributeType==1" ng-value="1">sku属性</label>
+            </dd>
+        </dl>
+    </div>
+    <div class="ngdialog-footer">
+        <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+        <button class="btn-enter" ng-click="enter()">确认</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="operateAttribute">
+    <h1>操作属性值</h1>
+    <div class="add-attr-value">属性值：<input type="text" ng-model="attrValue.name" maxlength="10"> <a ng-click="addValue()">新增</a></div>
+    <div class="list_warp">
+        <table class="list_table">
+            <thead>
+                <tr>
+                    <th width="75%">属性值</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody ng-if="attrValueList.length>0">
+                <tr ng-repeat="item in attrValueList">
+                    <td ng-bind="item.name"></td>
+                    <td class="option">
+                        <!--<a>编辑</a>-->
+                        <a ng-click="delAttrValue(item.id)">删除</a>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody ng-if="attrValueList.length<1">
+                <tr>
+                    <td colspan="2">暂无数据！</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</script>
+

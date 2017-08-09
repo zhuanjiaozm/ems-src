@@ -1,0 +1,86 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>售后管理</a><a>退款处理详情</a>
+            </div>
+            <div class="tab_box">
+                <ul class="tab-title">
+                    <li class="active"><a>退款详情</a></li>
+                    <li><input type="button" class="back_btn" ui-sref="main.refund" value="返回"></li>
+                </ul>
+                <div class="tab_content">
+                    <table class="form_table">
+                        <tr>
+                            <th width="15%">退款编号</th>
+                            <td width="85%">{{vm.id}}</td>
+                        </tr>
+                        <tr>
+                            <th>订单编号</th>
+                            <td>{{vm.orderid}}</td>
+                        </tr>
+                        <tr>
+                            <th>退款类型</th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>退款状态</th>
+                            <td>{{vm.status}}</td>
+                        </tr>
+                        <tr>
+                            <th>退款金额</th>
+                            <td>{{vm.refundAmount|currency:'￥'}}</td>
+                        </tr>
+                        <tr>
+                            <th>退款原因</th>
+                            <td>{{vm.reason}}</td>
+                        </tr>
+                        <tr>
+                            <th>退款说明</th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>商品列表</th>
+                            <td>
+                                <table class="form_table" style="width:95%; margin:10px;">
+                                    <thead>
+                                    <tr>
+                                        <th>商品名称</th>
+                                        <th>属性</th>
+                                        <th>数量</th>
+                                        <th>金额</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>{{vm.title}}</td>
+                                        <td>{{vm.skuDesc}}</td>
+                                        <td>{{vm.refundCount}}</td>
+                                        <td>{{vm.orderAmount|currency:'￥'}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>申请介入</th>
+                            <td>买家已经申请客服介入，待客服处理。</td>
+                        </tr>
+                        <tr>
+                            <th>申请介入原因</th>
+                            <td>是打发打发懂法守法地方</td>
+                        </tr>
+                        <tr>
+                            <th>相关凭证</th>
+                            <td>
+                                <img src="/images/213.png" width="100">
+                                <img src="/images/213.png" width="100">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</div>

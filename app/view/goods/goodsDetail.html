@@ -1,0 +1,224 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a>
+                <span ng-if="!isExamine">
+                <a>商品管理</a><a>商品详情</a>
+                </span>
+                <span ng-if="isExamine">
+                <a>审核管理</a><a>商品审核</a>>审核详情
+                </span>
+            </div>
+            <div class="tab_box" ng-init="showMain='base'">
+                <ul class="tab-title">
+                    <li ng-class="{'active':showMain=='base'}" ng-click="showMain='base'"><a>基本信息</a></li>
+                    <li ng-class="{'active':showMain=='pic'}" ng-click="getProductPic()"><a>商品图片</a></li>
+                    <li ng-class="{'active':showMain=='detail'}" ng-click="getProductDesc()"><a>商品详情</a></li>
+                    <li ng-class="{'active':showMain=='attribute'}" ng-click="getProductSku()"><a>商品属性</a></li>
+                    <li ng-class="{'active':showMain=='presell'}" ng-click="showMain='presell'"><a>预售信息</a></li>
+                    <li ng-class="{'active':showMain=='examine'}" ng-click="getExamine()"><a>审核信息</a></li>
+                    <li><input type="button" class="back_btn"
+                               ui-sref="{{isExamine ? 'main.goodsExamine' : 'main.goodsList({type:productType})'}}" value="返回"></li>
+                </ul>
+                <div class="tab_content" ng-if="showMain=='base'">
+                    <div ng-if="productType=='0'">
+                        <table class="form_table detail-table">
+                            <tr>
+                                <th width="15%">商品编号</th>
+                                <td width="35%" ng-bind="product.id"></td>
+                                <th width="15%">商品名称</th>
+                                <td width="35%" ng-bind="product.title">女包新款2013新款潮流女真皮包 包邮</td>
+                            </tr>
+                            <tr>
+                                <th>市场价</th>
+                                <td ng-bind="product.outPrice | currency:'￥'">1999.00</td>
+                                <th>商城价</th>
+                                <td ng-bind="product.price | currency:'￥'">1666.00</td>
+                            </tr>
+                            <tr>
+                                <th>商品库存</th>
+                                <td ng-bind="product.stock+product.unit">108 件</td>
+                                <th>商品分类</th>
+                                <td ng-bind="product.categoryPathname || '--'">一级分类 > 二级分类 > 三级分类</td>
+                            </tr>
+                            <tr>
+                                <th>所属店铺</th>
+                                <td ng-bind="product.shopName">淼鑫猪肚鸡</td>
+                                <th>店铺编号</th>
+                                <td ng-bind="product.id">109873</td>
+                            </tr>
+                            <tr>
+                                <th>当前状态</th>
+                                <td ng-bind="product.isSearch==1?'屏蔽':(product.productStatus==1&&product.auditStatus==3?'上架':'下架')">已下架</td>
+                                <th>店铺分类</th>
+                                <td ng-bind="product.shopProductCategoryPath || '暂无分类'"></td>
+                            </tr>
+                            <tr>
+                                <th>发布时间</th>
+                                <td ng-bind="product.createTime | date:'yyyy-MM-dd hh:mm:ss'">2017-03-16 08:30</td>
+                                <th>{{isExamine?'--':'上架时间'}}</th>
+                                <td ng-bind="isExamine?'--':(product.startSaleTime | date:'yyyy-MM-dd hh:mm:ss')">--</td>
+                            </tr>
+                        </table>
+                        <div>
+                            <h2 class="title">物流服务信息</h2>
+                            <table class="form_table detail-table">
+                                <tbody>
+                                <tr>
+                                    <th width="15%">提货方式</th>
+                                    <td width="35%" ng-bind="product.pickupType | pickupType"></td>
+                                    <th width="15%">运费模板</th>
+                                    <td width="35%" ng-bind="product.freightFeeName"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div ng-if="productType=='1'">
+                        <table class="form_table detail-table">
+                            <tr>
+                                <th width="15%">商品编号</th>
+                                <td width="35%" ng-bind="product.id"></td>
+                                <th width="15%">商品名称</th>
+                                <td width="35%" ng-bind="product.title">女包新款2013新款潮流女真皮包 包邮</td>
+                            </tr>
+                            <tr>
+                                <th>市场价</th>
+                                <td ng-bind="product.outPrice | currency:'￥'">1999.00</td>
+                                <th>商城价</th>
+                                <td ng-bind="product.price | currency:'￥'">1666.00</td>
+                            </tr>
+                            <tr>
+                                <th>商品库存</th>
+                                <td ng-bind="product.stock+product.unit">108 件</td>
+                                <th>商品分类</th>
+                                <td ng-bind="product.categoryPathname || '--'"></td>
+                            </tr>
+                            <tr>
+                                <th>所属店铺</th>
+                                <td ng-bind="product.shopName">淼鑫猪肚鸡</td>
+                                <th>店铺编号</th>
+                                <td ng-bind="product.id">109873</td>
+                            </tr>
+                            <tr>
+                                <th>当前状态</th>
+                                <td ng-bind="product.isSearch==1?'屏蔽':((product.productStatus==1&&product.auditStatus==3)?'上架':'下架')"></td>
+                                <th>操作信息</th>
+                                <td ng-bind="'--'"></td>
+                            </tr>
+                            <tr>
+                                <th>发布时间</th>
+                                <td ng-bind="product.createTime | date:'yyyy-MM-dd hh:mm:ss'">2017-03-16 08:30</td>
+                                <th>{{isExamine?'--':'上架时间'}}</th>
+                                <td ng-bind="isExamine?'--':(product.startSaleTime | date:'yyyy-MM-dd hh:mm:ss')">--</td>
+                            </tr>
+                        </table>
+                        <div>
+                            <h2 class="title">服务信息</h2>
+                            <table class="form_table detail-table">
+                                <tbody>
+                                <tr>
+                                    <th width="15%">服务承诺</th>
+                                    <td width="35%">支持随时退  支持过期退</td>
+                                    <th width="15%">消费方式</th>
+                                    <td width="35%" ng-bind="product.consumeType=='0'?'免预约':'预约消费'"></td>
+                                </tr>
+                                <tr>
+                                    <th>使用有效期</th>
+                                    <td>
+                                        <span ng-if="product.validityType==0" ng-bind="product.beginTime | date:'yyyy-MM-dd' + ' 至'"></span>
+                                        <span ng-if="product.validityType==0||product.validityType==1" ng-bind="product.endTime | date:'yyyy-MM-dd'"></span>
+                                        <span ng-if="product.validityType==2" ng-bind="product.afterDay"></span>
+                                    </td>
+                                    <th>适用门店</th>
+                                    <td ng-bind="product.storeNames">分店1，分店2...</td>
+                                </tr>
+                                <tr>
+                                    <th>商家服务</th>
+                                    <td ng-bind="product.serviceDescription"></td>
+                                    <th>使用说明</th>
+                                    <td ng-bind="product.useDescription"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="show-form" ng-if="showMain=='pic'">
+                    <div>
+                        <ul class="images-list">
+                            <li class="w-320" ng-repeat="item in pics">
+                                <div class="imgbox">
+                                    <img ng-src="{{imgUrl+item.url}}" alt="">
+                                </div>
+                                <!--<div class="imgtitle">商品主图</div>-->
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="show-form" ng-if="showMain=='detail'">
+                    <div style="padding:0 20px;" ng-bind-html="desc"></div>
+                </div>
+                <div class="tab_content" ng-if="showMain=='attribute'">
+                    <div>
+                        <h2 class="title">商品属性</h2>
+                        <ul class="clearfix">
+                            <li class="fleft" style="width:20%;" ng-repeat="item in attrs">{{item.attributeName}}：<span
+                                    ng-repeat="value in item.values">{{value.valueName+'，'}}</span></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h2 class="title">sku属性</h2>
+                        <table class="form_table">
+                            <thead>
+                            <tr>
+                                <th ng-repeat="item in skus[0].items track by $index">
+                                    {{item.attributeName}}
+                                </th>
+                                <th>价格</th>
+                                <th>库存</th>
+                                <th>自定义编号</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in skus">
+                                <td ng-repeat="value in item.items" ng-bind="value.valueName"></td>
+                                <td ng-bind="item.price | currency:'￥'"></td>
+                                <td ng-bind="item.stock"></td>
+                                <td ng-bind="item.outerId">231</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="show-form" ng-if="showMain=='presell'">
+                    <div>
+                        <dl>
+                            <dt>预售结束时间：</dt>
+                            <dd>2017-12-12 18:23:23</dd>
+                        </dl>
+                        <dl>
+                            <dt>每人限购数量：</dt>
+                            <dd>3</dd>
+                        </dl>
+                        <dl>
+                            <dt>预售规则：</dt>
+                            <dd>累计销售人次达到 2人</dd>
+                        </dl>
+                        <dl>
+                            <dt>预售规则：</dt>
+                            <dd>预售活动结束后 5 天内发货</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="show-form" ng-if="showMain=='examine'">
+                    <div examine-info info="auditInfo"></div>
+                </div>
+            </div>
+            <div class="tab_box" ng-if="isExamine && taskData.taskStatus==1">
+                <div examine-form conf="{id:taskData.taskId, flag:'goods'}"></div>
+            </div>
+        </div>
+    </div>
+</div>

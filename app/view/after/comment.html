@@ -1,0 +1,119 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>售后管理</a><a>评论列表</a>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">订单编号:</div>
+                        <div class="sch-input"><input type="text" num-input ng-model="params.orderId" class="sort_input_skin"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">商品名称:</div>
+                        <div class="sch-input"><input type="text" ng-model="params.title" class="sort_input_skin"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">商品编号：</div>
+                        <div class="sch-input"><input type="text" num-input ng-model="params.productId" class="sort_input_skin"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">评价时间:</div>
+                        <div class="sch-input">
+                            <input type="text" ng-laydate max-date='{{params.end}}' class="sort_input_skin_s laydate-icon" ng-model="params.begin">                            -
+                            <input type="text" ng-laydate min-date='{{params.begin}}' class="sort_input_skin_s laydate-icon" ng-model="params.end">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">评价类型：</div>
+                        <div class="sch-input">
+                            <select ng-model="params.commentLevel">
+                                <option value="">全部</option>
+                                <option value="good">好评</option>
+                                <option value="normal">中评</option>
+                                <option value="bad">差评</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">买家账号：</div>
+                        <div class="sch-input"><input ng-model="params.memberAccount" type="text" class="sort_input_skin"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">店铺名称：</div>
+                        <div class="sch-input"><input ng-model="params.shopName" type="text" class="sort_input_skin"></div>
+                    </div>
+
+                    <div class="item">
+                        <div class="sch-btn">
+                            <input ng-click="loadData()" type="button" class="sort_btn" value="搜索">
+                            <input ng-click="params = {index:0, size:params.size}" type="button" class="reset_btn" value="重置">
+                        </div>
+                    </div>
+                </div>
+                <table class="list_table">
+                    <thead>
+                        <tr>
+                            <!--<th><input type="checkbox"></th>-->
+                            <th>订单编号</th>
+                            <th>商品名称</th>
+                            <th>商品编号</th>
+                            <th>评价时间</th>
+                            <th>买家账号</th>
+                            <th>店铺名称</th>
+                            <!--<th>商户账号</th>-->
+                            <th>评价类型</th>
+                            <th>评价详情</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in vm">
+                            <!--<td><input type="checkbox"></td>-->
+                            <td>{{item.orderId}}</td>
+                            <td class="left"><img ng-src="{{imgBaseUrl+item.picUrl}}" width="40" height="40">{{item.title}}</td>
+                            <td>{{item.productId}}</td>
+                            <td>{{item.commentTime | date:'yyyy-MM-dd HH:mm'}}</td>
+                            <td>{{item.memberAccount}}</td>
+                            <td>{{item.shopName}}</td>
+                            <!--<td>{{牛牛ABC}}</td>-->
+                            <td>{{convertCommentType(item.commentLevel)}}</td>
+                            <td class="option">
+                                <a ng-click="commentInfo(item)">查看</a>
+                                <!--<a ng-click="block(item)">屏蔽</a>-->
+                                <a ng-click="delete(item)">删除</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pages">
+                    <div ui-pagination conf="conf"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="commentInfo">
+    <div class="commentInfo">
+        <div class="ngdialog-content">
+            <h1>买家评论：</h1>
+            <div>
+                <p>
+                    <div>{{vm.commentContent}}</div>
+                    <img ng-if="vm.pic01" img-zoom ng-src="{{imgBaseUrl + vm.pic01}}" />
+                    <img ng-if="vm.pic02" img-zoom ng-src="{{imgBaseUrl + vm.pic02}}" />
+                    <img ng-if="vm.pic03" img-zoom ng-src="{{imgBaseUrl + vm.pic03}}" />
+                    <img ng-if="vm.pic04" img-zoom ng-src="{{imgBaseUrl + vm.pic04}}" />
+                    <img ng-if="vm.pic05" img-zoom ng-src="{{imgBaseUrl + vm.pic05}}" />
+                </p>
+                <small>评论时间：{{vm.commentTime | date:'yyyy-MM-dd HH:mm:ss'}}</small>
+            </div>
+            <h1>商家评论：</h1>
+            <div ng-if="vm.replyContent">
+                <p>{{vm.replyContent}}</p>
+                <small>评论时间：{{vm.replyTime|date:'yyyy-MM-dd HH:mm'}}</small>
+            </div>
+        </div>
+    </div>
+</script>

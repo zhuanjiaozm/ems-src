@@ -1,0 +1,35 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>报表统计</a><a>流量分析</a>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">统计时间:</div>
+                        <div class="sch-input">
+                            <input type="text" id="start" class="sort_input_skin laydate-icon"> -
+                            <input type="text" id="end" class="sort_input_skin laydate-icon">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-btn">
+                            <input type="button" class="sort_btn" value="搜索">
+                        </div>
+                    </div>
+                </div>
+                <div class="charts-box">
+                    <ul class="cb-title">
+                        <li class="cut"><a>综合访问量</a></li>
+                        <li><a>地区分布</a></li>
+                        <li><a>访问来源</a></li>
+                    </ul>
+                    <div class="cb-main" style="height: 600px;">
+                        <area-chart config="config" data="data"></area-chart>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

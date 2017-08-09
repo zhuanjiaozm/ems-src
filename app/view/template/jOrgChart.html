@@ -1,0 +1,149 @@
+<div class="jOrgChart">
+    <!-- {{currentClickNode}}
+    <form class="form-inline">
+        <div class="form-group">
+            <label for="exampleInputName2">节点名称</label>
+            <input type="text" class="form-control" id="exampleInputName2" placeholder="节点名称" ng-model="currentClickNode.spaceName">
+
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail2">Email</label>
+            <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
+        </div>
+        <button type="submit" class="btn btn-default">确认</button>
+    </form> -->
+
+    <div id="chart" class="orgChart"></div>
+
+
+    <script type="text/ng-template" id="devicesNodeOperate.html">
+        <div class="operate">
+            <i class="fa fa-trash text-danger delete" aria-hidden="true"></i>
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+        </div>
+        <div class="popover fade bottom in">
+            <div class="arrow" style="left: 50%;"></div>
+            <h3 class="popover-title">确定要删除当前节点吗？</h3>
+            <div class="popover-content">
+                <button type="button" class="btn btn-default btn-sm btn-cancel" ng-click="cancelDelete()">取消</button>
+                <button type="button" class="btn btn-danger btn-sm btn-delete" ng-click="deleteOperate()">删除</button>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="spaceNodeOperate.html">
+        <div class="operate">
+            <i class="fa fa-pencil-square-o btn-edit-space-node" aria-hidden="true"></i>
+            <i class="fa fa-trash text-danger btn-delete" aria-hidden="true"></i>
+            <i class="fa fa-laptop text-warning btn-add-device" aria-hidden="true"></i>
+            <i class="fa fa-ravelry text-info btn-add-space" aria-hidden="true"></i>
+            <i class="fa fa-eye text-warning" aria-hidden="true"></i>
+        </div>
+
+        <!-- 编辑空间节点开始 -->
+        <div class="popover fade bottom in popover-edit-space">
+            <div class="arrow" style="left: 20%;"></div>
+            <h3 class="popover-title">请输入空间节点的名称：</h3>
+            <div class="popover-content form-inline">
+                <div class="form-group">
+                    <label for="exampleInputEmail2">空间名称:</label>
+                    <input type="email" class="form-control space-name" placeholder="空间名称">
+                </div>
+                <button type="button" class="btn btn-danger btn-sm popover-edit-space-confirm">修改</button>
+            </div>
+        </div>
+        <!-- 编辑空间节点结束 -->
+
+        <!-- 删除当前节点开始 -->
+        <div class="popover fade bottom in popover-delete">
+            <div class="arrow" style="left: 50%;"></div>
+            <h3 class="popover-title">确定要删除当前节点吗？</h3>
+            <div class="popover-content">
+                <button type="button" class="btn btn-default btn-sm btn-cancel" ng-click="cancelDelete()">取消</button>
+                <button type="button" class="btn btn-danger btn-sm btn-delete-confirm">删除</button>
+            </div>
+        </div>
+        <!-- 删除当前节点结束 -->
+        <!-- 新增子空间 开始 -->
+        <div class="popover fade bottom in popover-add-space">
+            <div class="arrow" style="left: 50%;"></div>
+            <h3 class="popover-title">请输入子空间名：</h3>
+            <div class="popover-content">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control btn-add-space-name" id="exampleInputAmount" placeholder="请输入子空间名">
+                            <div class="input-group-addon btn-add-space-confim">
+                                确认
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- 新增子空间 结束 -->
+
+        <!-- 选择已有设备 开始-->
+        <div class="popover fade bottom in popover-add-device">
+            <div class="arrow" style="left: 6%;"></div>
+            <h3 class="popover-title">请选择需要在当前空间下添加的设备</h3>
+            <form class="form-inline">
+                <div class="container-search">
+                    <div class="form-group">
+                        <label for="exampleInputName2">搜索:</label>
+                        <input type="text" class="form-control searchParam" placeholder="设备名称/编号">
+                    </div>
+                    <button type="button" class="btn btn-default btn-add-device-srearch">查找</button>
+                </div>
+
+                <div class="container-new">
+                    <div class="form-group">
+                        <label for="exampleInputName2">新增:</label>
+                        <select name="deviceId" class="deviceId form-control">
+                            <option value="">请选择设备类型</option>
+                        </select>
+                        <input type="text" class="form-control searchParam equipmentCode" placeholder="编号">
+                        <input type="text" class="form-control searchParam" placeholder="型号">
+                        <input type="text" class="form-control searchParam" placeholder="读取频率">
+                        <select class="form-control">
+                            <option value="">读取频率单位</option>
+                            <option value="1">秒</option>
+                            <option value="2">分钟</option>
+                            <option value="3">小时</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-default btn-add-device-new">新增</button>
+                </div>
+
+
+            </form>
+            <div class="popover-content">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                <!-- <input type="checkbox"> -->
+                            </th>
+                            <th>类型</th>
+                            <th>型号</th>
+                            <th>编号</th>
+                            <th>协议</th>
+                            <th>所属空间</th>
+                            <th>激活日期</th>
+                            <th>添加人</th>
+                            <th>添加时间</th>
+                            <th>状态</th>
+                            <th>读取频率</th>
+                        </tr>
+                    </thead>
+                    <tbody class="devicesList"></tbody>
+                </table>
+                <button type="button" class="btn btn-default btn-sm btn-cancel" ng-click="cancelDelete()">取消</button>
+                <button type="button" class="btn btn-success btn-sm btn-add-device-confirm">添加</button>
+            </div>
+        </div>
+        <!-- 选择已有设备 结束 -->
+
+
+    </script>
+</div>

@@ -1,0 +1,104 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b>
+                <a>首页</a>
+                <a>内容管理</a>
+                <a class="last-e">资讯管理</a>
+                <div class="operate">
+                    <button ui-sref="main.addNews">新建资讯</button>
+                </div>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">资讯标题:</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin w-medium" ng-model="params.infoTitle"></div>
+                    </div>
+                    
+                    <div class="item">
+                        <div class="sch-txt">创建时间:</div>
+                        <div class="sch-input">
+
+                            <input type="text" ng-laydate class="sort_input_skin laydate-icon"  ng-model="params.startTime" istime='false' max-date='{{params.endTime}}' format="YYYY-MM-DD">
+                            至
+                            <input type="text" ng-laydate class="sort_input_skin laydate-icon" ng-model="params.endTime" istime="false" min-date="{{params.startTime}}" format="YYYY-MM-DD">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">状态:</div>
+                        <div class="sch-input">
+                            <select class="w-medium" ng-model="params.finalStatus">
+                                <option value="">全部</option>
+                                <option ng-value="c.code" ng-repeat="c in newsFinalStatus" ng-bind="c.name"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">页面:</div>
+                        <div class="sch-input">
+                            <select class="w-medium" ng-model="params.infoPage">
+                                <option value="">全部</option>
+                                <option ng-value="c.code" ng-repeat="c in newsAllPages" ng-bind="c.name"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-btn">
+                            <input type="button" class="sort_btn" value="搜索" ng-click="getNoticesArray(params)">
+                            <ber-resert reset-obj="params"></ber-reset>
+                        </div>
+                    </div>
+                </div>
+                <table class="list_table">
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th class="left">标题</th>
+                            <th>页面</th>
+                            <th>创建时间</th>
+                            <th>状态</th>
+                            <th class="w-m">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="n in newsList" ng-if="newsList.length>0">
+                            <td ng-bind="$index+1"></td>
+                            <td class="left" ng-bind="n.infoTitle"></td>
+                            <td ng-bind="newsAllPagesObj[n.infoPage]"></td>
+                            <td ng-bind="n.createDatetime | date:'yyyy-MM-dd HH:mm:ss'"></td>
+                            <td ng-bind="n.finalStatusName"></td>
+                            <td class="option">
+                                <a ui-sref="main.addNews({flag:1,id:n.id})">详情</a>
+                                <a ui-sref="main.addNews({flag:2,id:n.id})"  ng-if="n.finalStatus!='2'">编辑</a>
+                                <a ng-if="n.finalStatus=='4'"  ng-click="toggleStatus(n.id,5)">失效</a>
+                                <a  ng-if="n.finalStatus=='5'" ng-click="toggleStatus(n.id,4)">生效</a>
+                                <a ng-click="delete(n.id)" ng-if="n.finalStatus!='2'">删除</a>
+                                <a ng-click="startWorkFlow(n.id)" ng-if="n.finalStatus=='1'||n.finalStatus=='3'">提交审核</a>
+                            </td>
+                        </tr>
+                        <tr ng-if="newsList.length<1">
+                            <td colspan="6">
+                                暂无数据
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pages">
+                    <div ui-pagination conf="conf" total="total"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="delete-news">
+    <h1>删除确认</h1>
+    <div class="ngdialog-content">
+        确定要删除本条资讯吗？
+    </div>
+    <div class="ngdialog-footer">
+        <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+        <button class="btn-enter" ng-click="enter()">确认</button>
+    </div>
+</script>

@@ -1,0 +1,110 @@
+<div class="main_wrap">
+     <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>商品管理</a><a>违规商品列表</a>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">商品编号:</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin" ng-model="params.productId" maxlength="20"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">商品名称:</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin" ng-model="params.title"  maxlength="20"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">所属店铺:</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin" ng-model="params.shopName"  maxlength="20"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">违规时间:</div>
+                        <div class="sch-input">
+                            <input type="text" class="laydate-icon" ng-model="params.createTime" ng-laydate max-date="{{params.endTime}}"> 至
+                            <input type="text" class="laydate-icon" ng-model="params.endTime"  ng-laydate  min-date="{{params.startTime}}">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">所属分类:</div>
+                        <div class="sch-input">
+                            <select ng-model="categoryId.l1" ng-change="getSons(2,categoryId.l1);" ng-if="catsList1&&catsList1.length>0">
+                                <option value="">请选择分类</option>
+                                <option value="{{c.id}}" ng-repeat="c in catsList1">{{c.name}}</option>
+                            </select>
+                            <select ng-model="categoryId.l2"  ng-change="getSons(3,categoryId.l2);" ng-if="categoryId.l1&&catsList2.length>0">
+                                <option value="">请选择分类</option>
+                                <option value="{{c.id}}" ng-repeat="c in catsList2">{{c.name}}</option>
+                            </select>
+                            <select ng-model="categoryId.l3"  ng-change="getSons(4,categoryId.l3);" ng-if="categoryId.l2&&catsList3.length>0">
+                                <option value="">请选择分类</option>
+                                <option value="{{c.id}}" ng-repeat="c in catsList3">{{c.name}}</option>
+                            </select>
+                            <select ng-model="categoryId.l4"  ng-change="getSons(5,categoryId.l4)" ng-if="categoryId.l3&&catsList4.length>0">
+                                <option value="">请选择分类</option>
+                                <option value="{{c.id}}" ng-repeat="c in catsList4">{{c.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-btn">
+                            <input type="button" class="sort_btn" value="搜索" ng-click="saerch()">
+                            <!-- <span ber-resert reset-obj="params"></span> -->
+                        </div>
+                    </div>
+                </div>
+                <table class="list_table">
+                    <thead>
+                        <tr >
+                            <th>
+                                <input type="checkbox" ng-click="selectAll($event)" ng-checked="isSelectedAll()"/>
+                            </th>
+                            <th>商品编号</th>
+                            <th width="32%" style="text-align: left;">商品名称</th>
+                            <th>所属店铺</th>
+                            <th>商户名称</th>
+                            <th>商品分类</th>
+                            <th>商城价格</th>
+                            <th>库存</th>
+                            <th>违规时间</th>
+                            <th width="50">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-if="list.length>0" ng-repeat="l in list">
+                            <td>
+                                <input type="checkbox" name="selected" ng-checked="isSelected(l.id)" ng-click="updateSelection($event,l.id)"/>
+                            </td>
+                            <td ng-bind="l.productId"></td>
+                            <td style="text-align: left;" ng-bind="l.title"></td>
+                            <td ng-bind="l.shopName"></td>
+                            <td ng-bind="l.merchantAccount"></td>
+                            <td ng-bind="l.categoryPathname"></td>
+                            <td ng-bind="l.price"></td>
+                            <td ng-bind="l.stock"></td>
+                            <td ng-bind="l.createTime | date:'yyyy-MM-dd HH:mm:ss'"></td>
+                            <td class="option">
+                                <a ng-click="illegalproduct(1,l)">恢复</a>
+                            </td>
+                        </tr>
+                        <tr ng-if="!list||list.length<1">
+                            <td colspan="11">
+                                暂无数据！
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <div class="pages">
+                    <div class="batch-operate" ng-show="list.length>0">
+                        <label>
+                            <input type="checkbox" ng-click="selectAll($event)" ng-checked="isSelectedAll()"/>全选
+                        </label>
+                        <button class="bo-red" ng-click="illegalproduct(2,selected)">批量恢复</button>
+                    </div>
+                    <div ui-pagination conf="conf"></div>
+                </div>
+            </div>
+        </div>
+     </div>
+</div>

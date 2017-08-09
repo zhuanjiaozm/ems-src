@@ -1,0 +1,120 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>代理商管理</a><span>添加代理商</span>
+            </div>
+            <form class="form_wrap" name="agentForm">
+                <div class="form_row">
+                    <div class="form_l"><span class="red">*</span>代理商名称：</div>
+                    <div class="form_r">
+                        <input type="text" name="name" class="form_input_skin_big" ng-model="agentInfo.name" maxlength="30" required> ({{agentInfo.name.length||0}}/30)
+                    </div>
+                    <div ng-messages="agentForm.name.$error" ng-if="agentForm.name.$touched" class="form_r red">
+                        <span required-error></span>
+                        <span maxlength-error conf="{maxLength:30}"></span>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l"><span class="red">*</span>代理商编号：</div>
+                    <div class="form_r">
+                        <input type="text" name="code" class="form_input_skin" ng-model="agentInfo.code" maxlength="15" required>
+                    </div>
+                    <div ng-messages="agentForm.code.$error" ng-if="agentForm.code.$touched" class="form_r red">
+                        <span required-error></span>
+                        <span maxlength-error conf="{maxLength:15}"></span>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l"><span class="red">*</span>代理商账号：</div>
+                    <div class="form_r">
+                        <input type="text" name="account" class="form_input_skin" ng-model="agentInfo.account" maxlength="16" required>
+                    </div>
+                    <div ng-messages="agentForm.account.$error" ng-if="agentForm.account.$touched" class="form_r red">
+                        <span required-error></span>
+                        <span maxlength-error conf="{maxLength:16}"></span>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l"><span class="red">*</span>密码：</div>
+                    <div class="form_r">
+                        <input type="password" name="password" class="form_input_skin" ng-minlength="6" ng-maxlength="16"
+                               ng-model="agentInfo.password" required>
+                    </div>
+                    <div ng-messages="agentForm.password.$error" ng-if="agentForm.password.$touched" class="form_r red">
+                        <span required-error></span>
+                        <span maxlength-error conf="{maxLength:16}"></span>
+                        <span minlength-error conf="{minLength:6}"></span>
+                    </div>
+                </div>
+                <div class="form_row" ng-if="!agentId">
+                    <div class="form_l"><span class="red">*</span>账号额度：</div>
+                    <div class="form_r">
+                        <input type="text" ng-model="agentInfo.agentsAssets.amount" num-input is-float="true"
+                               ng-max="1000000" ng-can-change="((agentInfo.agentsAssets.amount||0) * 100) % 1 == 0"
+                               class="form_input_skin" name="amount">
+                    </div>
+                    <div ng-messages="agentForm.password.$error" ng-if="agentForm.password.$touched" class="form_r red">
+                        <span required-error></span>
+                        <span maxlength-error conf="{maxLength:16}"></span>
+                        <span minlength-error conf="{minLength:6}"></span>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l"><span class="red">*</span>联系人：</div>
+                    <div class="form_r">
+                        <input type="text" name="name" class="form_input_skin" ng-maxlength="16" ng-model="agentInfo.contacts" required>
+                    </div>
+                    <div ng-messages="agentForm.contacts.$error" ng-if="agentForm.contacts.$touched" class="form_r red">
+                        <span required-error></span>
+                        <span maxlength-error conf="{maxLength:16}"></span>
+                        <span minlength-error conf="{minLength:6}"></span>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l"><span class="red">*</span>联系方式：</div>
+                    <div class="form_r">
+                        <input type="text" num-input name="contactsMobile" class="form_input_skin" ng-maxlength="16" ng-model="agentInfo.contactsMobile" required>
+                    </div>
+                    <div ng-messages="agentForm.contactsMobile.$error" ng-if="agentForm.contactsMobile.$touched" class="form_r red">
+                        <span required-error></span>
+                        <span maxlength-error conf="{maxLength:16}"></span>
+                        <span minlength-error conf="{minLength:6}"></span>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l"><span class="red">*</span>所属分行：</div>
+                    <div class="form_r">
+                        <span organize-select conf="{nameFlag:',',firstRequired:true}" ng-if="!isLoading" organize-id="agentInfo.organizeId"
+                              organize-ids="agentInfo.organizeIds" organize-names="agentInfo.orgName"></span>
+                    </div>
+                    <div ng-messages="agentForm.firstRequired.$error" ng-if="agentForm.firstRequired.$touched" class="form_r red">
+                        <span required-error></span>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l">所属地区：</div>
+                    <div class="form_r">
+                        <div city-select ng-if="!isLoading"
+                             province-model="agentInfo.province" province-name-model="agentInfo.provinceName"
+                             city-model="agentInfo.city" city-name-model="agentInfo.cityName"
+                             district-model="agentInfo.district" district-name-model="agentInfo.districtName">
+                        </div>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l">详细地址：</div>
+                    <div class="form_r">
+                        <textarea class="form_input_skin_big" rows="3" ng-model="agentInfo.addressDetail" maxlength="100"></textarea>
+                    </div>
+                </div>
+
+                <div class="form_row sub">
+                    <input type="button" class="sort_btn" ng-disabled="agentForm.$invalid" ng-class="{'gray':agentForm.$invalid}" value="完成创建" ng-click="submitAgent()">
+                    <input type="button" class="sort_btn gray" value="返回" ui-sref="main.agentList">
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

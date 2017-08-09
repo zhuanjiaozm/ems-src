@@ -1,0 +1,101 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>商户管理</a><a>经营分类管理</a>
+            </div>
+            <div class="two-part">
+                <div class="left-tree">
+                    <ul id="treeDemo" class="ztree"></ul>
+                </div>
+                <div class="table_warp">
+                    <div class="operate">
+                        <button ng-click="addBusinessCategory()">新增</button>
+                    </div>
+                    <table class="list_table">
+                        <thead>
+                        <tr>
+                            <th>分类编号</th>
+                            <th>分类名称</th>
+                            <th>是否显示</th>
+                            <th>排序</th>
+                            <th width="120">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in businessChildCategorys">
+                            <td>{{item.code}}</td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.visible==1?'是':'否'}}</td>
+                            <td>{{item.ordinal}}</td>
+                            <td class="option">
+                                <a ng-click="editBusinessCategory(item)">编辑</a>
+                                <a ng-click="delCats(item)">删除</a>
+                            </td>
+                        </tr>
+                        <tr ng-if="businessChildCategorys<1">
+                            <td colspan="5">
+                                暂无数据！
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="addCategory">
+    <h1 ng-bind="dailogTitle"></h1>
+    <div class="ngdialog-content">
+        <dl>
+            <dt><span class="red">*</span>分类名称：</dt>
+            <dd><input type="text" class="w-large" name="name" placeholder="请输入分类名称，最多支持10个字" ng-model="category.name" maxlength="10" required>
+            </dd>
+        </dl>
+        <dl>
+            <dt><span class="red">*</span>分类编号：</dt>
+            <dd><input type="text" class="w-medium" name="code" ng-model="category.code" maxlength="100" required>
+            </dd>
+        </dl>
+        <dl>
+            <dt><span class="red">*</span>排序编号：</dt>
+            <dd><input type="text" class="w-medium" name="ordinal" num-input placeholder="用作排序" ng-model="category.ordinal" required>
+            </dd>
+        </dl>
+        <dl>
+            <dt><span class="red">*</span>是否显示：</dt>
+            <dd>
+                <label><input type="radio" name="visible" ng-model="category.visible" value="0" ng-checked="{{!category.visible}}">否</label>
+                <label><input type="radio" name="visible" ng-model="category.visible" value="1" ng-checked="{{category.visible}}">是</label>
+            </dd>
+        </dl>
+        <dl ng-if="!category.id"><!-- 编辑时不能修改 -->
+            <dt>上级分类：</dt>
+            <dd>
+                <select class="select_skin" name="parentId" ng-model="category.parentId" ng-change="selectParentCat(this)"
+                        ng-options="val.id as val.name for val in businessParentCategorys">
+                    <option value="">请选择</option>
+                </select>
+            </dd>
+        </dl>
+        <dl>
+            <dt>关联商品分类：</dt>
+            <dd>
+                <div ng-if="!category.id && !category.parentId>0"><!-- 修改时不出来，选了一级分类的不出来 -->
+                    <label><input type="radio" name="categoryType" ng-model="category.categoryType" value="0"/>实物类</label>
+                    <label><input type="radio" name="categoryType" ng-model="category.categoryType" value="1"/>服务类</label>
+                </div>
+                <div ng-if="category.id && !category.parentId>0">
+                    <label ng-bind="{'0':'实物类','1':'服务类'}[category.categoryType]"></label>
+                </div>
+                <ul id="treeProductCat" class="ztree" ng-show="category.parentId>0"></ul>
+            </dd>
+        </dl>
+    </div>
+    <div class="ngdialog-footer">
+        <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+        <button class="btn-enter" ng-click="enter()">确认</button>
+    </div>
+</script>
+

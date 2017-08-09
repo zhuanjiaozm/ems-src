@@ -1,0 +1,38 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><span>首页</span><span>报表统计</span><span>订单统计</span>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">统计时间:</div>
+                        <div class="sch-input">
+                            <input type="text" class="sort_input_skin laydate-icon" ng-model="params.starttime"
+                                   ng-laydate format="YYYY-MM-DD" max-date="{{params.endtime || (nowDate | date:'yyyy-MM-dd')}}">
+                            至
+                            <input type="text" class="sort_input_skin laydate-icon" ng-model="params.endtime"
+                                   ng-laydate format="YYYY-MM-DD" min-date="{{params.starttime}}"  max-date="{{nowDate | date:'yyyy-MM-dd'}}">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-btn">
+                            <input type="button" class="sort_btn" value="搜索" ng-click="goSearch()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab_box">
+                <ul class="tab-title">
+                    <li ng-class="{'active':showMain=='tradeDayCount'}" ng-click="changeType('tradeDayCount')"><a>下单量</a></li>
+                    <li ng-class="{'active':showMain=='tradeDaySum'}" ng-click="changeType('tradeDaySum')"><a>交易额</a></li>
+                    <li></li><!--由于样式问题，这个li不能省-->
+                </ul>
+                <div class="echart_form">
+                    <area-chart config="config" data="statisticsData"></area-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

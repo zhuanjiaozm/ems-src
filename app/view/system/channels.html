@@ -1,0 +1,104 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>系统管理</a><a class="last-e">渠道管理</a>
+                <div class="operate">
+                    <button ng-click="operateChannles()">添加渠道</button>
+                </div>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">渠道名称:</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin" ng-model="channelsParams.name"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">状态:</div>
+                        <div class="sch-input">
+                            <select class="sort_input_skin" ng-model="channelsParams.status">
+                                <option value="1">可用</option>
+                                <option value="2">不可用</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <input type="button" class="sort_btn" ng-click="getSearch()" value="搜索">
+                        <!--<div select-shop sparams="sparams" select="radio"></div>-->
+                    </div>
+                </div>
+                <table class="list_table">
+                    <thead>
+                    <tr>
+                        <th width="35">序号</th>
+                        <th>渠道编号</th>
+                        <th>渠道名称</th>
+                        <th>渠道描述</th>
+                        <th>状态</th>
+                        <th width="150">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody ng-if="channelsList.length>0">
+                        <tr ng-repeat="item in channelsList">
+                            <td>{{$index+1}}</td>
+                            <td>{{ item.salesChannelId }}</td>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.channelDesc}}</td>
+                            <td ng-bind="statusName(item.status)"></td>
+                            <td class="option">
+                                <a>删除</a>
+                                <a ng-click="operateChannles(item)">编辑</a>
+                                <a>详情</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-if="!channelsList || channelsList.length<1">
+                        <tr>
+                            <td colspan="6">暂无数据！</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pages">
+                    <!--<div class="batch-operate">
+                        <label><input type="checkbox">全选</label>
+                        <button class="bo-red">批量删除</button>
+                    </div>-->
+                    <div ui-pagination conf="conf"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="operChannel">
+    <h1 ng-bind="ngDialogTitle"></h1>
+    <div class="ngdialog-content">
+        <form name="userForm">
+            <dl>
+                <dt><span class="red">*</span>渠道名称：</dt>
+                <dd><input type="text" class="w-medium" required ng-model="channelInfo.name" maxlength="32"></dd>
+            </dl>
+            <dl>
+                <dt><span class="red">*</span>渠道编码：</dt>
+                <dd><input type="text" class="w-medium" maxlength="32" ng-model="channelInfo.code"></dd>
+            </dl>
+            <dl>
+                <dt><span class="red">*</span>渠道状态：</dt>
+                <dd>
+                    <label><input type="radio" name="status" ng-value="'1'" ng-model="channelInfo.status">可用</label>
+                    <label><input type="radio" name="status" ng-value="'2'" ng-model="channelInfo.status">不可用</label>
+                </dd>
+            </dl>
+            <dl>
+                <dt>描述：</dt>
+                <dd>
+                    <textarea class="w-large" rows="5" ng-model="channelInfo.channelDesc" maxlength="100"></textarea>
+                </dd>
+            </dl>
+        </form>
+    </div>
+    <div class="ngdialog-footer">
+        <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+        <button class="btn-enter" ng-click="enter()">确认</button>
+    </div>
+</script>

@@ -1,0 +1,47 @@
+<div>
+    <div>
+        <dl ng-repeat="apply in info" ng-if="$last">
+            <dt>申请时间：</dt>
+            <dd>{{apply.createTime | date:'yyyy - MM - dd &nbsp;&nbsp;&nbsp;&nbsp; HH : mm : ss'}}</dd>
+        </dl>
+    </div>
+
+    <!--根据审核次数循环下面DIV-->
+    <div style="margin-bottom: 20px;"  ng-repeat="examine in info" ng-if="!$last">
+        <dl>
+            <dt>审核时间：</dt>
+            <dd>{{examine.createTime | date:'yyyy - MM - dd &nbsp;&nbsp;&nbsp;&nbsp; HH : mm : ss'}}</dd>
+        </dl>
+        <dl>
+            <dt>审核意见：</dt>
+            <dd>{{examine.ideaContent}}</dd>
+        </dl>
+        <dl>
+            <dt>审核结果：</dt>
+            <dd>{{examine.idea==1?'同意':''}}{{examine.idea==2?'不同意':''}}</dd>
+        </dl>
+        <dl>
+            <dt>审核者：</dt>
+            <dd>{{examine.operPerson}}</dd>
+        </dl>
+    </div>
+
+    <div style="margin-bottom: 20px;" ng-if="info.length<=1">
+        <dl>
+            <dt>审核时间：</dt>
+            <dd>&nbsp;</dd>
+        </dl>
+        <dl>
+            <dt>审核意见：</dt>
+            <dd>&nbsp;</dd>
+        </dl>
+        <dl>
+            <dt>审核结果：</dt>
+            <dd>&nbsp;</dd>
+        </dl>
+        <dl>
+            <dt>审核者：</dt>
+            <dd>&nbsp;</dd>
+        </dl>
+    </div>
+</div>

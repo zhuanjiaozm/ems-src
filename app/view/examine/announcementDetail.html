@@ -1,0 +1,40 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>审核管理</a><a>公告审核</a>> 审核详情
+            </div>
+            <div class="tab_box" ng-init="showMain='base'">
+                <ul class="tab-title">
+                    <li ng-class="{'active':showMain=='base'}" ng-click="showMain='base'"><a>公告详情</a></li>
+                    <li ng-class="{'active':showMain=='examine'}" ng-click="getExamine()"><a>审核信息</a></li>
+                    <li><input type="button" class="back_btn" ui-sref="main.announcementExamine" value="返回"></li>
+                </ul>
+                <div class="tab_content" ng-if="showMain=='base'">
+                    <table class="form_table">
+                        <tr>
+                            <th width="15%">公告标题</th>
+                            <td width="85%" ng-bind="announcement.title"></td>
+                        </tr>
+                        <tr>
+                            <th>公告摘要</th>
+                            <td ng-bind="announcement.summary"></td>
+                        </tr>
+                        <tr>
+                            <th>公告内容</th>
+                            <td style="text-align: left">
+                                <div data-ng-bind-html="announcement.content" class="ngBindHtml"></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="show-form" ng-if="showMain=='examine'">
+                    <div examine-info info="auditInfo"></div>
+                </div>
+            </div>
+            <div class="tab_box" ng-if="taskId!='detail' && announcement.auditStatus==2">
+                <div examine-form conf="{id:taskId, flag:'announcement'}"></div>
+            </div>
+        </div>
+    </div>
+</div>

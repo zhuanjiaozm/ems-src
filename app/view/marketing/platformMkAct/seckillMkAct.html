@@ -1,0 +1,127 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>营销中心</a><a>平台秒杀活动列表</a>
+                <div class="operate">
+                    <button ui-sref="main.seckillMkActCreate">新建活动</button>
+                </div>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">活动编号：</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin" ng-model="params.actId" num-input is-negative="true"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">活动名称：</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin" ng-model="params.actName"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">活动状态：</div>
+                        <div class="sch-input">
+                            <select class="sort_input_skin" ng-model="params.status" ng-options="key as val for (key, val) in seckillActStatus"></select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">创建时间：</div>
+                        <div class="sch-input">
+                            <input type="text" class="sort_input_skin laydate-icon" ng-model="params.beginCreateTime"
+                                   ng-laydate format="YYYY-MM-DD" max-date="{{params.endCreateTime}}">
+                            至
+                            <input type="text" class="sort_input_skin laydate-icon" ng-model="params.endCreateTime"
+                                   ng-laydate format="YYYY-MM-DD" min-date="{{params.beginCreateTime}}">
+                        </div>
+                    </div>
+                    <div class="item" ng-if="false">
+                        <div class="sch-txt">活动类型：</div>
+                        <div class="sch-input">
+                            <select>
+                                <option value="0">全部</option>
+                                <option value="0">秒杀</option>
+                                <option value="0">团购</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-btn">
+                            <input type="button" class="sort_btn" value="搜索" ng-click="goSearch()">
+                        </div>
+                    </div>
+                </div>
+                <table class="list_table">
+                    <thead>
+                    <tr>
+                        <th>活动编号</th>
+                        <th>活动名称</th>
+                        <th>活动创建时间</th>
+                        <th>活动时间</th>
+                        <th>创建人</th>
+                        <th>活动状态</th>
+                        <th class="w-m">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="act in actList">
+                        <td ng-bind="act.id"></td>
+                        <td ng-bind="act.actName"></td>
+                        <td ng-bind="act.createTime | date:'yyyy-MM-dd HH:mm:ss'"></td>
+                        <td>
+                            <div ng-bind="'起 '+(act.beginTime | date:'yyyy-MM-dd HH:mm:ss')"></div>
+                            <div ng-bind="'止 '+(act.endTime | date:'yyyy-MM-dd HH:mm:ss')"></div>
+                        </td>
+                        <td ng-bind="act.createPerson"></td>
+                        <td ng-bind="act.queryStatusDescription"></td>
+                        <td class="option">
+                            <a ui-sref="main.seckillMkActDetail({id:act.id})">详情</a>
+                            <a ng-if="!act.queryStatus || act.queryStatus=='preheatNotBegin'" ui-sref="main.seckillMkActModify({id:act.id})">编辑</a>
+                            <a ng-click="goodsList(act.id)">商品列表</a>
+                            <a ng-if="act.queryStatus!='terminate'" ng-click="actStop(act.id)">终止</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="pages">
+                    <div ui-pagination conf="conf"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="actGoods">
+    <div class="tab_box" style="padding:0">
+        <h1>活动商品列表</h1>
+        <div class="tab_content">
+            <table class="form_table">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>商品编号</th>
+                    <th>商品名称</th>
+                    <th>所属商户</th>
+                    <th>所属店铺</th>
+                    <th>数量</th>
+                    <th>秒杀价</th>
+                    <th>商城价</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="product in selectedProductList">
+                    <td ng-bind="$index+1 + goodsParams.size*goodsParams.index"></td>
+                    <td ng-bind="product.productId"></td>
+                    <td ng-bind="product.productTitle"></td>
+                    <td ng-bind="product.merchantName"></td>
+                    <td ng-bind="product.shopName"></td>
+                    <td ng-bind="product.actStock"></td>
+                    <td ng-bind="product.actPrice"></td>
+                    <td ng-bind="product.productPrice"></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="pages">
+                <div ui-pagination conf="confGoods"></div>
+            </div>
+        </div>
+    </div>
+</script>

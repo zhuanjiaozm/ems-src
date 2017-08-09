@@ -1,0 +1,228 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>营销中心</a><span ng-bind="isEdit ? '编辑平台优惠券':'新建平台优惠券'"></span>
+            </div>
+
+            <form class="form_wrap" name="actForm">
+                <div class="form_row">
+                    <div class="form_l">
+                        <span class="red">*</span>名称：
+                    </div>
+                    <div class="form_r">
+                        <input type="text" name="actTitle" class="form_input_skin" ng-model="addParams.act.actTitle" maxlength="15" required>({{addParams.act.actTitle.length||'0'}}/15)
+                    </div>
+                    <div ng-messages="actForm.actTitle.$error" ng-if="actForm.actTitle.$touched" class="form_r red">
+                        <span required-error></span>
+                        <span maxlength-error conf="{maxLength:15}"></span>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l">
+                        <span class="red">*</span>批次有效期：</div>
+                    <div class="form_r">
+                        <input class="msize_input laydate-icon" ng-model="addParams.act.actStartTime"  type="text" name="actStartTime" required
+                               ng-laydate istime="true" issecond="false" format="YYYY-MM-DD hh:mm:ss" min-date="{{nowDate | date:'yyyy-MM-dd HH:mm:ss'}}" minuteset="half">
+                        &nbsp;&nbsp;至&nbsp;&nbsp;
+                        <input class="msize_input laydate-icon"  ng-model="addParams.act.actEndTime"  type="text" name="actEndTime" required
+                               ng-laydate istime="true" issecond="false" format="YYYY-MM-DD hh:mm:ss" min-date="{{addParams.act.actStartTime ||(nowDate | date:'yyyy-MM-dd HH:mm:ss')}}" minuteset="half">
+                    </div>
+                    <div ng-messages="actForm.actStartTime.$error" ng-if="actForm.actStartTime.$touched" class="form_r red">
+                        <span required-error></span>
+                    </div>
+                    <div ng-messages="actForm.actEndTime.$error" ng-if="actForm.actEndTime.$touched" class="form_r red">
+                        <span required-error></span>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l">
+                        <span class="red">*</span>面额：</div>
+                    <div class="form_r">
+                        <input type="text" class="ssize_input" name="discountAmount" ng-model="addParams.act.discountAmount" required maxlength="5"
+                            num-input is-negative="true" ng-min="1"> 元
+                    </div>
+                    <div ng-messages="actForm.discountAmount.$error" ng-if="actForm.discountAmount.$touched" class="form_r red">
+                        <span required-error></span>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l">
+                        <span class="red">*</span>发行量：</div>
+                    <div class="form_r">
+                        <label><input type="radio" name="quantityType" ng-model="addParams.act.quantityType" value="UNLIMIT" ng-click="addParams.act.totalNum=''">无限制</label>&nbsp;&nbsp;
+                        <label>
+                            <input type="radio" name="quantityType" ng-model="addParams.act.quantityType" value="LIMIT" ng-checked="addParams.act.totalNum>0">发行 &nbsp;&nbsp;
+                            <input type="text" class="ssize_input" name="totalNum" ng-model="addParams.act.totalNum" maxlength="5" ng-model-options="{updateOn:'blur'}"
+                                   ng-required="addParams.act.quantityType=='LIMIT'"
+                                   num-input is-negative="true" ng-max="10001" ng-min="1"> 张 &nbsp;&nbsp;(不能超过10000张)
+                        </label>
+                    </div>
+                    <div ng-messages="actForm.totalNum.$error" ng-if="actForm.totalNum.$touched" class="form_r red">
+                        <span required-error></span>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l">总金额：</div>
+                    <div class="form_r">总额:<span class="red" ng-bind="addParams.act.discountAmount * addParams.act.totalNum || 0"></span> 元</div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l">
+                        <span class="red">*</span>每人限领：</div>
+                    <div class="form_r">
+                        <input type="text" class="ssize_input" name="maxQuantity" ng-model="addParams.act.maxQuantity" required maxlength="3"
+                               num-input is-negative="true"> 张/人 &nbsp;&nbsp;(用完才能继续领取)
+                    </div>
+                    <div ng-messages="actForm.maxQuantity.$error" ng-if="actForm.maxQuantity.$touched" class="form_r red">
+                        <span required-error></span>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l">
+                        <span class="red">*</span>使用条件：</div>
+                    <div class="form_r">
+                        满 <input type="text" class="ssize_input" name="orderAmount" ng-model="addParams.act.orderAmount" required maxlength="8" min-num-check="{{addParams.act.discountAmount || 1}}"
+                                 num-input is-negative="true" ng-min="1"> 元，可使用此券
+                    </div>
+                    <div ng-messages="actForm.orderAmount.$error" ng-if="actForm.orderAmount.$touched" class="form_r red">
+                        <span required-error></span>
+                        <span min-num-error conf="{minNumSet:addParams.act.discountAmount}"></span>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l">
+                        <span class="red">*</span>结算：
+                    </div>
+                    <div class="form_r" ng-settle add-params="addParams"></div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l">
+                        <span class="red">*</span>设置有效期：</div>
+                    <div class="form_r page_list_form">
+                        <div class="table_warp">
+                            <h3>设置优惠券的有效期</h3>
+                            <div class="form_row">
+                                <div class="form_l w_100"><label><input type="radio" name="validTimeType" value="BETWEEN" ng-model="addParams.act.validTimeType">指定时间:</label></div>
+                                <div class="form_r">
+                                    <input class="laydate-icon" ng-model="addParams.act.validStartTime" type="text" name="validStartTime" ng-required="addParams.act.validTimeType=='BETWEEN'"
+                                           ng-laydate istime="true" issecond="false" format="YYYY-MM-DD hh:mm:ss" min-date="{{nowDate | date:'yyyy-MM-dd HH:mm:ss'}}" max-date="{{addParams.act.vEndTime}}" minuteset="half">
+                                    &nbsp;&nbsp;至&nbsp;&nbsp;
+                                    <input class="laydate-icon" ng-model="addParams.act.vEndTime" type="text" name="vEndTime" ng-required="addParams.act.validTimeType=='BETWEEN'"
+                                           ng-laydate istime="true" issecond="false" format="YYYY-MM-DD hh:mm:ss" min-date="{{addParams.act.validStartTime ||(nowDate | date:'yyyy-MM-dd HH:mm:ss')}}" minuteset="half">
+                                </div>
+                                <div ng-messages="actForm.validStartTime.$error" ng-if="actForm.validStartTime.$touched" class="form_r red">
+                                    <span required-error></span>
+                                </div>
+                                <div ng-messages="actForm.vEndTime.$error" ng-if="actForm.vEndTime.$touched" class="form_r red">
+                                    <span required-error></span>
+                                </div>
+                            </div>
+                            <div class="form_row">
+                                <div class="form_l w_100"><label><input type="radio" name="validTimeType" value="DATE" ng-model="addParams.act.validTimeType">领取成功日至:</label></div>
+                                <div class="form_r">
+                                    <input class="laydate-icon"  ng-model="addParams.act.vTime"  type="text" name="vTime" ng-required="addParams.act.validTimeType=='DATE'"
+                                           ng-laydate istime="true" issecond="false" format="YYYY-MM-DD hh:mm:ss" min-date="{{nowDate | date:'yyyy-MM-dd HH:mm:ss'}}" minuteset="half">
+                                </div>
+                                <div ng-messages="actForm.vTime.$error" ng-if="actForm.vTime.$touched" class="form_r red">
+                                    <span required-error></span>
+                                </div>
+                            </div>
+                            <div class="form_row">
+                                <div class="form_l w_100"><label><input type="radio" name="validTimeType" value="DAYS" ng-model="addParams.act.validTimeType">领取成功后:</label></div>
+                                <div class="form_r">
+                                    <input type="text" class="ssize_input" ng-model="addParams.act.validDays" ng-required="addParams.act.validTimeType=='DAYS'"
+                                           num-input is-negative="true">天内有效
+                                </div>
+                                <div ng-messages="actForm.validDays.$error" ng-if="actForm.validDays.$touched" class="form_r red">
+                                    <span required-error></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l">
+                        <span class="red">*</span>适用范围：</div>
+                    <div class="form_r" ng-init="showMain='store'">
+                        <label ng-if="false"><input type="radio" name="useEdge">全场参与</label>
+                        <label ng-if="false"><input type="radio" name="useEdge">指定品类</label>
+                        <label>
+                            <input type="radio" ng-value="'SHOP'" ng-model="addParams.act.rangeType"
+                                      name="rangeType" required>指定店铺
+                        </label>
+                        <label ng-if="false">
+                            <input type="radio" ng-value="'PRODUCT'" ng-model="addParams.act.rangeType"
+                                      name="rangeType" required>部分商品
+                        </label>
+                        <span ng-if="false" class="red">说明：适用范围按大到小的范围排序</span>
+                    </div>
+                </div>
+                <div class="form_row" ng-if="addParams.act.rangeType!='ALL'">
+                    <div class="form_l">
+                        <span class="red">*</span>{{(addParams.act.rangeType!='PRODUCT')?'店铺':'商品'}}类型：
+                    </div>
+                    <div class="form_r">
+                        <label><input type="radio" ng-value="'REAL'" ng-model="addParams.act.categoryType"
+                                      name="mktType">实物类</label>
+                        <label ng-if="false"><input type="radio" ng-value="'SERVICE'" ng-model="addParams.act.categoryType"
+                                      name="mktType">服务类</label>
+                    </div>
+                    <div ng-messages="actForm.mktType.$error" ng-if="actForm.mktType.$touched" class="form_r red">
+                        <span required-error></span>
+                    </div>
+                </div>
+                <div class="form_row" ng-if="addParams.act.rangeType!='ALL'">
+                    <div class="form_l">
+                        <span class="red">*</span>指定{{(addParams.act.rangeType!='PRODUCT')?'店铺':'商品'}}：
+                    </div>
+                    <div class="form_r">
+                        <div select-shop sparams="sparams" select="checkbox"></div>
+                        <input name="sparams" type="hidden" ng-model="sparams.ids" ng-required="addParams.act.rangeType=='SHOP'||addParams.act.rangeType=='PRODUCT'">
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l">
+                        <span class="red">*</span>活动说明：
+                    </div>
+                    <div class="form_r">
+                        <textarea rows="5" ng-model="addParams.act.description" name="description" required></textarea>
+                    </div>
+                    <div ng-messages="actForm.description.$error" ng-if="actForm.description.$touched" class="form_r red">
+                        <span required-error></span>
+                    </div>
+                </div>
+                <div class="form_row" ng-if="false">
+                    <div class="form_l">
+                        <span class="red">*</span>推广方式：</div>
+                    <div class="form_r" ng-init="showMain='seller'">
+                        <input type="button" class="sort_btn" value="买家领取" ng-class="{'active':showMain=='seller'}" ng-click="showMain='seller'">
+                        <input type="button" class="sort_btn" value="平台发放" ng-class="{'active':showMain=='platform'}" ng-click="showMain='platform'">
+                    </div>
+                </div>
+                <div class="form_row" ng-if="false">
+                    <div class="form_l">
+                        <span class="red">*</span>推广范围：</div>
+                    <div class="form_r">
+                        <p ng-if="showMain=='seller'">
+                            <input type="checkbox" name="">店铺首页 &nbsp;&nbsp;
+                            <input type="checkbox" name="">领券中心 &nbsp;&nbsp;
+                            请选择领券中心分类
+                            <select class="select-inline">
+                                <option>请选择</option>
+                            </select>
+                        </p>
+                        <p ng-if="showMain=='platform'">
+                            <label><input type="radio" name="range">满就送</label>&nbsp;&nbsp;
+                            <label><input type="radio" name="range">指定客户</label>
+                        </p>
+                    </div>
+                </div>
+                <div class="form_row sub">
+                    <input type="button" class="sort_btn" ng-disabled="actForm.$invalid" ng-class="{'gray':actForm.$invalid}" value="完成创建" ng-click="createAct()">
+                    <input type="button" class="sort_btn gray" value="返回" ui-sref="main.couponDiscount">
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

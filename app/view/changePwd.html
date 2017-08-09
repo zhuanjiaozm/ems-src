@@ -1,0 +1,56 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>修改密码</a>
+            </div>
+            <form class="form_wrap" name="form_wrap">
+                <div class="form_row">
+                    <div class="form_l">登录名：</div>
+                    <div class="form_r" ng-bind="account"></div>
+                </div>
+                <div class="form_row" ng-if="profile.loginTime">
+                    <div class="form_l">原密码：</div>
+                    <div class="form_r">
+                        <input type="password"
+                               name="oldpwd"
+                               ng-minlength="6"
+                               ng-maxlength="32"
+                               class="form_input_skin w-large"
+                               ng-model="user.oldpwd" required>
+                        <span class="red" ng-show="form_wrap.oldpwd.$error.required&&form_wrap.oldpwd.$touched">密码不能为空</span>
+                        <span class="red"  ng-show="form_wrap.oldpwd.$error.minlength||form_wrap.oldpwd.maxlength">密码为6-32位</span>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l">新密码：</div>
+                    <div class="form_r">
+                        <input type="password"
+                               class="form_input_skin w-large"
+                               ng-pattern="/^(?!([a-zA-Z]+|\d+)$)[a-zA-Z_\d]{6,32}$/"
+                               name="newpwd"
+                               ng-model="user.newpwd" required>
+                        <span  class="red"  ng-show="form_wrap.newpwd.$error.required&&form_wrap.newpwd.$touched">新密码不能为空</span>
+                        <span  class="red"  ng-show="form_wrap.newpwd.$error.pattern&&form_wrap.newpwd.$touched">包含数字、大小写字母、符号中的两种及以上且密码为6-32位</span>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l">确认新密码：</div>
+                    <div class="form_r">
+                        <input type="password"
+                               class="form_input_skin w-large"
+                               name="passwordAgain"
+                               ng-model="user.passwordAgain" required>
+                        <span class="red" ng-show="form_wrap.passwordAgain.$error.required&&form_wrap.passwordAgain.$touched">密码不能为空</span>
+                        <span class="red" ng-show="user.passwordAgain&&user.passwordAgain!=user.newpwd">两次密码不一致</span>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <input type="button" class="form_btn" ng-class="{'disable':form_wrap.$invalid||(user.passwordAgain!=user.newpwd)}"
+                           ng-click="changePwd()" ng-disabled="form_wrap.$invalid||(user.passwordAgain!=user.newpwd)" value="确定修改">
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

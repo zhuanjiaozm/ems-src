@@ -1,0 +1,169 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>消息管理</a><a class="last-e">消息列表</a>
+                <div class="operate">
+                    <button ng-click="sendMsg()">发送消息</button>
+                </div>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">发送时间:</div>
+                        <div class="sch-input">
+                            <input type="text" id="start" class="sort_input_skin laydate-icon" ng-model="userParams.beginTime" ng-laydate max-date="{{userParams.endTime}}"> -
+                            <input type="text" id="end" class="sort_input_skin laydate-icon" ng-model="userParams.endTime" ng-laydate min-date="{{userParams.beginTime}}">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">收件人:</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin" ng-model="userParams.receiverMobile" maxlength="11"></div>
+                    </div>
+
+                    <div class="item">
+                        <div class="sch-btn">
+                            <input type="button" class="sort_btn" value="搜索" ng-click="searchList()">
+                            <input type="button" class="reset_btn ng-isolate-scope" value="重置" ng-click="userParams={}">
+                        </div>
+                    </div>
+                </div>
+                <table class="list_table">
+                    <thead>
+                        <tr>
+                            <th>选择</th>
+                            <th>消息ID</th>
+                            <th>发件人</th>
+                            <th>收件人</th>
+                            <th>发送形式</th>
+                            <th class="left">消息标题</th>
+                            <th>发送时间</th>
+                            <th width="15%">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="t in list" ng-if="list&&list.length>0">
+                            <td>
+                                <input type="checkbox" name="selected" ng-checked="isSelected(t.msgReadId)" ng-click="updateSelection($event,t.msgReadId)" />
+                            </td>
+                            <td ng-bind="t.msgReadId">
+                            </td>
+
+                            <td ng-bind="t.senderName"></td>
+                            <td ng-bind="t.receiverMobile"></td>
+                            <td ng-bind="sdenumsObj[t.channelTypes]"></td>
+                            <td class="left" ng-bind="t.title"></td>
+                            <td ng-bind="t.createTime | date:'yyyy-MM-dd HH:mm:ss'"></td>
+                            <td class="option">
+                                <a ng-click="forDetail(t)">阅读</a>
+                                <a ng-click="delMsg(1,t.msgReadId)">删除</a>
+                            </td>
+                        </tr>
+                        <tr ng-if="!list||list.length<1">
+                            <td colspan="87">
+                                暂无数据
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pages" ng-if="list&&list.length>0">
+                    <div class="batch-operate">
+                        <input type="checkbox" ng-click="selectAll($event)" ng-checked="isSelectedAll()" />
+                        <span>全选</span>
+                        <button class="bo-red" ng-click="delMsg(2,sendType)">批量删除</button>
+                    </div>
+                    <div ui-pagination conf="conf"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="forDetail">
+    <div class="text-center">
+        <span class="title">收件箱</span>
+    </div>
+    <ul class="forDetail">
+        <li>
+            <strong>标题：</strong>
+            <span ng-bind="m.title"></span>
+        </li>
+        <li>
+            <strong>发件人：</strong>
+            <span ng-bind="m.senderName"></span>
+        </li>
+        <li>
+            <strong>收件人：</strong>
+            <span ng-bind="m.receiverMobile"></span>
+        </li>
+    </ul>
+    <textarea ng-model="m.content" class="content" disabled="disabled">
+
+    </textarea>
+</script>
+<script type="text/ng-template" id="sendMsg">
+    <h1>发送消息</h1>
+    <form name="userForm">
+        <div class="ngdialog-content">
+            <dl>
+                <dt><span class="red">*</span>接收组：</dt>
+                <dd>
+                    <label><input type="radio" name="receiverGroup" ng-model="add.receiverGroup" value="1">会员</label>
+                    <label><input type="radio" name="receiverGroup" ng-model="add.receiverGroup" value="2">商户</label>
+                </dd>
+            </dl>
+            <dl>
+                <dt>&nbsp;</dt>
+                <dd>
+                    <label><input type="radio" name="sendTarget" ng-model="add.sendTarget" value="2">所有人</label>
+                    <label><input type="radio" name="sendTarget" ng-model="add.sendTarget" value="1">指定人</label>
+                </dd>
+            </dl>
+            <dl ng-show="add.sendTarget=='1'">
+                <dt><span class="red">*</span>指定<span>({{numbers.length||0}}/200)</span>：</dt>
+                <dd>
+                    <div style="border:1px solid #e3e3e3;width:650px;">
+                        <span ng-repeat="n in numbers" class="badge" ng-if="$index<200">
+                            <i ng-bind="n"></i><i class="iconfont icon-close red" ng-click="delNum($index)"></i>
+                        </span>
+                        <input type="text" ng-model="add.phone" ng-change="checkPhoneNumber(add.phone)" style="width:650px" placeholder="请输入电话号码并用英文分号隔开">
+                        <!-- <button class="btn-enter">导入手机号</button> -->
+                    </div>
+                </dd>
+            </dl>
+            <dl>
+                <dt><span class="red">*</span>消息类型：</dt>
+                <dd>
+                    <select class="w-medium" ng-model="add.mesgFlag">
+                        <option value="">请选择</option>
+                        <option ng-value="c.id" ng-repeat="c in msgtypes" ng-bind="c.name"></option>
+                    </select>
+                </dd>
+            </dl>
+            <dl>
+                <dt><span class="red">*</span>标题：</dt>
+                <dd>
+                    <input type="text" class="w-large" maxlength="30" ng-model="add.title" style="width:650px;display:block;">
+                </dd>
+            </dl>
+            <dl>
+                <dt><span class="red">*</span>内容：</dt>
+                <dd>
+                    <textarea class="w-large" rows="5" maxlength="100" ng-model="add.content" style="width:650px;display:block;"></textarea>
+                </dd>
+            </dl>
+            <dl>
+                <dt><span class="red">*</span>发送形式：</dt>
+                <dd>
+                    <label ng-repeat="tag in sdenums" ng-hide="(add.sendTarget=='2'&&tag.id=='2')||(add.sendTarget=='2'&&tag.id=='1')">
+                        <input type="checkbox" ng-model="tag.selected" ng-click="backfn(tag.selected,$index);" name="sendType">
+                        <span ng-bind="tag.name"></span>
+                    </label>
+                </dd>
+            </dl>
+        </div>
+        <div class="ngdialog-footer">
+            <button class="btn-enter" ng-click="enter()">确认</button>
+            <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+        </div>
+    </form>
+</script>

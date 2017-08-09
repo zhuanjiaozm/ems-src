@@ -1,0 +1,46 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>审核管理</a><a>资讯审核</a>> 审核详情
+            </div>
+            <div class="tab_box" ng-init="showMain='base'">
+                <ul class="tab-title">
+                    <li ng-class="{'active':showMain=='base'}" ng-click="showMain='base'"><a>资讯详情</a></li>
+                    <li ng-class="{'active':showMain=='examine'}" ng-click="getExamine()"><a>审核信息</a></li>
+                    <li><input type="button" class="back_btn" ui-sref="main.informationExamine" value="返回"></li>
+                </ul>
+                <div class="tab_content" ng-if="showMain=='base'">
+                    <table class="form_table">
+                        <tr>
+                            <th width="15%">标题</th>
+                            <td width="85%" ng-bind="newsInfo.infoTitle"></td>
+                        </tr>
+                        <tr>
+                            <th>创建人</th>
+                            <td ng-bind="newsInfo.creator"></td>
+                        </tr>
+                        <tr>
+                            <th>创建时间</th>
+                            <td ng-bind="newsInfo.createDatetime | date:'yyyy-MM-dd HH:mm:ss'"></td>
+                        </tr>
+                        <tr>
+                            <th  width="15%">资讯内容</th>
+                            <td  width="85%" style="text-align:left">
+                                <div data-ng-bind-html="infoContents" class="ngBindHtml"></div>
+                                <!-- <textarea ng-ueditor="Controller.ueditorConfig" ready="Controller.ready($editor)" ng-model="newsInfo.infoContent" disabled="disabled"></textarea> -->
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+                <div class="show-form" ng-if="showMain=='examine'">
+                    <div examine-info info="auditInfo"></div>
+                </div>
+            </div>
+            <div class="tab_box" ng-if="taskData.taskId!='detail' && newsInfo.auditStatus==2">
+                <div examine-form conf="{id:taskData.taskId, flag:'information'}"></div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,92 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>卡券管理</a><a>卡券转让管理</a>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">卡券批次:</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin" ng-model="cardCouponParams.batchNo" maxlength="20"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">卡券名称:</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin" ng-model="cardCouponParams.couponName" maxlength="20"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">状态：</div>
+                        <div class="sch-input">
+                            <select class="sort_input_skin" ng-model="cardCouponParams.status">
+                                <option value="">请选择</option>
+                                <option value="0">未上架</option>
+                                <option value="1">销售中</option>
+                                <option value="2">下架</option>
+                                <option value="3">已售罄</option>
+                                <option value="-1">已删除</option>
+                                <option value="-2">已过期</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">转让价:</div>
+                        <div class="sch-input">
+                            <input type="text" class="w-small" ng-model="cardCouponParams.minPrice" maxlength="7"> 至
+                            <input type="text" class="w-small" ng-model="cardCouponParams.maxPrice" maxlength="7">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">发布时间:</div>
+                        <div class="sch-input">
+                            <input type="text" class="sort_input_skin laydate-icon" ng-model="cardCouponParams.minCreateTime" ng-laydate max-date="{{cardCouponParams.maxCreateTime}}"
+                                maxlength="10"> 至
+                            <input type="text" class="sort_input_skin laydate-icon" ng-model="cardCouponParams.maxCreateTime" ng-laydate min-date="{{cardCouponParams.minCreateTime}}"
+                                maxlength="10">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-btn">
+                            <input type="button" class="sort_btn" value="搜索" ng-click="getSearch()">
+                        </div>
+                    </div>
+                </div>
+                <table class="list_table">
+                    <thead>
+                        <tr>
+                            <th>卡券批次</th>
+                            <th>卡券名称</th>
+                            <th>单价（元）</th>
+                            <th>转让方</th>
+                            <th>转让价格</th>
+                            <th>转让库存</th>
+                            <th>已售出</th>
+                            <th>状态</th>
+                            <th>创建时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="c in couponList">
+                            <td ng-bind="c.batchNo"></td>
+                            <td ng-bind="c.couponName"></td>
+                            <td ng-bind="c.oldPrice"></td>
+                            <td ng-bind="c.transferAgentName"></td>
+                            <td ng-bind="c.price"></td>
+                            <td ng-bind="c.stock"></td>
+                            <td ng-bind="c.salesNum"></td>
+                            <td ng-bind="{'0':'未上架','1':'销售中','2':'下架','3':'已售罄','-1':'已删除','-2':'已过期'}[c.status]"></td>
+                            <td ng-bind="c.createDate"></td>
+                            <td class="option">
+                                <a ng-click="getDetail(c.transferId)">详情</a>
+                                <a ng-click="deals(c.transferId)">终止转让</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pages">
+                    <div ui-pagination conf="conf"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

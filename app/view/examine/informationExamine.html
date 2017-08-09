@@ -1,0 +1,75 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>审核管理</a><a>资讯审核</a>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">资讯标题:</div>
+                        <div class="sch-input"><input type="text" class="w-medium" ng-model="params.infoTitle"></div>
+                    </div>
+                    <!-- <div class="item">
+                        <div class="sch-txt">商品名称:</div>
+                        <div class="sch-input"><input type="text" class="sort_input_skin" ></div>
+                    </div> -->
+                    <div class="item">
+                        <div class="sch-txt">创建时间:</div>
+                        <div class="sch-input">
+                            <input type="text" class="w-small laydate-icon"  ng-laydate max-date="{{params.endTime}}" ng-model="params.startTime">
+                            至
+                            <input type="text" class="w-small laydate-icon"  ng-laydate min-date="{{params.startTime}}" ng-model="params.endTime">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">审核状态:</div>
+                        <div class="sch-input">
+                            <select class="w-medium" ng-model="params.taskStatus">
+                                <option value="1">待办</option>
+                                <option value="2">已办</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-btn">
+                            <input type="button" class="sort_btn" value="搜索"  ng-click="goSearch()">
+                        </div>
+                    </div>
+                </div>
+                <table class="list_table">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>标题</th>
+                        <th>申请时间</th>
+                        <th>创建人</th>
+                        <th>审核状态</th>
+                        <th width="15%">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="news in newsList">
+                            <td ng-bind="$index+1"></td>
+                            <td ng-bind="news.infoTitle"></td>
+                            <td ng-bind="news.applyDate | date:'yyyy-MM-dd HH:mm:ss'"></td>
+                            <td ng-bind="news.applyUser"></td>
+                            <td ng-bind="examineStatus[news.taskStatus]"></td>
+                            <td class="option">
+                                <a ui-sref="main.informationExamineDetail({id:news.hotInfoId, tid:(news.taskStatus==1?news.taskId : 'detail')})">
+                                    {{news.taskStatus==1 ? '审核' : '详情'}}
+                                </a>
+                            </td>
+                        </tr>
+                        <tr ng-if="!newsList || newsList.length==0">
+                            <td colspan="6">暂无数据</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pages" ng-if="newsList">
+                    <div ui-pagination conf="conf"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

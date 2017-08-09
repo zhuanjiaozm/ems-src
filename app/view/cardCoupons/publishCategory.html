@@ -1,0 +1,38 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>卡券管理</a><span>选择优惠券类型</span>
+            </div>
+            <div class="coupon">
+                <ul class="coupon-type">
+                    <li class="cut">
+                        <h3>代金券</h3>
+                        <p>具有固定面值的电子券，用于线下消费时直接抵扣现金</p>
+                    </li>
+                </ul>
+                <div class="coupon-category-item">
+                    <ul class="cci-box">
+                        <li ng-repeat="item in firstLevel" ng-click="getCats(item,2)" ng-class="{'cut':item.id===categoryPath[1]}">
+                            {{item.name}}
+                            <i ng-if="item.isParent" class="iconfont icon-arrow"></i>
+                        </li>
+                    </ul>
+                    <ul class="cci-box">
+                        <li ng-repeat="item in secondLevel" ng-click="getCats(item,3)" ng-class="{'cut':item.id===categoryPath[2]}">
+                            {{item.name}}
+                            <i ng-if="item.isParent" class="iconfont icon-arrow"></i>
+                        </li>
+                    </ul>
+                    <ul class="cci-box">
+                        <li ng-repeat="item in thridLevel" ng-click="getCats(item,4)" ng-class="{'cut':item.id===categoryPath[3]}">
+                            {{item.name}}
+                            <i ng-if="item.isParent" class="iconfont icon-arrow"></i>
+                        </li>
+                    </ul>
+                </div>
+                <button class="sort_btn" ng-class="{'gray':!isSubmit}" ng-disabled="!isSubmit" ng-click="publishCoupon()">下一步</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,113 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>消息中心</a><a>新增模板</a>
+                <div class="operate">
+                    <button ui-sref="main.messageTemplate">返回</button>
+                </div>
+            </div>
+            <form class="form_wrap addMsgTemplate">
+                <div class="form_row" ng-if="theTemplate.id">
+                    <div class="form_l">模板编码：</div>
+                    <div class="form_r">
+                          {{theTemplate.id}}
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l"><span class="red">*</span>发送场景：</div>
+                    <div class="form_r">
+                        <select class="form_input_skin" ng-model="theTemplate.sendScenes">
+                            <option value="">请选择</option>
+                            <option value="{{j.code}}" ng-repeat="j  in scens" ng-bind="j.name"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l"><span class="red">*</span>消息标题：</div>
+                    <div class="form_r"><input type="text" class="form_input_skin" placeholder="消息标题" ng-model="theTemplate.msgTitle" maxlength="30"></div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l"><span class="red">*</span>模板内容：</div>
+                    <div class="form_r">
+                        <textarea rows="5" class="w-large" ng-model="theTemplate.msgContent"></textarea>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l">变量参数：</div>
+                    <div class="form_r">
+                        账号：{account}，网站名：{site_name}，网站地址：{accout}，链接：{accout}，ip地址：{accout}
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l"><span class="red">*</span>发送形式：</div>
+                    <div class="form_r">
+                        <label ng-repeat="tag in sdenums">
+                            <input type="checkbox" ng-click="updateSelection($event,tag.id)" ng-checked="isSelected(tag.id)">
+                            <span ng-bind="tag.name"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!--<div class="form_row">-->
+                    <!--<div class="form_l"><span class="red">*</span>消息类型：</div>-->
+                    <!--<div class="form_r">-->
+                        <!--<select class="form_input_skin" ng-model="theTemplate.msgType">-->
+                            <!--<option value="">请选择</option>-->
+                            <!--<option value="{{j.code}}" ng-repeat="j  in msgtypes" ng-bind="j.name"></option>-->
+                        <!--</select>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="form_row">-->
+                    <!--<div class="form_l"><span class="red">*</span>跳转类型：</div>-->
+                    <!--<div class="form_r">-->
+                        <!--<select class="form_input_skin" ng-model="theTemplate.jump"  ng-change="theTemplate.jumpContent=''">-->
+                            <!--<option value="">无动作</option>-->
+                            <!--<option value="{{j.code}}" ng-repeat="j  in jpenums" ng-bind="j.name" ></option>-->
+                        <!--</select>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div ng-if="theTemplate.jump==5"  class="form_row">-->
+                    <!--<div class="form_l"><label><span class="red">*</span>商品编号：</label></div>-->
+                    <!--<div class="form_r">-->
+                        <!--<input type="text" ng-model="theTemplate.jumpContent"  size="45"  disabled="disabled">-->
+                        <!--<div select-shop sparams="advertProductId" select="radio" ng-hide="readonly"></div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div ng-if="theTemplate.jump==4"  class="form_row">-->
+                    <!--<div class="form_l"><label><span class="red">*</span>店铺编号：</label></div>-->
+                    <!--<div class="form_r">-->
+                        <!--<input type="text" ng-model="theTemplate.jumpContent" size="45"  disabled="disabled">-->
+                        <!--<div select-shop sparams="advertShopId" select="radio"  ng-hide="readonly"></div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div ng-if="theTemplate.jump==2"  class="form_row">-->
+                    <!--<div class="form_l"><label><span class="red">*</span>类目ID:</label></div>-->
+                    <!--<div class="form_r">-->
+                        <!--<select-category ng-model="theTemplate.jumpContent" ></select-category>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div ng-if="theTemplate.jump==1"  class="form_row">-->
+                    <!--<div class="form_l"><label><span class="red">*</span>URL地址：</label></div>-->
+                    <!--<div class="form_r">-->
+                        <!--<input type="text" ng-model="theTemplate.jumpContent"><span>(请输入对应url，例：http://www.123.com)</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div ng-if="theTemplate.jump==3"  class="form_row">-->
+                    <!--<div class="form_l"><label><span class="red">*</span>快捷入口：</label></div>-->
+                    <!--<div class="form_r">-->
+                        <!--<input type="text" ng-model="theTemplate.jumpContent"><span>(请输入对应页面的ID值，例：2567)</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+
+
+                <div class="form_row">
+                    <input type="button" class="form_btn" value="保存" ng-if="flag!=1" ng-click="submitTemplate(theTemplate)">
+                    <a  class="addMsgTemplateGoback" ui-sref="main.messageTemplate">取消</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

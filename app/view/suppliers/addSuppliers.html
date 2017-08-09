@@ -1,0 +1,107 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>供应商管理</a><span>添加供应商</span>
+            </div>
+            <form class="form_wrap" name="supForm">
+                <div class="form_row">
+                    <div class="form_l"><span class="red">*</span>供应商名称：</div>
+                    <div class="form_r">
+                        <input type="text" name="name" class="form_input_skin_big" ng-model="supplierInfo.name" maxlength="30" required> ({{supplierInfo.name.length||0}}/30)
+                    </div>
+                    <div ng-messages="supForm.name.$error" ng-if="supForm.name.$touched" class="form_r red">
+                        <span required-error></span>
+                        <span maxlength-error conf="{maxLength:30}"></span>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l"><span class="red">*</span>供应商编号：</div>
+                    <div class="form_r">
+                        <input type="text" name="code" class="form_input_skin" ng-model="supplierInfo.code" maxlength="15" required>
+                    </div>
+                    <div ng-messages="supForm.code.$error" ng-if="supForm.code.$touched" class="form_r red">
+                        <span required-error></span>
+                        <span maxlength-error conf="{maxLength:15}"></span>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l"><span class="red">*</span>供应商账号：</div>
+                    <div class="form_r">
+                        <input type="text" name="account" class="form_input_skin" ng-model="supplierInfo.account" maxlength="16" required>
+                    </div>
+                    <div ng-messages="supForm.account.$error" ng-if="supForm.account.$touched" class="form_r red">
+                        <span required-error></span>
+                        <span maxlength-error conf="{maxLength:16}"></span>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l"><span class="red">*</span>密码：</div>
+                    <div class="form_r">
+                        <input type="password" name="password" class="form_input_skin" ng-minlength="6" ng-maxlength="16"
+                               ng-model="supplierInfo.password" required>
+                    </div>
+                    <div ng-messages="supForm.password.$error" ng-if="supForm.password.$touched" class="form_r red">
+                        <span required-error></span>
+                        <span maxlength-error conf="{maxLength:16}"></span>
+                        <span minlength-error conf="{minLength:6}"></span>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l"><span class="red">*</span>联系人：</div>
+                    <div class="form_r">
+                        <input type="text" name="name" class="form_input_skin" ng-maxlength="16" ng-model="supplierInfo.contacts" required>
+                    </div>
+                    <div ng-messages="supForm.contacts.$error" ng-if="supForm.contacts.$touched" class="form_r red">
+                        <span required-error></span>
+                        <span maxlength-error conf="{maxLength:16}"></span>
+                        <span minlength-error conf="{minLength:6}"></span>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l"><span class="red">*</span>联系方式：</div>
+                    <div class="form_r">
+                        <input type="text" num-input name="contactsMobile" class="form_input_skin" ng-maxlength="16" ng-model="supplierInfo.contactsMobile" required>
+                    </div>
+                    <div ng-messages="supForm.contactsMobile.$error" ng-if="supForm.contactsMobile.$touched" class="form_r red">
+                        <span required-error></span>
+                        <span maxlength-error conf="{maxLength:16}"></span>
+                        <span minlength-error conf="{minLength:6}"></span>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l"><span class="red">*</span>所属分行：</div>
+                    <div class="form_r">
+                        <span organize-select conf="{nameFlag:',',firstRequired:true}" organize-id="supplierInfo.organizeId"
+                              organize-ids="supplierInfo.organizeIds" organize-names="supplierInfo.orgName"  ng-if="!isLoading"></span>
+                    </div>
+                    <div ng-messages="supForm.firstRequired.$error" ng-if="supForm.firstRequired.$touched" class="form_r red">
+                        <span required-error></span>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l">所属地区：</div>
+                    <div class="form_r">
+                        <div city-select  ng-if="!isLoading"
+                             province-model="supplierInfo.province" province-name-model="supplierInfo.provinceName"
+                             city-model="supplierInfo.city" city-name-model="supplierInfo.cityName"
+                             district-model="supplierInfo.district" district-name-model="supplierInfo.districtName">
+                        </div>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="form_l">详细地址：</div>
+                    <div class="form_r">
+                        <textarea class="form_input_skin_big" rows="3" ng-model="supplierInfo.addressDetail" maxlength="100"></textarea>
+                    </div>
+                </div>
+
+                <div class="form_row sub">
+                    <input type="button" class="sort_btn" ng-disabled="supForm.$invalid" ng-class="{'gray':supForm.$invalid}" value="完成创建" ng-click="submitSupplier()">
+                    <input type="button" class="sort_btn gray" value="返回" ui-sref="main.supplierList">
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

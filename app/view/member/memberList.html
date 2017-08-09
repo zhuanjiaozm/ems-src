@@ -1,0 +1,132 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>会员管理</a><a>会员列表</a>
+                <div class="operate">
+                    <button ng-click="exportsMember()">批量导出</button>
+                    <button ng-click="importMember()">批量导入</button>
+                </div>
+            </div>
+            <div class="table_warp">
+                <div class="search-bar">
+                    <div class="item">
+                        <div class="sch-txt">会员账号:</div>
+                        <div class="sch-input"><input type="text" class="w-medium" ng-model="params.account"></div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-txt">注册时间:</div>
+                        <div class="sch-input">
+                            <input ng-laydate class="sort_input_skin laydate-icon" ng-model="params.startTime"
+                                   istime='false' max-date='{{req.endTime}}' format="YYYY-MM-DD">
+                            至
+                            <input ng-laydate class="sort_input_skin laydate-icon" ng-model="params.endTime"
+                                   istime="false" min-date="{{req.startTime}}" format="YYYY-MM-DD">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="sch-btn">
+                            <input type="button" class="sort_btn" value="搜索" ng-click="search()">
+                        </div>
+                    </div>
+
+                </div>
+                <table class="list_table">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>会员编号</th>
+                        <th>会员账号</th>
+                        <th>联系方式</th>
+                        <th>注册时间</th>
+                        <th>账户状态</th>
+                        <th width="200">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody ng-if="memberArray.length>0">
+                    <tr ng-repeat="item in memberArray|filter:{backList:'!1'}">
+                        <td>{{$index+1}}</td>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.account }}</td>
+                        <td>{{ item.mobile }}</td>
+                        <td>{{ item.createTime|date : 'yyyy-MM-dd HH:mm:ss' }}</td>
+                        <td>
+                            <span ng-bind="item.locked=='1'?'锁定':''"></span>
+                            <span ng-bind="item.forbidden=='1'?'禁止':''"></span>
+                            <span ng-bind="item.backList=='1'?'黑名单':''"></span>
+                            <span ng-if="item.locked!='1'&&item.forbidden!='1'&&item.backList!='1'">正常</span>
+                        </td>
+                        <td class="option">
+                            <a ui-sref="main.memberDetail({memberId:item.id,flag:1})">详情</a>
+                            <a ng-click="operateMemberStatus(item, 2, item.locked=='1'?1:0)">{{item.locked=='1'?'解锁':'锁定'}}</a>
+                            <a ng-click="bindLabel()">加标签</a>
+                            <br>
+                            <a ng-click="operateMemberStatus(item, 3, item.forbidden=='1'?1:0)">{{item.forbidden=='1'?'解禁交易':'禁止交易'}}</a>
+                            <a ng-click="operateMemberStatus(item, 1,0)">加入黑名单</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tbody ng-if="memberArray.length<1">
+                    <tr>
+                        <td colspan="7">暂无数据！</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="pages">
+                    <div ui-pagination conf="conf"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="operMember">
+    <h1>{{ngDialogTitle}}</h1>
+    <div class="ngdialog-content">
+        <p>请输入原因</p>
+        <textarea style="width: 100%;" rows="5" ng-model="operParams.reason"></textarea>
+        <p class="">说明：锁定以后，该会员将不能登录，请小心操作。</p>
+    </div>
+    <div class="ngdialog-footer">
+        <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+        <button class="btn-enter" ng-click="enter()">确认</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="importUser">
+    <h1 ng-bind="dialogTitle"></h1>
+    <div class="ngdialog-content">
+        <form name="labelForm">
+            <dl ng-if="false">
+                <dt>导入客户的身份：</dt>
+                <dd>
+                    <input class="w-medium" ng-model="addParams.labelName" maxlength="10">
+                </dd>
+            </dl>
+            <dl ng-init="showLabel=false;">
+                <dt>标签：</dt>
+                <dd ng-mouseover="showLabel=true;" ng-mouseleave="showLabel=false;">
+                    <a class="blue">加标签</a>
+                    <div class="label-box" ng-show="showLabel">
+                        <ul>
+                            <li ng-repeat="item in labels"><label><input type="checkbox" ng-checked="item.selected"
+                                                                         ng-click="selectLabel(item.labelId)">{{item.labelName}}</label>
+                            </li>
+                        </ul>
+                    </div>
+                </dd>
+            </dl>
+            <dl>
+                <dt><span class="red">*</span>文件：</dt>
+                <dd>
+                    <input type="file" id="userFile">
+                </dd>
+                <dd style="margin-left:5px;"><a class="blue" href="../files/批量导入用户.xls">模板下载</a></dd>
+            </dl>
+        </form>
+    </div>
+    <div class="ngdialog-footer">
+        <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+        <button class="btn-enter" ng-click="enter()">确认</button>
+    </div>
+</script>

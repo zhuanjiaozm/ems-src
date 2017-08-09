@@ -1,0 +1,226 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>会员管理</a><a>会员详情</a>
+            </div>
+            <div class="tab_box" ng-init="showMain='base'">
+                <ul class="tab-title">
+                    <li ng-class="{'active':showMain=='base'}" ng-click="showMain='base'"><a>基本信息</a></li>
+                    <!-- <li ng-class="{'active':showMain=='bank'}" ng-click="showMain='bank'"><a>银行信息</a></li>
+                    <li ng-class="{'active':showMain=='discount'}" ng-click="showMain='discount'"><a>优惠信息</a></li> -->
+                    <li><input type="button" class="back_btn" ng-click="goBack()" value="返回"></li>
+                </ul>
+                <div class="tab_content" ng-if="showMain=='base'">
+                    <table class="form_table">
+                        <tr>
+                            <th width="15%">会员编号</th>
+                            <td width="35%">{{memberInfo.id}}</td>
+                            <th width="15%">生日</th>
+                            <td width="35%">
+                                <span ng-bind="memberInfo.birth|date:'yyyy-MM-dd'"> </span>
+                            </td>
+                        </tr>
+                        <tr >
+                            <th>
+                                <span>会员头像</span>
+                            </th>
+                            <td>
+                                <img ng-src="{{imgServerUrl+memberInfo.avatar||'images/error.png'}}" onerror="javascript:this.src='images/error.png'" width="50" style="vertical-align:middle;">
+                            </td>
+                            <th>性别</th>
+                            <td>
+                                <span ng-bind="{'0':'保密','1':'男','2':'女'}[memberInfo.gender]"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>会员昵称</th>
+                            <td>{{ memberInfo.nickName }}</td>
+                            <th>注册时间</th>
+                            <td>{{ memberInfo.createTime|date : 'yyyy-MM-dd HH:mm:ss' }}</td>
+                        </tr>
+                        <tr>
+                            <th>会员等级</th>
+                            <td>{{memberInfo.memberLevel}}</td>
+                            <th>最后登录时间</th>
+                            <td>{{ memberInfo.loginTime|date : 'yyyy-MM-dd HH:mm:ss' }}</td>
+                        </tr>
+                        <tr>
+                            <th>账户状态</th>
+                            <td>
+                                <span ng-bind="memberInfo.locked=='1'?'锁定':''"></span>
+                                <span ng-bind="memberInfo.forbidden=='1'?'禁止':''"></span>
+                                <span ng-bind="memberInfo.backList=='1'?'黑名单':''"></span>
+                                <span ng-if="memberInfo.locked!='1'&&memberInfo.forbidden!='1'&&memberInfo.backList!='1'">正常</span>
+                            </td>
+                            <th>登录IP地址</th>
+                            <td>{{ memberInfo.loginIp }}</td>
+                        </tr>
+                        <tr>
+                            <th>推荐人</th>
+                            <td>{{ memberInfo.recommendInfo }}</td>
+                            <th></th>
+                            <td></td>
+                        </tr>
+                    </table>
+                    <!-- <div>
+                        <h2 class="title">账户状态变更记录</h2>
+                        <table class="form_table">
+                            <thead>
+                            <tr>
+                                <td>序号</td>
+                                <td>操作人</td>
+                                <td>操作类型</td>
+                                <td>操作时间</td>
+                                <td>操作说明</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in memberInfo.changedRecord">
+                                <td>1</td>
+                                <td>wangwu 王五</td>
+                                <td>冻结</td>
+                                <td>2015-03-03 12:00:35</td>
+                                <td>13800138000</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div> -->
+                    <div>
+                        <h2 class="title">收货地址</h2>
+                        <table class="form_table">
+                            <thead>
+                            <tr>
+                                <td>收货人</td>
+                                <td>所在地区</td>
+                                <td>街道地址</td>
+                                <td>邮政编号</td>
+                                <td>手机号码</td>
+                                <td>备注</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in memberInfo.memberAddressList">
+                                <td ng-bind="item.recipient"></td>
+                                <td ng-bind="item.provinceName+item.cityName+item.districtName"></td>
+                                <td ng-bind="item.address"></td>
+                                <td ng-bind="item.postcode"></td>
+                                <td ng-bind="item.telephone"></td>
+                                <td ng-bind="{'1':'默认'}[item.isDefault]"></td>
+                            </tr>
+                            <tr ng-if="!memberInfo.memberAddressList||memberInfo.memberAddressList.length<1">
+                                <td colspan="6">
+                                    暂无收货地址
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="bank_content" ng-if="showMain=='bank'">
+                    <div class="user-points">
+                        <h2>用户积分</h2>
+                        <dl>
+                            <dt>综合积分：</dt>
+                            <dd>234,000</dd>
+                        </dl>
+                        <dl>
+                            <dt>用户积分：</dt>
+                            <dd>80,000</dd>
+                        </dl>
+                        <dl>
+                            <dt>贵宾积分：</dt>
+                            <dd>34,000</dd>
+                        </dl>
+                        <dl>
+                            <dt>村镇积分：</dt>
+                            <dd>24,000</dd>
+                        </dl>
+                    </div>
+                    <div class="bind-bank">
+                        <h2>绑定银行卡</h2>
+                        <ul>
+                            <li>
+                                <div class="name">宝润银行</div>
+                                <div class="type">储蓄卡</div>
+                                <div class="number">6222 **** **** 1110</div>
+                            </li>
+                            <li>
+                                <div class="name">宝润银行</div>
+                                <div class="type">储蓄卡</div>
+                                <div class="number">6222 **** **** 1110</div>
+                            </li>
+                            <li>
+                                <div class="name">宝润银行</div>
+                                <div class="type">储蓄卡</div>
+                                <div class="number">6222 **** **** 1110</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="discount_content" ng-if="showMain=='discount'">
+                    <div class="coupon">
+                        <h2 class="title">优惠券</h2>
+                        <div class="item">
+                            <div class="shop-name">胜佳-愉景雅宛店</div>
+                            <div class="info">
+                                <h3 class="name">满100减20</h3>
+                                <p>春节让利活动</p>
+                                <p>有效期至 2016-12-30 12:00</p>
+                                <div class="state used">已使用</div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="shop-name">胜佳-愉景雅宛店</div>
+                            <div class="info">
+                                <h3 class="name">满100减20</h3>
+                                <p>春节让利活动</p>
+                                <p>有效期至 2016-12-30 12:00</p>
+                                <div class="state expire">已过期</div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="shop-name">胜佳-愉景雅宛店</div>
+                            <div class="info">
+                                <h3 class="name">满100减20</h3>
+                                <p>春节让利活动</p>
+                                <p>有效期至 2016-12-30 12:00</p>
+                                <div class="state expire">已过期</div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="shop-name">胜佳-愉景雅宛店</div>
+                            <div class="info">
+                                <h3 class="name">满100减20</h3>
+                                <p>春节让利活动</p>
+                                <p>有效期至 2016-12-30 12:00</p>
+                                <div class="state expire">已过期</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="redpacket">
+                        <h2 class="title">红包</h2>
+                        <div class="item">
+                            <div class="shop-name"></div>
+                            <div class="info">
+                                <h3 class="name">全场满100减20</h3>
+                                <p>国庆节红包活动</p>
+                                <p>有效期至 2016-12-30 12:00</p>
+                                <div class="state expire">已过期</div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="shop-name"></div>
+                            <div class="info">
+                                <h3 class="name">全场满100减20</h3>
+                                <p>国庆节红包活动</p>
+                                <p>有效期至 2016-12-30 12:00</p>
+                                <div class="state expire">已过期</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,175 @@
+<div class="main_wrap">
+    <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><span>店铺管理</span><span>店铺详情</span>
+            </div>
+            <div class="tab_box" ng-init="showMain='base'">
+                <ul class="tab-title">
+                    <li ng-class="{'active':showMain=='base'}" ng-click="showMain='base'"><a>店铺信息</a></li>
+                    <li ng-class="{'active':showMain=='pic'}" ng-click="showMain='pic'"><a>图片信息</a></li>
+                    <li ng-class="{'active':showMain=='recommend'}" ng-click="showMain='recommend'"><a>推荐人信息</a></li>
+                    <li ng-class="{'active':showMain=='examine'}" ng-click="getExamine()"><a>审核信息</a></li>
+                    <li><input type="button" class="back_btn" ui-sref="{{isExamine ? 'main.shopExamine':'main.shopManager'}}" value="返回"></li>
+                </ul>
+                <div class="show-form" ng-if="showMain=='base'">
+                    <dl class="form_row">
+                        <dt>店铺名称：</dt>
+                        <dd>{{shop.shopName}}</dd>
+                    </dl>
+                    <dl class="form_row">
+                        <dt>店铺类型：</dt>
+                        <dd ng-bind="{'1':'企业独营','2':'企业连锁','3':'个体户'}[merchant.merchantType]"></dd>
+                    </dl>
+                    <dl class="form_row" ng-if="shop.shopType">
+                        <dt>店铺分类：</dt>
+                        <dd ng-bind="{'1':'总店','2':'分店'}[shop.shopType]"></dd>
+                    </dl>
+                    <dl class="form_row">
+                        <dt>所在地区：</dt>
+                        <dd>{{shop.provinceName}}-{{shop.cityName}}-{{shop.districtName}}</dd>
+                    </dl>
+                    <dl class="form_row">
+                        <dt>详细通讯地区：</dt>
+                        <dd>{{shop.address}}</dd>
+                    </dl>
+                    <dl class="form_row">
+                        <dt>店铺介绍：</dt>
+                        <dd>{{shop.description}}</dd>
+                    </dl>
+                    <dl>
+                        <dt>经营商品分类：</dt>
+                        <dd ng-bind="{'0':'实物类','1':'服务类'}[shop.categoryType]"></dd>
+                    </dl>
+                    <dl>
+                        <dt>经营类目：</dt>
+                        <dd ng-bind="shop.businessCatName"></dd>
+                    </dl>
+                    <dl class="form_row">
+                        <dt>营业时间：</dt>
+                        <dd>{{shop.businessHoursStart}}至{{shop.businessHoursEnd}}</dd>
+                    </dl>
+                    <dl class="form_row">
+                        <dt>客服电话：</dt>
+                        <dd>{{shop.serviceTel}}</dd>
+                    </dl>
+                    <dl>
+                        <dt>是否支持开票：</dt>
+                        <dd>
+                            {{shop.invoice ? '支持' : '不支持开票'}}
+                            <span ng-if="shop.invoice">
+                                    <span ng-if="shop.invoiceStatus == '2' || shop.invoiceStatus === '0'">电子发票</span>
+                                    <span ng-if="shop.invoiceStatus == '2' || shop.invoiceStatus == '1'">纸质发票</span>
+                                </span>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>是否支持积分支付：</dt>
+                        <dd>{{shop.support=='1' ? '不支持' : '支持积分支付'}}</dd>
+                    </dl>
+                    <dl class="form_row">
+                        <dt>商户名称：</dt>
+                        <dd>{{shop.merchantName}}</dd>
+                    </dl>
+                    <dl class="form_row">
+                        <dt>商户账号：</dt>
+                        <dd>{{merchant.account}}</dd>
+                    </dl>
+                    <dl class="form_row">
+                        <dt>商户编号：</dt>
+                        <dd>{{shop.merchantId}}</dd>
+                    </dl>
+                    <dl class="form_row" ng-if="shopBranch.length>0">
+                        <dt>门店信息：</dt>
+                        <dd>
+                            <ul class="store-list">
+                                <li ng-repeat="branch in shopBranch">
+                                    门店{{$index+1}}
+                                    <a ui-sref="main.storeDetail({id:branch.id})" ng-bind="branch.name"></a>
+                                </li>
+                            </ul>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="show-form" ng-if="showMain=='pic'">
+                    <div>
+                        <ul cl
+                            ass="images-list">
+                            <li class="w-320">
+                                <div class="imgbox">
+                                    <img src="images/tem_pro.png" ng-src="{{imgBaseUrl + shop.logo + $root.$imgSize.L}}" alt="店铺logo" title="店铺logo">
+                                </div>
+                                <div class="imgtitle">店铺LOGO</div>
+                            </li>
+                            <li class="w-320" ng-if="shop.appPics[0]">
+                                <div class="imgbox">
+                                    <img src="images/tem_pro.png" ng-src="{{imgBaseUrl + shop.appPics[0].imgUrl + $root.$imgSize.L}}" alt="店铺首页app端" title="店铺首页app端">
+                                </div>
+                                <div class="imgtitle">店铺首页app端</div>
+                            </li>
+                            <li class="w-320" ng-if="shop.appPics[1]">
+                                <div class="imgbox">
+                                    <img src="images/tem_pro.png" ng-src="{{imgBaseUrl + shop.appPics[1].imgUrl + $root.$imgSize.L}}" alt="店铺首页app端" title="店铺首页app端">
+                                </div>
+                                <div class="imgtitle">店铺首页app端</div>
+                            </li>
+                            <li class="w-320" ng-if="shop.appPics[2]">
+                                <div class="imgbox">
+                                    <img src="images/tem_pro.png" ng-src="{{imgBaseUrl + shop.appPics[2].imgUrl + $root.$imgSize.L}}" alt="店铺首页app端" title="店铺首页app端">
+                                </div>
+                                <div class="imgtitle">店铺首页app端</div>
+                            </li>
+                            <li class="w-320" ng-if="shop.pcPics[0]">
+                                <div class="imgbox">
+                                    <img src="images/tem_pro.png" ng-src="{{imgBaseUrl + shop.pcPics[0].imgUrl + $root.$imgSize.L}}" alt="店铺首页电脑端" title="店铺首页电脑端">
+                                </div>
+                                <div class="imgtitle">店铺首页电脑端</div>
+                            </li>
+                            <li class="w-320" ng-if="shop.pcPics[1]">
+                                <div class="imgbox">
+                                    <img src="images/tem_pro.png" ng-src="{{imgBaseUrl + shop.pcPics[1].imgUrl + $root.$imgSize.L}}" alt="店铺首页电脑端" title="店铺首页电脑端">
+                                </div>
+                                <div class="imgtitle">店铺首页电脑端</div>
+                            </li>
+                            <li class="w-320" ng-if="shop.pcPics[2]">
+                                <div class="imgbox">
+                                    <img src="images/tem_pro.png" ng-src="{{imgBaseUrl + shop.pcPics[2].imgUrl + $root.$imgSize.L}}" alt="店铺首页电脑端" title="店铺首页电脑端">
+                                </div>
+                                <div class="imgtitle">店铺首页电脑端</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="show-form" ng-if="showMain=='recommend'">
+                    <div ng-if="!shop.recommendMerchant">
+                        <dl>
+                            <dt>推荐人工号：</dt>
+                            <dd>{{shop.recommendManagerId}}</dd>
+                        </dl>
+                        <dl>
+                            <dt>推荐人姓名：</dt>
+                            <dd>{{shop.recommendManagerName}}</dd>
+                        </dl>
+                    </div>
+                    <div ng-if="shop.recommendMerchant">
+                        <dl>
+                            <dt>推荐商户编号：</dt>
+                            <dd>{{shop.recommendMerchant}}</dd>
+                        </dl>
+                        <dl>
+                            <dt>推荐商户名称：</dt>
+                            <dd>{{shop.recommendMerchantName}}</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="show-form" ng-if="showMain=='examine'">
+                    <div examine-info info="auditInfo"></div>
+                </div>
+            </div>
+            <div class="tab_box" ng-if="isExamine && shop.auditStat == 2 && taskData.taskStatus==1">
+                <div examine-form conf="{id:taskData.taskId, flag:'shop', formParams:{shopId: shop.id}}" ng-if="shop.id"></div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="J_City_Box">
+    <ul id="J_CityList">
+        <li ng-repeat="item in regionData" ng-init="showChildrenId = {id:null}">
+            <div class="dcity clearfix">
+                <div class="ecity gcity">
+                    <span class="group-label">
+                                <label ng-class="{'half':item.isHalf}">
+                                    <input ng-init="define_Selected(item)" ng-click="selectedArea(item, $event)" ng-true-value='true' ng-model="item._selected" ng-disabled="item.isLock" class="J_Group" type="checkbox">{{item.regionRange}}</label>
+                        </span>
+                </div>
+                <div class="province-list">
+                    <div class="ecity" ng-repeat="province in item.children">
+                        <span class="gareas">
+                            <label ng-class="{'half':province.isHalf}">
+                            <input ng-init="define_Selected(province)" ng-click="selectedProvince(province, $event)" ng-true-value='true' ng-model="province._selected" ng-disabled="province.isLock" class="J_Province" type="checkbox">{{province.name}}</label>
+                            <span class="check_num"></span>
+                            <img class="trigger" src="images/area_arrow_down.png" ng-click="showChildrenId.id == province.id? showChildrenId.id = 0 :showChildrenId.id = province.id">
+                        </span>
+                        <div class="citys" ng-show="showChildrenId.id == province.id">
+                            <span class="areas" ng-repeat="city in province.children">
+                                <label ng-class="{'half':city.isHalf}">
+                                <input ng-click="selectedCity(city)" ng-checked="city.selected || city.isLock || province.selected || province.isLock" ng-disabled="city.isLock || province.isLock"  class="J_City" type="checkbox">
+                                        {{city.name}}</label>
+                                </span>
+                            <p style="text-align:right;">
+                                <input value="关闭" class="close_button" type="button" ng-click="showChildrenId.id = null">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="confirm()">确认</button>
+</div>

@@ -1,0 +1,76 @@
+<div class="main_wrap">
+     <div class="list_warp">
+        <div class="list_box">
+            <div class="site">
+                <b>您当前所在的位置：</b><a>首页</a><a>系统管理</a><a>机构列表</a>
+            </div>
+            <div class="two-part">
+                <div class="left-tree">
+                    <ul id="treeDemo" class="ztree"></ul>
+                </div>
+                <div class="table_warp">
+                    <div class="operate"><button ng-click="operateOrganize(2)">新增</button></div>
+                    <table class="list_table">
+                        <thead>
+                        <tr>
+                            <th width="35">序号</th>
+                            <th>机构名称</th>
+                            <th>机构编号</th>
+                            <th width="140">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in displayOrgainzeArray">
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.orgNo }}</td>
+                                <td class="option">
+                                    <!--<a>详情</a>-->
+                                    <a ng-click="operateOrganize(1,item)">编辑</a>
+                                    <a ng-click="operateOrganize(0,item)">删除</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody ng-if="displayOrgainzeArray.length<1">
+                            <tr>
+                                <td colspan="4">
+                                    暂无数据！
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!--<div class="pages">
+                        <div ui-pagination conf="conf"></div>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+     </div>
+</div>
+
+<script type="text/ng-template" id="addInstitu">
+    <h1>{{ngDialogTitle}}</h1>
+    <div class="ngdialog-content">
+        <form name="orgForm">
+            <dl>
+                <dt><span class="red">*</span>上级机构：</dt>
+                <dd>{{orgParentName}}</dd>
+            </dl>
+            <dl>
+                <dt><span class="red">*</span>机构名称：</dt>
+                <dd><input type="text" class="w-medium" required ng-model="orgParams.orgName" maxlength="10"></dd>
+            </dl>
+            <dl>
+                <dt><span class="red">*</span>机构编号：</dt>
+                <dd>
+                    <input type="text" class="w-medium" num-input ng-model="orgParams.orgNo" maxlength="10">
+                </dd>
+            </dl>
+        </form>
+    </div>
+    <div class="ngdialog-footer">
+        <button class="btn-canle" ng-click="closeThisDialog(0)">取消</button>
+        <button class="btn-enter" ng-click="enter()">确认</button>
+    </div>
+</script>
+
